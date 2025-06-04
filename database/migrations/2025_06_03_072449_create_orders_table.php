@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,13 +14,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->decimal('total_harga', 12, 2);
-            $table->foreignId('bank_id')->constrained('banks')->onDelete('set null')->nullable();
+            $table->unsignedBigInteger('bank_id')->nullable();
+            $table->unsignedBigInteger('alamat_id')->nullable();
             $table->string('bukti_pembayaran')->nullable();
             $table->string('kurir');
-            $table->foreignId('alamat_id')->constrained('alamats')->onDelete('set null')->nullable();
             $table->string('resi')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
+            $table->foreign('bank_id')->references('id')->on('banks')->onDelete('set null');
+            $table->foreign('alamat_id')->references('id')->on('alamats')->onDelete('set null');
         });
     }
 
