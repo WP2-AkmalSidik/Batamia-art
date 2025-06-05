@@ -4,17 +4,38 @@
 
 @section('content')
     <div class="mt-8 card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-400">Daftar Kategori</h3>
-            <button onclick="openAddModal()" class="btn-accent px-4 py-2 text-sm font-medium rounded-md">
-                <i class="fas fa-plus mr-2"></i>Tambah Kategori
-            </button>
+
+            <div class="flex flex-col sm:flex-row gap-3 lg:items-center">
+                <!-- Search Box -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Cari kategori..."
+                        class="form-input pl-10 pr-4 py-2 w-full sm:w-64 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <button id="clearSearch" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hidden">
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="openAddModal()"
+                    class="btn-accent px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap">
+                    <i class="fas fa-plus mr-2"></i>Tambah Kategori
+                </button>
+            </div>
         </div>
 
-        <div class="overflow-x-auto rounded-lg">
-            <!-- Table na ddiye -->
+        <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+            <!-- Table -->
             @include('pages.admin.kategori.components.table')
         </div>
+
+        <!-- Pagination -->
+        @include('pages.admin.kategori.components.pagination')
     </div>
 
     <!-- Tambah Kategori -->
@@ -27,6 +48,43 @@
     @include('pages.admin.kategori.components.hapus-kategori')
 
     <script>
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const clearSearch = document.getElementById('clearSearch');
+
+            searchInput.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    clearSearch.classList.remove('hidden');
+                } else {
+                    clearSearch.classList.add('hidden');
+                }
+
+                // Implementasi search logic di sini
+                performSearch(this.value);
+            });
+
+            clearSearch.addEventListener('click', function() {
+                searchInput.value = '';
+                this.classList.add('hidden');
+                performSearch('');
+            });
+
+            // Search dengan Enter key
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch(this.value);
+                }
+            });
+        });
+
+        function performSearch(query) {
+            // Implementasi pencarian
+            console.log('Searching for:', query);
+            // Di sini bisa tambahkan AJAX call untuk search
+        }
+
         function openAddModal() {
             openModal('addModal');
         }
@@ -95,18 +153,27 @@
         });
 
         // Form Submissions
-        document.getElementById('addCategoryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implementasi add category
-            alert('Kategori berhasil ditambahkan!');
-            closeModal('addModal');
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const addForm = document.getElementById('addCategoryForm');
+            const editForm = document.getElementById('editCategoryForm');
 
-        document.getElementById('editCategoryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implementasi update category
-            alert('Kategori berhasil diupdate!');
-            closeModal('editModal');
+            if (addForm) {
+                addForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Implementasi add category
+                    alert('Kategori berhasil ditambahkan!');
+                    closeModal('addModal');
+                });
+            }
+
+            if (editForm) {
+                editForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Implementasi update category
+                    alert('Kategori berhasil diupdate!');
+                    closeModal('editModal');
+                });
+            }
         });
 
         // Bisa tutup modal dgn klik diluar
@@ -118,7 +185,7 @@
             });
         });
 
-        // Tutup modal mnggunakan ESC 
+        // Tutup modal menggunakan ESC 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const openModal = document.querySelector('.modal.show');
@@ -128,4 +195,47 @@
             }
         });
     </script>
+
+    <style>
+        /* Custom line clamp for description */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Enhanced search box styling */
+        #searchInput:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
+        }
+
+        /* Pagination hover effects */
+        nav button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Table row animation */
+        .table-row {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .table-row:hover::before {
+            left: 100%;
+        }
+    </style>
 @endsection

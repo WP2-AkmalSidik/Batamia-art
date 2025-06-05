@@ -9,6 +9,6 @@ class PesananController extends Controller
 {
     public function index()
     {
-        return view('pages.admin.pesanan');
+        return view('pages.admin.pesanan.index');
     }
 }
