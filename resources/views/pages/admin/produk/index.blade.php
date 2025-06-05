@@ -5,14 +5,35 @@
 @section('content')
     <!-- Product Management -->
     <div class="mt-8 card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-400">Daftar Produk</h3>
-            <button onclick="openAddModal()" class="btn-accent px-4 py-2 text-sm font-medium rounded-md">
-                <i class="fas fa-plus mr-2"></i>Tambah Produk
-            </button>
+
+            <div class="flex flex-col sm:flex-row gap-3 lg:items-center">
+                <!-- Search Box -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Cari Produk..."
+                        class="form-input pl-10 pr-4 py-2 w-full sm:w-64 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <button id="clearSearch" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hidden">
+                            <i class="fas fa-times text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="openAddModal()"
+                    class="btn-accent px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap">
+                    <i class="fas fa-plus mr-2"></i>Produk
+                </button>
+            </div>
         </div>
         <!-- Table Produk -->
-        @include('pages.admin.produk.components.table-produk')
+        <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+            @include('pages.admin.produk.components.table-produk')
+        </div>
+        @include('pages.admin.produk.components.pagination')
     </div>
 
     <!-- Tambah Produk -->
