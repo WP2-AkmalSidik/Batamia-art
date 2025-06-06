@@ -27,6 +27,13 @@
                     <span>Dashboard</span>
                 </a>
 
+                <!-- Is User -->
+                <a href="{{ route('user.dashboard') }}"
+                    class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
+                    <i class="fa-solid fa-house-chimney w-5 mr-3"></i>
+                    <span>Beranda</span>
+                </a>
+
                 <a href="{{ route('kategori.index') }}"
                     class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('kategori.index') ? 'active' : '' }}">
                     <i class="fas fa-tags w-5 mr-3"></i>
