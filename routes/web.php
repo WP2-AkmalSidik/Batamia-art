@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\LaporanPenjualanController;
-use App\Http\Controllers\Admin\PengaturanController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\User\DetailProdukController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProdukController;
+use App\Http\Controllers\Admin\PesananController;
+use App\Http\Controllers\Admin\PenggunaController;
+use App\Http\Controllers\Admin\PengaturanController;
+
 
 Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('laporan.index');
@@ -23,6 +24,11 @@ Route::resource('/produk', App\Http\Controllers\Admin\ProdukController::class)->
 Route::resource('/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('pesanan');
 Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
 Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
+
+// User Routes
+Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+Route::get('/detail-produk', [DetailProdukController::class, 'index'])->name('user.detail');
+
 Route::post('/pengaturan/bank', [PengaturanController::class, 'storeBank'])->name('bank.store');
 Route::get('/pengaturan/bank/{id}', [PengaturanController::class, 'showBank'])->name('bank.show');
 Route::put('/pengaturan/bank/{id}', [PengaturanController::class, 'updateBank'])->name('bank.update');
