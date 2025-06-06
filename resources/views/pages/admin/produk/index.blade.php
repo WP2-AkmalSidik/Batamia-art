@@ -2,6 +2,11 @@
 
 @section('title', 'Produk')
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+@endpush
+
 @section('content')
     <!-- Product Management -->
     <div class="mt-8 card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
@@ -29,11 +34,8 @@
                 </button>
             </div>
         </div>
-        <!-- Table Produk -->
-        <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-            @include('pages.admin.produk.components.table-produk')
+        <div id="produk-table">
         </div>
-        @include('pages.admin.produk.components.pagination')
     </div>
 
     <!-- Tambah Produk -->
@@ -48,81 +50,314 @@
     @include('pages.admin.produk.components.modal-hapus')
 
     <script>
+        let cropperAdd = null;
+        let cropperEdit = null;
+        let originalFileAdd = null;
+        let originalFileEdit = null;
+        let croppedBlobAdd = null;
+        let croppedBlobEdit = null;
+
+        function initCropperHandlers(context) {
+            const $uploadArea = $(`#uploadArea-${context}`);
+            const $fileInput = $(`#fileInput-${context}`);
+            const $cropperSection = $(`#cropperSection-${context}`);
+            const $cropperImage = $(`#cropperImage-${context}`);
+            const $finalPreview = $(`#finalPreview-${context}`);
+            const $finalImage = $(`#finalImage-${context}`);
+            const $zoomRange = $(`#zoomRange-${context}`);
+
+            let cropper = null;
+            let originalFile = null;
+            let croppedBlob = null;
+
+            function resetCropper() {
+                if (cropper) cropper.destroy();
+                cropper = null;
+                originalFile = null;
+                croppedBlob = null;
+                $fileInput.val('');
+                $uploadArea.removeClass('hidden');
+                $cropperSection.addClass('hidden');
+                $finalPreview.addClass('hidden');
+                $zoomRange.val(1);
+            }
+
+            $uploadArea.on('click', () => $fileInput.click());
+
+            $fileInput.on('change', function(e) {
+                handleFile(e.target.files[0]);
+            });
+
+            $uploadArea.on('dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('dragover');
+            }).on('dragleave drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+            }).on('drop', function(e) {
+                handleFile(e.originalEvent.dataTransfer.files[0]);
+            });
+
+            function handleFile(file) {
+                if (!file || !file.type.startsWith('image/')) return;
+                if (file.size > 2 * 1024 * 1024) {
+                    showToast('error', 'Ukuran max gambar 2 MB');
+                    return;
+                }
+                originalFile = file;
+                const reader = new FileReader();
+                reader.onload = e => initializeCropper(e.target.result);
+                reader.readAsDataURL(file);
+            }
+
+            function initializeCropper(imageSrc) {
+                $cropperImage.attr('src', imageSrc);
+                $uploadArea.addClass('hidden');
+                $cropperSection.removeClass('hidden');
+
+                $cropperImage.on('load', function() {
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper($cropperImage[0], {
+                        aspectRatio: 1,
+                        viewMode: 2,
+                        dragMode: 'move',
+                        autoCropArea: 0.8,
+                        preview: `#cropPreview-${context}`
+                    });
+                });
+            }
+
+            $zoomRange.on('input', function() {
+                if (cropper) cropper.zoomTo(parseFloat($(this).val()));
+            });
+
+            $(`#cropImage-${context}`).on('click', function() {
+                if (cropper) {
+                    const canvas = cropper.getCroppedCanvas({
+                        width: 800,
+                        height: 800
+                    });
+                    canvas.toBlob(blob => {
+                        croppedBlob = blob;
+                        $finalImage.attr('src', URL.createObjectURL(blob));
+                        $cropperSection.addClass('hidden');
+                        $finalPreview.removeClass('hidden');
+                    }, 'image/jpeg', 0.9);
+                }
+            });
+
+            $(`#editCrop-${context}`).on('click', function() {
+                $finalPreview.addClass('hidden');
+                $cropperSection.removeClass('hidden');
+            });
+
+            return {
+                getBlob: () => croppedBlob,
+                getFile: () => originalFile,
+                reset: resetCropper
+            };
+        }
+
+        function openDeleteModal(id) {
+            $('#hapus-produk').data('id', id);
+            openModal('deleteModal');
+        }
+
+        function confirmDelete() {
+            closeModal('deleteModal');
+        }
+
         function openAddModal() {
+            cropperAdd.reset();
             openModal('addModal');
         }
 
         function openDetailModal(id) {
-            // Di sini bisa fetch data produk berdasarkan ID
+
+            initDetailModal({
+                modalId: 'detailModal',
+                endpoint: `produk/${id}`,
+                fields: ['stok', 'deskripsi'],
+                callback: function(data) {
+                    const harga = data.harga;
+                    const berat = data.berat;
+                    const kategori = data.kategori.nama;
+                    const image = data.image;
+                    const created_at = data.created_at;
+                    const updated_at = data.updated_at;
+                    const status = data.status == true ? 'Aktif' : 'Nonaktif';
+                    console.log(status)
+                    $('#created_at-detail').html(formatTanggal(created_at));
+                    $('#updated_at-detail').html(formatTanggal(updated_at));
+                    $('#kategori_id-detail').html(kategori);
+                    $('#statusDetail').html(status);
+                    $('#harga-detail').html(formatRupiah(harga));
+                    $('#berat-detail').html(formatBerat(berat));
+                    $('#image-detail').attr('src', image.startsWith('http') ? image :
+                        `{{ asset('storage') }}/${image}`);
+                }
+            });
+
             openModal('detailModal');
         }
 
         function openEditModal(id) {
-            // Di sini bisa fetch data produk berdasarkan ID untuk di-populate ke form
-            openModal('editModal');
-        }
 
-        function openDeleteModal(id) {
-            // Di sini bisa set product ID yang akan dihapus
-            openModal('deleteModal');
-        }
+            cropperEdit.reset();
 
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
+            loadSelectOptions("#select-edit-kategori", "/kategori")
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-
-        function confirmDelete() {
-            // Implementasi delete product
-            alert('Produk berhasil dihapus!');
-            closeModal('deleteModal');
-        }
-
-        // Form Submissions
-        document.getElementById('addProductForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implementasi add product
-            alert('Produk berhasil ditambahkan!');
-            closeModal('addModal');
-        });
-
-        document.getElementById('editProductForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Implementasi update product
-            alert('Produk berhasil diupdate!');
-            closeModal('editModal');
-        });
-
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal(this.id);
+            initEditModal({
+                modalId: 'editModal',
+                formSelector: '#edit-produk',
+                endpoint: `produk/${id}`,
+                fields: ['nama', 'kategori_id', 'stok', 'berat', 'harga', 'deskripsi'],
+                callback: function(data) {
+                    const image = data.image;
+                    $('#current-image').attr('src', image.startsWith('http') ? image :
+                        `{{ asset('storage') }}/${image}`);
+                },
+                onFetched: function(data) {
+                    openModal('editModal');
                 }
             });
-        });
+        }
 
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const openModal = document.querySelector('.modal.show');
-                if (openModal) {
-                    closeModal(openModal.id);
-                }
+        $(document).ready(function() {
+
+            cropperAdd = initCropperHandlers("add");
+            cropperEdit = initCropperHandlers("edit");
+
+            console.log(cropperAdd)
+
+            console.log('ready')
+            // Debounce untuk search input
+            let debounceTimeout;
+            const debounceDelay = 500;
+
+            // State
+            let currentPage = 1;
+            let currentQuery = '';
+            console.log(currentPage, currentQuery);
+
+            // Fungsi Load Data
+            function loadData(page = 1, query = '') {
+                $.ajax({
+                    url: `/produk?page=${page}&search=${encodeURIComponent(query)}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('#produk-table').html(res.data.view);
+                        $('#paginationLinks').html(res.data.pagination);
+
+                        currentPage = page;
+                        currentQuery = query;
+                    },
+                    error: function() {
+                        alert('Gagal memuat data.');
+                    }
+                });
             }
+
+            // Event: Search input (debounced)
+            $('#searchInput').on('keyup', function() {
+                clearTimeout(debounceTimeout);
+
+                const query = $(this).val();
+                currentQuery = query;
+
+                debounceTimeout = setTimeout(() => {
+                    loadData(1, currentQuery); // reset ke page 1 saat search
+                }, debounceDelay);
+            });
+
+            // Event: Klik link pagination
+            $(document).on('click', '.pagination a', function(e) {
+                e.preventDefault();
+
+                const href = $(this).attr('href');
+                const urlParams = new URLSearchParams(href.split('?')[1]);
+                const page = urlParams.get('page') || 1;
+                console.log(href, urlParams, page);
+
+                loadData(page, currentQuery);
+            });
+
+            $(document).on('submit', '#tambah-produk', function(e) {
+                e.preventDefault();
+
+                const url = '{{ route('produk.store') }}';
+                const method = 'POST'
+                const formData = new FormData(this);
+
+                if (cropperAdd.getBlob()) {
+                    formData.append("image", cropperAdd.getBlob(), cropperAdd.getFile().name);
+                }
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("addModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "tambah-produk", ["nama", "icon", "deskripsi"]);
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            $(document).on('submit', '#edit-produk', function(e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                const url = `/produk/${id}`;
+                const method = 'POST'
+                const formData = new FormData(this);
+                formData.append('_method', 'PUT')
+
+                if (cropperEdit.getBlob()) {
+                    console.log(cropperEdit.getBlob())
+                    formData.append("image", cropperEdit.getBlob(), cropperEdit.getFile().name);
+                }
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("editModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "tambah-produk", ["nama", "icon", "deskripsi"]);
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            $(document).on('submit', '#hapus-produk', function(e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                const url = `/produk/${id}`;
+                const method = 'DELETE'
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("deleteModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleSimpleError(error)
+                };
+
+                ajaxCall(url, method, null, successCallback, errorCallback);
+            })
+
+            loadSelectOptions("#select-tambah-kategori", "/kategori")
+
+            loadData(currentPage, currentQuery);
         });
     </script>
 @endsection
