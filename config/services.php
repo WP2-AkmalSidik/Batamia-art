@@ -18,21 +18,29 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
+    'ses'      => [
+        'key'    => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'resend' => [
+    'resend'   => [
         'key' => env('RESEND_KEY'),
     ],
 
-    'slack' => [
+    'slack'    => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
-            'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
+            'channel'              => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],
+
+    'wilayah'  => [
+        'api_key'         => env('WILAYAH_API_KEY'),
+        'base_url'        => env('WILAYAH_BASE_URL', 'https://api.binderbyte.com/wilayah'),
+        'timeout'         => env('WILAYAH_TIMEOUT', 30),
+        'connect_timeout' => env('WILAYAH_CONNECT_TIMEOUT', 10),
+        'cache_timeout'   => env('WILAYAH_CACHE_TIMEOUT', 86400),
     ],
 
 ];

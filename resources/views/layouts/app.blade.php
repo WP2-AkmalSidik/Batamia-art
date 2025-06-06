@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Batamia Art - Admin Dashboard</title>
     @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/af96158b7b.js" crossorigin="anonymous"></script>
@@ -64,6 +65,12 @@
             updateThemeIndicator(document.documentElement.className);
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ asset('') }}js/custom.js"></script>
+    @stack('styles')
+
 </head>
 
 <body class="font-sans">
@@ -83,6 +90,29 @@
             @yield('content')
         </div>
     </main>
+    @include('layouts.components.logout')
+    <script>
+        function confirmLogout() {
+            const url = '{{ route('logout') }}';
+            const method = 'POST';
+
+            const successCallback = function(response) {
+                handleSuccess(response);
+                closeModal("addModal");
+                loadData(currentPage, currentQuery);
+            };
+
+            const errorCallback = function(error) {
+                handleValidationErrors(error);
+            };
+
+            ajaxCall(url, "POST", null, successCallback, errorCallback);
+        }
+        $(document).ready(function() {
+
+        })
+    </script>
+    @stack('scripts')
 </body>
 
 </html>

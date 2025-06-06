@@ -8,19 +8,19 @@
             </button>
         </div>
 
-        <form id="editCategoryForm" class="space-y-4">
+        <form id="edit-kategori" class="space-y-4">
             <div>
                 <label class="form-label">Nama Kategori</label>
-                <input type="text" class="form-input w-full" value="Dekorasi Rumah" required>
+                <input type="text" name="nama" class="form-input w-full" required>
             </div>
 
             <div>
                 <label class="form-label">Icon Kategori</label>
                 <div class="grid grid-cols-6 gap-2">
                     <button type="button"
-                        class="icon-option w-10 h-10 rounded-lg border-2 border-blue-500 bg-blue-50 flex items-center justify-center"
+                        class="icon-option w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-blue-500 hover:bg-blue-50"
                         data-icon="fas fa-home">
-                        <i class="fas fa-home text-blue-600"></i>
+                        <i class="fas fa-home text-gray-600"></i>
                     </button>
                     <button type="button"
                         class="icon-option w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-blue-500 hover:bg-blue-50"
@@ -48,12 +48,12 @@
                         <i class="fas fa-gamepad text-gray-600"></i>
                     </button>
                 </div>
-                <input type="hidden" id="editSelectedIcon" name="icon" value="fas fa-home">
+                <input type="hidden" id="editSelectedIcon" name="icon">
             </div>
 
             <div>
                 <label class="form-label">Deskripsi</label>
-                <textarea class="form-input w-full h-20 resize-none" required>Produk dekorasi untuk rumah dan interior</textarea>
+                <textarea class="form-input w-full h-20 resize-none" name="deskripsi" required></textarea>
             </div>
 
             <div class="flex justify-end space-x-2 pt-2">

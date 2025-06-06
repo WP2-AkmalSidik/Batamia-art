@@ -29,13 +29,10 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-            <!-- Table -->
-            @include('pages.admin.kategori.components.table')
+        <div id="kategori-table">
+            {{-- data kategori --}}
         </div>
 
-        <!-- Pagination -->
-        @include('pages.admin.kategori.components.pagination')
     </div>
 
     <!-- Tambah Kategori -->
@@ -48,36 +45,23 @@
     @include('pages.admin.kategori.components.hapus-kategori')
 
     <script>
-        // Search functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const clearSearch = document.getElementById('clearSearch');
+        function resetIconSelection() {
+            $('.icon-option').removeClass('icon-selected');
 
-            searchInput.addEventListener('input', function() {
-                if (this.value.length > 0) {
-                    clearSearch.classList.remove('hidden');
-                } else {
-                    clearSearch.classList.add('hidden');
-                }
+            $('#selectedIcon').val('');
+        }
 
-                // Implementasi search logic di sini
-                performSearch(this.value);
-            });
+        function openDeleteModal(id, produk = 1) {
+            const totalProduk = produk + ' produk';
+            $('#hapus-kategori').data('id', id);
+            $('#total-produk-delete-modal').html(totalProduk);
 
-            clearSearch.addEventListener('click', function() {
-                searchInput.value = '';
-                this.classList.add('hidden');
-                performSearch('');
-            });
+            openModal('deleteModal');
+        }
 
-            // Search dengan Enter key
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performSearch(this.value);
-                }
-            });
-        });
+        function confirmDelete() {
+            closeModal('deleteModal');
+        }
 
         function performSearch(query) {
             // Implementasi pencarian
@@ -90,109 +74,181 @@
         }
 
         function openEditModal(id) {
-            // Di sini bisa fetch data kategori berdasarkan ID untuk di-populate ke form
-            openModal('editModal');
+            $('.icon-option i')
+                .removeClass('text-blue-600')
+                .addClass('text-gray-600');
+
+            initEditModal({
+                modalId: 'editModal',
+                formSelector: '#edit-kategori',
+                endpoint: `kategori/${id}`,
+                fields: ['nama', 'icon', 'deskripsi'],
+                callback: (data) => {
+                    // Set icon active class
+                    const iconSelector = $(`.icon-option[data-icon="${data.icon}"] i`)
+                    iconSelector.removeClass('text-gray-600');
+                    iconSelector.addClass('text-blue-600');
+                    $('#editSelectedIcon').val(data.icon);
+                },
+                onFetched: function(data) {
+                    openModal('editModal');
+                }
+            });
         }
 
-        function openDeleteModal(id) {
-            // Di sini bisa set category ID yang akan dihapus
-            openModal('deleteModal');
-        }
+        $(document).ready(function() {
+            console.log('ready')
+            // Debounce untuk search input
+            let debounceTimeout;
+            const debounceDelay = 500;
 
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
+            // State
+            let currentPage = 1;
+            let currentQuery = '';
+            console.log(currentPage, currentQuery);
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-
-        function confirmDelete() {
-            // Implementasi delete category
-            alert('Kategori berhasil dihapus!');
-            closeModal('deleteModal');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const iconOptions = document.querySelectorAll('.icon-option');
-
-            iconOptions.forEach(option => {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Remove selection from all icons in the same modal
-                    const modal = this.closest('.modal');
-                    const allIcons = modal.querySelectorAll('.icon-option');
-                    allIcons.forEach(icon => {
-                        icon.classList.remove('border-blue-500', 'bg-blue-50');
-                        icon.classList.add('border-gray-300');
-                    });
-
-                    // Add selection to clicked icon
-                    this.classList.remove('border-gray-300');
-                    this.classList.add('border-blue-500', 'bg-blue-50');
-
-                    // Update hidden input
-                    const iconClass = this.dataset.icon;
-                    const hiddenInput = modal.querySelector('input[name="icon"]');
-                    if (hiddenInput) {
-                        hiddenInput.value = iconClass;
+            // Fungsi Load Data
+            function loadData(page = 1, query = '') {
+                $.ajax({
+                    url: `/kategori?page=${page}&search=${encodeURIComponent(query)}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('#kategori-table').html(res.data.view);
+                        $('#paginationLinks').html(res.data.pagination);
+                        // update state
+                        currentPage = page;
+                        currentQuery = query;
+                    },
+                    error: function() {
+                        alert('Gagal memuat data.');
                     }
                 });
-            });
-        });
-
-        // Form Submissions
-        document.addEventListener('DOMContentLoaded', function() {
-            const addForm = document.getElementById('addCategoryForm');
-            const editForm = document.getElementById('editCategoryForm');
-
-            if (addForm) {
-                addForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Implementasi add category
-                    alert('Kategori berhasil ditambahkan!');
-                    closeModal('addModal');
-                });
             }
 
-            if (editForm) {
-                editForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    // Implementasi update category
-                    alert('Kategori berhasil diupdate!');
-                    closeModal('editModal');
-                });
-            }
-        });
+            $('.icon-option').on('click', function(e) {
+                e.preventDefault()
 
-        // Bisa tutup modal dgn klik diluar
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal(this.id);
+                const $modal = $(this).closest('.modal')
+
+                // Hapus highlight dari semua icon dalam modal yang sama
+                $modal.find('.icon-option')
+                    .removeClass('border-blue-500 bg-blue-50')
+                    .addClass('border-gray-300')
+
+                // Tambahkan highlight ke icon yang diklik
+                $(this)
+                    .removeClass('border-gray-300')
+                    .addClass('border-blue-500 bg-blue-50')
+
+                // Update input tersembunyi
+                const iconClass = $(this).data('icon')
+                const $hiddenInput = $modal.find('input[name="icon"]')
+                if ($hiddenInput.length > 0) {
+                    $hiddenInput.val(iconClass)
                 }
-            });
-        });
+            })
 
-        // Tutup modal menggunakan ESC 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const openModal = document.querySelector('.modal.show');
-                if (openModal) {
-                    closeModal(openModal.id);
-                }
-            }
+            // Event: Search input (debounced)
+            $('#searchInput').on('keyup', function() {
+                clearTimeout(debounceTimeout);
+
+                const query = $(this).val();
+                currentQuery = query;
+
+                debounceTimeout = setTimeout(() => {
+                    loadData(1, currentQuery); // reset ke page 1 saat search
+                }, debounceDelay);
+            });
+
+            // Event: Klik link pagination
+            $(document).on('click', '.pagination a', function(e) {
+                e.preventDefault();
+
+                const href = $(this).attr('href');
+                const urlParams = new URLSearchParams(href.split('?')[1]);
+                const page = urlParams.get('page') || 1;
+                console.log(href, urlParams, page);
+
+                loadData(page, currentQuery);
+            });
+
+            $(document).on('click', '.icon-option', function() {
+                // Hapus class selected dari semua button
+                $('.icon-option').removeClass('icon-selected');
+
+                // Tambahkan class selected ke button yang diklik
+                $(this).addClass('icon-selected');
+
+                // Ambil data-icon dan simpan ke hidden input
+                var selectedIcon = $(this).data('icon');
+                $('#selectedIcon').val(selectedIcon);
+            });
+
+            $(document).on('submit', '#tambah-kategori', function(e) {
+                e.preventDefault();
+
+                const url = '{{ route('kategori.store') }}';
+                const method = 'POST'
+                const formData = new FormData(this);
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("addModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "tambah-kategori", ["nama", "icon", "deskripsi"]);
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            $(document).on('submit', '#edit-kategori', function(e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                const url = `/kategori/${id}`;
+                const method = 'POST'
+                const formData = new FormData(this);
+                formData.append('_method', 'PUT')
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("editModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "tambah-kategori", ["nama", "icon", "deskripsi"]);
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            $(document).on('submit', '#hapus-kategori', function(e) {
+                e.preventDefault();
+
+                const id = $(this).data('id');
+
+                const url = `/kategori/${id}`;
+                const method = 'DELETE'
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    closeModal("deleteModal");
+                    loadData(currentPage, currentQuery);
+                };
+
+                const errorCallback = function(error) {
+                    handleSimpleError(error)
+                };
+
+                ajaxCall(url, method, null, successCallback, errorCallback);
+            })
+
+            loadData(currentPage, currentQuery);
         });
     </script>
 

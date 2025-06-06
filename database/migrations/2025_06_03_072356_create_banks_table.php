@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nama_bank');
             $table->string('no_akun');
             $table->string('nama_akun');
+            $table->enum('jenis', ['bank', 'e-wallet']);
+            $table->boolean('status')->default(true);
             $table->string('logo')->nullable();
             $table->timestamps();
         });
