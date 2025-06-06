@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banks', function (Blueprint $table) {
+        Schema::create('pengaturans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_bank');
-            $table->string('no_akun');
-            $table->string('nama_akun');
-            $table->enum('jenis', ['bank', 'e-wallet']);
-            $table->boolean('status')->default(true);
-            $table->string('logo')->nullable();
+            $table->string('nama_toko');
+            $table->string('provinsi');
+            $table->string('kabupaten');
+            $table->string('kecamatan');
+            $table->string('kelurahan');
+            $table->string('kode_pos');
+            $table->string('alamat');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banks');
+        Schema::dropIfExists('pengaturans');
     }
 };

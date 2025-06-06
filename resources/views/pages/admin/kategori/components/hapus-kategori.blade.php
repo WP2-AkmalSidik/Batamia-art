@@ -9,14 +9,16 @@
             <h3 class="text-xl font-bold mb-2">Hapus Kategori</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
                 Apakah Anda yakin ingin menghapus kategori <strong>"Dekorasi Rumah"</strong>?
-                Tindakan ini akan mempengaruhi <strong>24 produk</strong> dan tidak dapat dibatalkan.
+                Tindakan ini akan mempengaruhi <strong id="total-produk-delete-modal">24 produk</strong> dan tidak dapat dibatalkan.
             </p>
 
             <div class="flex justify-center space-x-3">
-                <button onclick="closeModal('deleteModal')" class="btn-secondary">Batal</button>
-                <button onclick="confirmDelete()" class="btn-danger">
-                    <i class="fas fa-trash mr-2"></i>Hapus Kategori
-                </button>
+                <form id="hapus-kategori" method="DELETE">
+                    <button onclick="closeModal('deleteModal')" class="btn-secondary">Batal</button>
+                    <button onclick="confirmDelete()" class="btn-danger">
+                        <i class="fas fa-trash mr-2"></i>Hapus Kategori
+                    </button>
+                </form>
             </div>
         </div>
     </div>

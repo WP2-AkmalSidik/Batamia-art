@@ -7,10 +7,10 @@
             </button>
         </div>
 
-        <form id="addCategoryForm">
+        <form id="tambah-kategori">
             <div class="mb-4">
                 <label class="form-label">Nama Kategori</label>
-                <input type="text" class="form-input w-full" placeholder="Nama kategori" required>
+                <input name="nama" type="text" class="form-input w-full" placeholder="Nama kategori" required>
             </div>
 
             <div class="mb-4">
@@ -52,7 +52,7 @@
 
             <div class="mb-4">
                 <label class="form-label">Deskripsi</label>
-                <textarea class="form-input w-full h-20 resize-none" placeholder="Deskripsi kategori"></textarea>
+                <textarea name="deskripsi" class="form-input w-full h-20 resize-none" placeholder="Deskripsi kategori"></textarea>
             </div>
 
             <div class="flex justify-end space-x-2">
