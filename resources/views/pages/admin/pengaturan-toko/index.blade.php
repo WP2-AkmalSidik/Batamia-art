@@ -2,6 +2,11 @@
 
 @section('title', 'Pengaturan Toko')
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+@endpush
+
 @section('content')
     <div class="space-y-6">
         <div class="card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
@@ -24,7 +29,7 @@
             <form id="storeInfoForm" class="space-y-6">
                 <div>
                     <label class="form-label">Nama Toko</label>
-                    <input type="text" class="form-input w-full" value="Toko Kerajinan Nusantara"
+                    <input type="text" class="form-input w-full" value="{{ getPengaturan()->nama_toko }}"
                         placeholder="Masukkan nama toko" required>
                 </div>
 
@@ -33,57 +38,46 @@
                     <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Alamat Toko</h4>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Provinsi -->
                         <div>
                             <label class="form-label">Provinsi</label>
-                            <select class="form-input w-full" required>
-                                <option value="">Pilih Provinsi</option>
-                                <option value="jawa-barat" selected>Jawa Barat</option>
-                                <option value="jawa-tengah">Jawa Tengah</option>
-                                <option value="jawa-timur">Jawa Timur</option>
-                                <option value="dki-jakarta">DKI Jakarta</option>
-                                <option value="banten">Banten</option>
-                                <option value="yogyakarta">D.I. Yogyakarta</option>
+                            <select id="provinsi" class="form-input w-full" required>
                             </select>
                         </div>
 
+                        <!-- Kota/Kabupaten -->
                         <div>
                             <label class="form-label">Kota/Kabupaten</label>
-                            <select class="form-input w-full" required>
-                                <option value="">Pilih Kota/Kabupaten</option>
-                                <option value="tasikmalaya" selected>Kota Tasikmalaya</option>
-                                <option value="kabupaten-tasikmalaya">Kabupaten Tasikmalaya</option>
-                                <option value="bandung">Kota Bandung</option>
-                                <option value="kabupaten-bandung">Kabupaten Bandung</option>
+                            <select id="kota" class="form-input w-full" disabled required>
                             </select>
                         </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
+                        <!-- Kecamatan -->
                         <div>
                             <label class="form-label">Kecamatan</label>
-                            <select class="form-input w-full" required>
-                                <option value="">Pilih Kecamatan</option>
-                                <option value="tawang" selected>Tawang</option>
-                                <option value="cihideung">Cihideung</option>
-                                <option value="cipedes">Cipedes</option>
-                                <option value="kawalu">Kawalu</option>
-                                <option value="mangkubumi">Mangkubumi</option>
+                            <select id="kecamatan" class="form-input w-full" disabled required>
                             </select>
                         </div>
 
+                        <!-- Desa/Kelurahan -->
                         <div>
                             <label class="form-label">Desa/Kelurahan</label>
-                            <select class="form-input w-full" required>
-                                <option value="">Pilih Desa/Kelurahan</option>
-                                <option value="tawang" selected>Tawang</option>
-                                <option value="parakannyasag">Parakannyasag</option>
-                                <option value="kahuripan">Kahuripan</option>
-                                <option value="yudanagara">Yudanagara</option>
+                            <select id="kelurahan" class="form-input w-full" disabled required>
                             </select>
+                        </div>
+                        <!-- Kode Post -->
+                        <div>
+                            <label class="form-label">Kode Pos</label>
+                            <input type="text" name="kode_pos" id="kode_pos" class="form-input w-full">
                         </div>
                     </div>
 
                     <div class="mt-4">
                         <label class="form-label">Alamat Lengkap / Nama Jalan</label>
-                        <textarea class="form-input w-full" rows="3" placeholder="Contoh: Jl. Raya Tawang No. 123, RT 01/RW 05" required>Jl. Raya Tawang No. 123, RT 01/RW 05, Dekat Pasar Tawang</textarea>
+                        <textarea id="alamat" name="alamat" class="form-input w-full" rows="3"
+                            placeholder="Contoh: Jl. Raya Tawang No. 123, RT 01/RW 05" required></textarea>
                     </div>
                 </div>
             </form>
@@ -106,248 +100,13 @@
                 </button>
             </div>
 
-            <div class="space-y-4">
-                <!-- Bank Transfer -->
-                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-university text-blue-600 text-xl mr-3"></i>
-                            <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100">Transfer Bank</h4>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="payment-method-item">
-                            <div
-                                class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-lg overflow-hidden border bg-white p-1.5 mr-3">
-                                        <img src="{{ asset('brand/bri.png') }}" alt="BRI"
-                                            class="w-full h-full object-contain">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100">Bank BRI</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">1234-5678-9012-3456</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <label class="toggle-switch-sm">
-                                        <input type="checkbox" checked>
-                                        <span class="slider-sm"></span>
-                                    </label>
-                                    <button onclick="editPaymentMethod('bri')"
-                                        class="text-yellow-500 hover:text-yellow-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="payment-method-item">
-                            <div
-                                class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-lg overflow-hidden border bg-white p-1.5 mr-3">
-                                        <img src="{{ asset('brand/bjb.png') }}" alt="BJB"
-                                            class="w-full h-full object-contain">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100">Bank BJB</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">9876-5432-1098-7654</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <label class="toggle-switch-sm">
-                                        <input type="checkbox" checked>
-                                        <span class="slider-sm"></span>
-                                    </label>
-                                    <button onclick="editPaymentMethod('bjb')"
-                                        class="text-yellow-500 hover:text-yellow-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- E-Wallet -->
-                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-mobile-alt text-green-600 text-xl mr-3"></i>
-                            <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100">E-Wallet</h4>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="payment-method-item">
-                            <div
-                                class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-lg overflow-hidden border bg-white p-1.5 mr-3">
-                                        <img src="{{ asset('brand/gopay.png') }}" alt="GoPay"
-                                            class="w-full h-full object-contain">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100">GoPay</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">+62 812-3456-7890</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <label class="toggle-switch-sm">
-                                        <input type="checkbox" checked>
-                                        <span class="slider-sm"></span>
-                                    </label>
-                                    <button onclick="editPaymentMethod('gopay')"
-                                        class="text-yellow-500 hover:text-yellow-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="payment-method-item">
-                            <div
-                                class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-lg overflow-hidden border bg-white p-1.5 mr-3">
-                                        <img src="{{ asset('brand/dana.png') }}" alt="DANA"
-                                            class="w-full h-full object-contain">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100">DANA</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">+62 821-9876-5432</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <label class="toggle-switch-sm">
-                                        <input type="checkbox">
-                                        <span class="slider-sm"></span>
-                                    </label>
-                                    <button onclick="editPaymentMethod('dana')"
-                                        class="text-yellow-500 hover:text-yellow-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="payment-method-item">
-                            <div
-                                class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-lg overflow-hidden border bg-white p-1.5 mr-3">
-                                        <img src="{{ asset('brand/ovo.png') }}" alt="OVO"
-                                            class="w-full h-full object-contain">
-                                    </div>
-                                    <div>
-                                        <p class="font-medium text-gray-900 dark:text-gray-100">OVO</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">+62 856-1234-5678</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <label class="toggle-switch-sm">
-                                        <input type="checkbox">
-                                        <span class="slider-sm"></span>
-                                    </label>
-                                    <button onclick="editPaymentMethod('ovo')"
-                                        class="text-yellow-500 hover:text-yellow-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cash on Delivery -->
-                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <i class="fas fa-hand-holding-usd text-amber-600 text-xl mr-3"></i>
-                            <div>
-                                <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100">Cash on Delivery (COD)
-                                </h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Pembayaran tunai saat barang diterima
-                                </p>
-                            </div>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
+            <div class="space-y-4" id="bank-card">
+                {{-- card bank  --}}
             </div>
         </div>
     </div>
 
-    <!-- Modal Tambah/Edit Metode Pembayaran -->
-    <div id="paymentModal"
-        class="modal fixed inset-0 z-50 flex items-center justify-center hidden bg-white/80 dark:bg-black/60">
-        <div class="modal-content w-full max-w-lg mx-4 p-6">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold">Tambah Metode Pembayaran</h3>
-                <button onclick="closePaymentModal()" class="text-gray-500 hover:text-gray-700 text-xl">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <form id="paymentMethodForm" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="form-label">Nama Bank/E-Wallet</label>
-                        <input type="text" class="form-input w-full" placeholder="Contoh: Bank Mandiri" required>
-                    </div>
-                    <div>
-                        <label class="form-label">Jenis</label>
-                        <select class="form-input w-full" required>
-                            <option value="">Pilih Jenis</option>
-                            <option value="bank">Bank</option>
-                            <option value="e-wallet">E-Wallet</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="form-label">Nomor Akun</label>
-                        <input type="text" class="form-input w-full" placeholder="Nomor rekening/telepon" required>
-                    </div>
-                    <div>
-                        <label class="form-label">Nama Akun</label>
-                        <input type="text" class="form-input w-full" placeholder="Nama pemilik akun" required>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="form-label">Logo</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                        <i class="fas fa-image text-2xl text-gray-400 mb-2"></i>
-                        <p class="text-gray-500 text-sm">Drag & drop logo atau <span
-                                class="text-blue-500 cursor-pointer">browse</span></p>
-                        <input type="file" class="hidden" accept="image/*">
-                    </div>
-                </div>
-
-                <div class="flex justify-end space-x-3 pt-4">
-                    <button type="button" onclick="closePaymentModal()" class="btn-secondary px-4 py-2">Batal</button>
-                    <button type="submit" class="btn-accent px-4 py-2">
-                        <i class="fas fa-save mr-2"></i>Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+    @include('pages.admin.pengaturan-toko.components.modal')
 
     <script>
         function saveAllSettings() {
@@ -366,23 +125,40 @@
         }
 
         function openAddPaymentModal() {
-            document.getElementById('paymentModal').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('paymentModal').classList.add('show');
-            }, 10);
+            cropperAdd.reset();
+            $('#modal-title').html('Tambah Metode Pembayaran')
+            const $form = $('#payment-form');
+            $form[0].reset();
+            $form.attr('data-id', '');
+            $('#currentImagePreview').removeClass('mb-3 flex items-center space-x-3').addClass('hidden')
+            openModal('paymentModal')
         }
 
-        function closePaymentModal() {
-            const modal = document.getElementById('paymentModal');
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
+        function editPaymentMethod(id) {
 
-        function editPaymentMethod(methodId) {
-            // Load method data and open modal for editing
-            openAddPaymentModal();
+            $('#currentImagePreview').addClass('mb-3 flex items-center space-x-3').removeClass('hidden')
+            const $form = $('#payment-form');
+            $form[0].reset();
+            $form.attr('data-id', id);
+            $('#modal-title').html('Edit Metode Pembayaran')
+            cropperAdd.reset();
+
+            initEditModal({
+                modalId: 'paymentModal',
+                formSelector: '#payment-form',
+                endpoint: `pengaturan/bank/${id}`,
+                fields: ['nama_bank', 'nama_akun', 'no_akun', 'jenis'],
+                callback: function(data) {
+                    const logo = data.logo;
+                    $('#current-image').attr('src', logo.startsWith('http') ? logo :
+                        `{{ asset('storage') }}/${logo}`);
+
+                },
+                onFetched: function(data) {
+                    openModal('paymentModal');
+                }
+            });
+            openModal('paymentModal');
             // Populate form with existing data
         }
 
@@ -421,14 +197,6 @@
             }, 3000);
         }
 
-        // Form submission
-        document.getElementById('paymentMethodForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Process form data
-            showNotification('Metode pembayaran berhasil ditambahkan!', 'success');
-            closePaymentModal();
-        });
-
         // Tutup modal klik selain modal
         document.getElementById('paymentModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -442,3 +210,251 @@
         });
     </script>
 @endsection
+@push('scripts')
+    <script>
+        let cropperAdd = null;
+        let originalFileAdd = null;
+        let croppedBlobAdd = null;
+
+        function initCropperHandlers(context) {
+            const $uploadArea = $(`#uploadArea-${context}`);
+            const $fileInput = $(`#fileInput-${context}`);
+            const $cropperSection = $(`#cropperSection-${context}`);
+            const $cropperImage = $(`#cropperImage-${context}`);
+            const $finalPreview = $(`#finalPreview-${context}`);
+            const $finalImage = $(`#finalImage-${context}`);
+            const $zoomRange = $(`#zoomRange-${context}`);
+
+            let cropper = null;
+            let originalFile = null;
+            let croppedBlob = null;
+
+            function resetCropper() {
+                if (cropper) cropper.destroy();
+                cropper = null;
+                originalFile = null;
+                croppedBlob = null;
+                $fileInput.val('');
+                $uploadArea.removeClass('hidden');
+                $cropperSection.addClass('hidden');
+                $finalPreview.addClass('hidden');
+                $zoomRange.val(1);
+            }
+
+            $uploadArea.on('click', () => $fileInput.click());
+
+            $fileInput.on('change', function(e) {
+                handleFile(e.target.files[0]);
+            });
+
+            $uploadArea.on('dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('dragover');
+            }).on('dragleave drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+            }).on('drop', function(e) {
+                handleFile(e.originalEvent.dataTransfer.files[0]);
+            });
+
+            function handleFile(file) {
+                if (!file || !file.type.startsWith('image/')) return;
+                if (file.size > 2 * 1024 * 1024) {
+                    showToast('error', 'Ukuran max gambar 2 MB');
+                    return;
+                }
+                originalFile = file;
+                const reader = new FileReader();
+                reader.onload = e => initializeCropper(e.target.result);
+                reader.readAsDataURL(file);
+            }
+
+            function initializeCropper(imageSrc) {
+                $cropperImage.attr('src', imageSrc);
+                $uploadArea.addClass('hidden');
+                $cropperSection.removeClass('hidden');
+
+                $cropperImage.on('load', function() {
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper($cropperImage[0], {
+                        aspectRatio: 1,
+                        viewMode: 2,
+                        dragMode: 'move',
+                        autoCropArea: 0.8,
+                        preview: `#cropPreview-${context}`
+                    });
+                });
+            }
+
+            $zoomRange.on('input', function() {
+                if (cropper) cropper.zoomTo(parseFloat($(this).val()));
+            });
+
+            $(`#cropImage-${context}`).on('click', function() {
+                if (cropper) {
+                    const canvas = cropper.getCroppedCanvas({
+                        width: 800,
+                        height: 800
+                    });
+                    canvas.toBlob(blob => {
+                        croppedBlob = blob;
+                        $finalImage.attr('src', URL.createObjectURL(blob));
+                        $cropperSection.addClass('hidden');
+                        $finalPreview.removeClass('hidden');
+                    }, 'image/jpeg', 0.9);
+                }
+            });
+
+            $(`#editCrop-${context}`).on('click', function() {
+                $finalPreview.addClass('hidden');
+                $cropperSection.removeClass('hidden');
+            });
+
+            return {
+                getBlob: () => croppedBlob,
+                getFile: () => originalFile,
+                reset: resetCropper
+            };
+        }
+
+        function loadData() {
+            $.ajax({
+                url: `/pengaturan`,
+                type: 'GET',
+                success: function(res) {
+                    $('#bank-card').html(res.data.view);
+                },
+                error: function() {
+                    showToast('error', 'Gagal memuat data');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            cropperAdd = initCropperHandlers("add");
+
+            // 1. Load Provinsi dulu, lalu set dan trigger kota
+            loadSelectOptions('#provinsi', '/wilayah/provinsi', '{{ getPengaturan()->provinsi }}')
+
+            // 2. Load Kota berdasarkan Provinsi
+            loadSelectOptions('#kota', `/wilayah/kota/{{ getPengaturan()->provinsi }}`,
+                '{{ getPengaturan()->kabupaten }}')
+            $('#kota').prop('disabled', false)
+
+            // 3. Load Kecamatan berdasarkan Kota
+            loadSelectOptions('#kecamatan', `/wilayah/kecamatan/{{ getPengaturan()->kabupaten }}`,
+                '{{ getPengaturan()->kecamatan }}')
+            $('#kecamatan').prop('disabled', false)
+
+            // 4. Load Kelurahan berdasarkan Kecamatan
+            loadSelectOptions('#kelurahan', `/wilayah/kelurahan/{{ getPengaturan()->kecamatan }}`,
+                '{{ getPengaturan()->kelurahan }}')
+            $('#kelurahan').prop('disabled', false)
+
+            // 5. Isi kode pos dan alamat lengkap
+            $('#kode_pos').val('{{ getPengaturan()->kode_pos }}')
+            $('#alamat').val('{{ getPengaturan()->alamat }}')
+
+            $('#provinsi').on('change', function() {
+                const provinsiId = $(this).val()
+
+                if (provinsiId) {
+                    loadSelectOptions('#kota', `/wilayah/kota/${provinsiId}`)
+                    $('#kota').prop('disabled', false)
+                } else {
+                    $('#kota').empty().prop('disabled', true)
+                }
+
+                // Reset child select
+                $('#kecamatan').empty().prop('disabled', true)
+                $('#kelurahan').empty().prop('disabled', true)
+            })
+
+            $('#kota').on('change', function() {
+                const kotaId = $(this).val()
+
+                if (kotaId) {
+                    loadSelectOptions('#kecamatan', `/wilayah/kecamatan/${kotaId}`)
+                    $('#kecamatan').prop('disabled', false)
+                } else {
+                    $('#kecamatan').empty().prop('disabled', true)
+                }
+
+                $('#kelurahan').empty().prop('disabled', true)
+            })
+
+            $('#kecamatan').on('change', function() {
+                const kecamatanId = $(this).val()
+
+                if (kecamatanId) {
+                    loadSelectOptions('#kelurahan', `/wilayah/kelurahan/${kecamatanId}`)
+                    $('#kelurahan').prop('disabled', false)
+                } else {
+                    $('#kelurahan').empty().prop('disabled', true)
+                }
+            })
+
+            $(document).on('change', '.update-status', function(e) {
+                e.preventDefault();
+
+                console.log('checked')
+
+                const id = $(this).data('id');
+                const status = $(this).is(':checked') ? 1 : 0
+
+                const url = `/pengaturan/bank/${id}/status`;
+                const method = 'PUT'
+                const data = {
+                    status
+                };
+
+                const successCallback = function(response) {
+                    showToast('success', response.message);
+                    loadData()
+                    closeModal("paymentModal");
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "payment-form");
+                };
+
+                ajaxCall(url, method, data, successCallback, errorCallback);
+            });
+
+            $(document).on('submit', '#payment-form', function(e) {
+                e.preventDefault();
+
+                let url;
+                url = '{{ route('bank.store') }}';
+                const method = 'POST'
+                const formData = new FormData(this);
+
+                const id = $(this).data('id');
+
+                if (id) {
+                    url = `/pengaturan/bank/${id}`
+                    formData.append('_method', 'PUT');
+                }
+
+                if (cropperAdd.getBlob()) {
+                    formData.append("logo", cropperAdd.getBlob(), cropperAdd.getFile().name);
+                }
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    loadData()
+                    closeModal("paymentModal");
+                };
+
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "payment-form");
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            loadData();
+
+        })
+    </script>
+@endpush

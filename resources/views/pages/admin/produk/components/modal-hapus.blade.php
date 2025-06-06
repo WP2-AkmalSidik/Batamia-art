@@ -14,9 +14,11 @@
 
             <div class="flex justify-center space-x-3">
                 <button onclick="closeModal('deleteModal')" class="btn-secondary">Batal</button>
-                <button onclick="confirmDelete()" class="btn-danger">
-                    <i class="fas fa-trash mr-2"></i>Hapus Produk
-                </button>
+                <form id="hapus-produk">
+                    <button onclick="confirmDelete()" class="btn-danger">
+                        <i class="fas fa-trash mr-2"></i>Hapus Produk
+                    </button>
+                </form>
             </div>
         </div>
     </div>
