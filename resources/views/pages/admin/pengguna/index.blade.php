@@ -31,11 +31,14 @@
         let $passwordConfirmation = $('input[name="password_confirmation"]');
         let $feedback = $('<div class="text-sm mt-1"></div>').insertAfter($passwordConfirmation.parent());
 
+        let isEdit;
+
         function openAddModal() {
+            isEdit = null;
             const $form = $('#tambah-pengguna');
             $form[0].reset();
             $form.attr('data-id', '');
-            $('#tambah-pengguna')[0].reset();
+
             $('#modal-title').html('Tambah Pengguna');
             $('#tambah-password').html(`
         <label class="form-label">Password</label>
@@ -81,9 +84,11 @@
         }
 
         function openEditModal(id) {
+            isEdit = true;
             const $form = $('#tambah-pengguna');
             $form[0].reset();
             $form.attr('data-id', id);
+            $form.attr('data-mode', 'edit');
             $('#modal-title').html('Edit Pengguna')
             $('#tambah-password').html('')
             $('#tambah-password_confirmation').html('')
@@ -283,11 +288,14 @@
                 const formData = new FormData(this);
 
                 const id = $(this).data('id');
+                const mode = $(this).data('mode');
 
-                if (id) {
+                if (isEdit == true) {
                     url = `/pengguna/${id}`
                     formData.append('_method', 'PUT');
                 }
+
+                console.log(id, mode, url)
 
                 const successCallback = function(response) {
                     handleSuccess(response);

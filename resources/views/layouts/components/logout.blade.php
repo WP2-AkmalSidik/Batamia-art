@@ -1,0 +1,24 @@
+<div id="logoutModal"
+    class="modal fixed inset-0 z-50 flex items-center justify-center hidden bg-white/80 dark:bg-black/60">
+    <div class="modal-content w-full max-w-md mx-4 p-6">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+            </div>
+
+            <h3 class="text-xl font-bold mb-2">Yakin logout</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+                Apakah anda yakin untuk <strong>logout</strong>?
+            </p>
+
+            <div class="flex justify-center space-x-3">
+                <form id="hapus-kategori" method="DELETE">
+                    <button onclick="closeModal('logoutModal')" class="btn-secondary">Batal</button>
+                    <button onclick="confirmLogout()" class="btn-danger">
+                        <i class="fas fa-trash mr-2"></i>Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
