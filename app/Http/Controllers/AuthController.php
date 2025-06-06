@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,8 +46,26 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function storeRegister(Request $request, string $id)
+    public function storeRegister(Request $request)
     {
-        //
+        $validator = $request->validate([
+            'nama'     => 'required',
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = User::create($validator);
+        return $this->successResponse($user, 'Berhasil Registrasi.');
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            Auth::logout();
+            return $this->successResponse(null, 'Logot berhasil');
+        } catch (\Exception $e) {
+            return $this->errorResponse(null, 'Logout gagal: ' . $e->getMessage());
+        }
+
     }
 }

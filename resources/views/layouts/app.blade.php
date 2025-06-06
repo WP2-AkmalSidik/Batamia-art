@@ -90,6 +90,28 @@
             @yield('content')
         </div>
     </main>
+    @include('layouts.components.logout')
+    <script>
+        function confirmLogout() {
+            const url = '{{ route('logout') }}';
+            const method = 'POST';
+
+            const successCallback = function(response) {
+                handleSuccess(response);
+                closeModal("addModal");
+                loadData(currentPage, currentQuery);
+            };
+
+            const errorCallback = function(error) {
+                handleValidationErrors(error);
+            };
+
+            ajaxCall(url, "POST", null, successCallback, errorCallback);
+        }
+        $(document).ready(function() {
+
+        })
+    </script>
     @stack('scripts')
 </body>
 

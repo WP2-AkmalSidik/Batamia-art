@@ -20,7 +20,7 @@
             <h4 class="text-center mb-4">Login</h4>
             <form id="login">
                 <!-- Simulasi CSRF token -->
-                <input type="hidden" name="_token" value="csrf_token_placeholder">
+                {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
