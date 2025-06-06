@@ -1,11 +1,15 @@
 <?php
 
-use App\Http\Controllers\User\DetailProdukController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\ProdukController;
 use App\Http\Controllers\Admin\PesananController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\PengaturanController;
+use App\Http\Controllers\User\DetailProdukController;
+use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\LaporanPenjualanController;
 
 
 Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
