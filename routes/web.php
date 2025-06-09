@@ -59,3 +59,5 @@ Route::prefix('wilayah')->name('wilayah.')->group(function () {
 // User Routes
 Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard');
 Route::get('/detail-produk', [DetailProdukController::class, 'index'])->name('user.detail');
+Route::view('/masuk', 'pages.login');
+Route::view('/signin', 'pages.signin');
