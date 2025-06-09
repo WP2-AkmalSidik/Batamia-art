@@ -6,14 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 @endpush
-
-@section('content')
-    <!-- Product Management -->
-    <div class="mt-8 card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-400">Daftar Produk</h3>
-
-            <div class="flex flex-col sm:flex-row gap-3 lg:items-center">
+hx-row gap-3 lg:items-center">
                 <!-- Search Box -->
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

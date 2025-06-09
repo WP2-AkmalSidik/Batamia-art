@@ -268,7 +268,7 @@ const loadSelectOptions = (selector, url, selectedValue = null) => {
     responseList.forEach(row => {
       const option = $('<option></option>')
         .attr('value', row.id)
-        .text(row.nama ?? row.judul ?? row.name ?? '')
+        .text(row.nama ?? row.judul ?? row.name)
       selectElem.append(option)
     })
 
