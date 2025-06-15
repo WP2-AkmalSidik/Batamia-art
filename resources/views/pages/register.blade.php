@@ -79,7 +79,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2" for="provinsi">
                             <i class="fas fa-map mr-2 text-amber-600"></i>Provinsi
                         </label>
-                        <select type="text" id="provinsi" name="provinsi"
+                        <select type="text" id="provinsi"
                             class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"
                             placeholder="Masukkan provinsi" required></select>
                     </div>
@@ -89,7 +89,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2" for="kota">
                             <i class="fas fa-city mr-2 text-amber-600"></i>Kota/Kabupaten
                         </label>
-                        <select type="text" id="kota" name="kota"
+                        <select type="text" id="kota"
                             class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"
                             placeholder="Masukkan kota/kabupaten" required></select>
                     </div>
@@ -99,7 +99,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2" for="kecamatan">
                             <i class="fas fa-map-pin mr-2 text-amber-600"></i>Kecamatan
                         </label>
-                        <select type="text" id="kecamatan" name="kecamatan"
+                        <select type="text" id="kecamatan"
                             class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"
                             placeholder="Masukkan kecamatan" required></select>
                     </div>
@@ -108,7 +108,7 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2" for="kelurahan">
                             <i class="fas fa-map-pin mr-2 text-amber-600"></i>Kelurahan
                         </label>
-                        <select type="text" id="kelurahan" name="kelurahan"
+                        <select type="text" id="kelurahan"
                             class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"
                             placeholder="Masukkan kelurahan" required></select>
                     </div>
@@ -118,7 +118,8 @@
                         <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2" for="kode_pos">
                             <i class="fas fa-mail-bulk mr-2 text-amber-600"></i>Kode Pos
                         </label>
-                        <select name="kode_pos" id="kode_pos" class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"></select>
+                        <select name="kode_pos" id="kode_pos"
+                            class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400"></select>
                     </div>
 
                     <!-- Password Input -->
@@ -346,6 +347,12 @@
 
                 const url = "{{ route('register.store') }}";
                 const data = new FormData(this);
+
+                data.append('provinsi', provinsi);
+                data.append('kota', kota);
+                data.append('kecamatan', kecamatan);
+                data.append('kelurahan', kelurahan);
+                data.append('kode_pos', kode_pos);
 
                 const successCallback = function(response) {
                     setButtonLoadingState("#register-button", false);
