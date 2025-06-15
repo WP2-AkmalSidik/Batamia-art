@@ -6,7 +6,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 @endpush
-hx-row gap-3 lg:items-center">
+
+@section('content')
+    <div class="mt-8 card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-400">Daftar @yield('title')</h3>
+
+            <div class="flex flex-col sm:flex-row gap-3 lg:items-center">
                 <!-- Search Box -->
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -169,7 +175,7 @@ hx-row gap-3 lg:items-center">
 
             initDetailModal({
                 modalId: 'detailModal',
-                endpoint: `produk/${id}`,
+                endpoint: `admin/produk/${id}`,
                 fields: ['stok', 'deskripsi'],
                 callback: function(data) {
                     const harga = data.harga;
@@ -203,7 +209,7 @@ hx-row gap-3 lg:items-center">
             initEditModal({
                 modalId: 'editModal',
                 formSelector: '#edit-produk',
-                endpoint: `produk/${id}`,
+                endpoint: `admin/produk/${id}`,
                 fields: ['nama', 'kategori_id', 'stok', 'berat', 'harga', 'deskripsi'],
                 callback: function(data) {
                     const image = data.image;
@@ -236,7 +242,7 @@ hx-row gap-3 lg:items-center">
             // Fungsi Load Data
             function loadData(page = 1, query = '') {
                 $.ajax({
-                    url: `/produk?page=${page}&search=${encodeURIComponent(query)}`,
+                    url: `/admin/produk?page=${page}&search=${encodeURIComponent(query)}`,
                     type: 'GET',
                     success: function(res) {
                         $('#produk-table').html(res.data.view);
@@ -277,12 +283,16 @@ hx-row gap-3 lg:items-center">
 
             $(document).on('submit', '#tambah-produk', function(e) {
                 e.preventDefault();
+                console.log('submit di klik')
 
-                const url = '{{ route('produk.store') }}';
+                const url = '{{ route('admin.produk.store') }}';
                 const method = 'POST'
                 const formData = new FormData(this);
 
-                if (cropperAdd.getBlob()) {
+                if (!cropperAdd.getBlob() && !cropperAdd.getFile()) {
+                    showToast('error', 'Please select an image for the product');
+                    return;
+                } else if (cropperAdd.getBlob()) {
                     formData.append("image", cropperAdd.getBlob(), cropperAdd.getFile().name);
                 }
 
@@ -296,6 +306,9 @@ hx-row gap-3 lg:items-center">
                     handleValidationErrors(error, "tambah-produk", ["nama", "icon", "deskripsi"]);
                 };
 
+                console.log(formData['image'])
+                console.log('Original file:', cropperAdd.getFile());
+                console.log('Cropped blob:', cropperAdd.getBlob());
                 ajaxCall(url, "POST", formData, successCallback, errorCallback);
             })
 
@@ -304,7 +317,7 @@ hx-row gap-3 lg:items-center">
 
                 const id = $(this).data('id');
 
-                const url = `/produk/${id}`;
+                const url = `/admin/produk/${id}`;
                 const method = 'POST'
                 const formData = new FormData(this);
                 formData.append('_method', 'PUT')
@@ -332,7 +345,7 @@ hx-row gap-3 lg:items-center">
 
                 const id = $(this).data('id');
 
-                const url = `/produk/${id}`;
+                const url = `/admin/produk/${id}`;
                 const method = 'DELETE'
 
                 const successCallback = function(response) {

@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
-use App\Models\Review;
 use App\Models\Kategori;
-use App\Models\OrderProduk;
 use App\Models\KeranjangProduk;
+use App\Models\OrderProduk;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
@@ -17,14 +17,29 @@ class Produk extends Model
     }
     public function reviews()
     {
-        return $this->belongsTo(Review::class);
+        return $this->hasMany(Review::class);
     }
     public function keranjangProduks()
     {
-        return $this->belongsTo(KeranjangProduk::class);
+        return $this->hasMany(KeranjangProduk::class);
     }
     public function orderProduks()
     {
-        return $this->belongsTo(OrderProduk::class);
+        return $this->hasMany(OrderProduk::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating') ?? 0;
+    }
+
+    public function fullStars()
+    {
+        return floor($this->averageRating());
+    }
+
+    public function hasHalfStar()
+    {
+        return ($this->averageRating() - $this->fullStars()) >= 0.5;
     }
 }

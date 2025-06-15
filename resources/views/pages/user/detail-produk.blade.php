@@ -24,8 +24,7 @@
             <div class="mb-6">
                 <div
                     class="relative aspect-square rounded-2xl overflow-hidden bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border border-gray-200 dark:border-gray-600">
-                    <img id="mainProductImage"
-                        src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop&crop=center"
+                    <img id="mainProductImage" src="{{ asset('storage/' . $produk->image) }}"
                         alt="Vas Bunga Kayu Jati Handmade" class="w-full h-full object-cover">
 
                     <!-- Badge Populer -->
@@ -34,14 +33,14 @@
                         Populer
                     </div>
 
-                    <!-- Wishlist Button -->
+                    {{-- <!-- Wishlist Button -->
                     <button
                         class="absolute top-4 left-4 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200">
                         <i class="far fa-heart text-gray-700 dark:text-gray-300 hover:text-red-500"></i>
-                    </button>
+                    </button> --}}
                 </div>
 
-                <!-- Thumbnail Images -->
+                {{-- <!-- Thumbnail Images -->
                 <div class="flex gap-2 mt-4 overflow-x-auto pb-2">
                     <button
                         onclick="changeImage('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=600&fit=crop&crop=center')"
@@ -61,35 +60,50 @@
                         <img src="https://images.unsplash.com/photo-1565821952374-c4f6d35c2e0c?w=100&h=100&fit=crop&crop=center"
                             alt="Thumbnail 3" class="w-full h-full object-cover">
                     </button>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Product Info -->
             <div
                 class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-600 p-6 mb-6">
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Vas Bunga Kayu Jati Handmade</h1>
-                <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-4">Rp 125.000</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">{{ $produk->nama }}</h1>
+                <p class="text-3xl font-bold text-amber-600 dark:text-amber-400 mb-4">Rp {{ $produk->harga }}</p>
 
                 <!-- Rating -->
                 <div class="flex items-center gap-2 mb-6">
                     <div class="flex items-center">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                        @php
+                            $avgRating = $produk->averageRating();
+                            $fullStars = floor($avgRating);
+                            $hasHalfStar = $avgRating - $fullStars >= 0.5;
+                            $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                        @endphp
+
+                        @for ($i = 0; $i < $fullStars; $i++)
+                            <i class="fas fa-star text-yellow-400"></i>
+                        @endfor
+
+                        @if ($hasHalfStar)
+                            <i class="fas fa-star-half-alt text-yellow-400"></i>
+                        @endif
+
+                        @for ($i = 0; $i < $emptyStars; $i++)
+                            <i class="far fa-star text-yellow-400"></i>
+                        @endfor
                     </div>
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">4.0</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">(24 ulasan)</span>
+                    <span
+                        class="text-sm font-medium text-gray-700 dark:text-gray-300">({{ $produk->reviews->count() ?? 0 }})</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">({{ $produk->reviews->count() }} ulasan)</span>
                     <span class="text-sm text-gray-500 dark:text-gray-400">•</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">156 terjual</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $terjual }} terjual</span>
                 </div>
 
                 <!-- Quick Info -->
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                         <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kategori</div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Kerajinan Kayu</div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $produk->kategori->nama }}
+                        </div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                         <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Bahan</div>
@@ -97,11 +111,11 @@
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                         <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Berat</div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">500 gram</div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $produk->berat }} gram</div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                         <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Stok</div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">25 pcs</div>
+                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $produk->stok }} pcs</div>
                     </div>
                 </div>
             </div>
@@ -111,26 +125,7 @@
                 class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-600 p-6 mb-6">
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Deskripsi Produk</h2>
                 <div class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
-                    <p>Vas bunga kayu jati handmade yang dibuat dengan keahlian tangan pengrajin lokal. Dibuat dari kayu
-                        jati pilihan yang berkualitas tinggi dan tahan lama.</p>
-
-                    <p><strong>Spesifikasi:</strong></p>
-                    <ul class="list-disc list-inside ml-4 space-y-1">
-                        <li>Dimensi: 15cm x 15cm x 20cm</li>
-                        <li>Bahan: Kayu Jati Premium</li>
-                        <li>Finishing: Natural Wood Polish</li>
-                        <li>Cocok untuk bunga segar maupun kering</li>
-                        <li>Handmade oleh pengrajin berpengalaman</li>
-                    </ul>
-
-                    <p><strong>Keunggulan:</strong></p>
-                    <ul class="list-disc list-inside ml-4 space-y-1">
-                        <li>Tahan rayap dan jamur</li>
-                        <li>Motif serat kayu yang unik</li>
-                        <li>Ramah lingkungan</li>
-                        <li>Mudah dibersihkan</li>
-                        <li>Cocok untuk dekorasi indoor</li>
-                    </ul>
+                    <p>{{ $produk->deskripsi }}</p>
                 </div>
             </div>
 
@@ -145,93 +140,36 @@
                 <!-- Review Items -->
                 <div class="space-y-4">
                     <!-- Review 1 -->
-                    <div class="border-b border-gray-200 dark:border-gray-600 pb-4 last:border-b-0 last:pb-0">
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-sm font-medium text-amber-800 dark:text-amber-300">A</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">Andi Pratama</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                    </div>
+                    @forelse ($produk->reviews as $review)
+                        <div class="border-b border-gray-200 dark:border-gray-600 pb-4 last:border-b-0 last:pb-0">
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span
+                                        class="text-sm font-medium text-amber-800 dark:text-amber-300">{{ substr($review->user->name, 0, 1) }}</span>
                                 </div>
-                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">Vas bunga nya bagus banget!
-                                    Kualitas kayu jati nya premium, finishing rapi. Cocok banget buat dekorasi ruang tamu.
-                                    Packingnya juga aman, sampai dengan selamat.</p>
-                                <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                                    <span>2 hari yang lalu</span>
-                                    <button class="hover:text-amber-500">Suka</button>
-                                    <button class="hover:text-amber-500">Balas</button>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $review->user->name }}</span>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                            <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">{{ $review->komen }}</p>
+                                    <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                                        <span>{{ $review->created_at }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Review 2 -->
-                    <div class="border-b border-gray-200 dark:border-gray-600 pb-4 last:border-b-0 last:pb-0">
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-sm font-medium text-amber-800 dark:text-amber-300">S</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">Sari Indah</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="far fa-star text-gray-300 dark:text-gray-600 text-xs"></i>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">Produk sesuai ekspektasi.
-                                    Ukurannya pas, motif kayu nya cantik. Cuma pengiriman agak lama. Overall recommended!
-                                </p>
-                                <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                                    <span>5 hari yang lalu</span>
-                                    <button class="hover:text-amber-500">Suka</button>
-                                    <button class="hover:text-amber-500">Balas</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Review 3 -->
-                    <div class="border-b border-gray-200 dark:border-gray-600 pb-4 last:border-b-0 last:pb-0">
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-sm font-medium text-amber-800 dark:text-amber-300">R</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-sm font-medium text-gray-900 dark:text-gray-100">Rudi Hermawan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
-                                        <i class="far fa-star text-gray-300 dark:text-gray-600 text-xs"></i>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-2">Kualitas bagus, harga sebanding.
-                                    Istri saya suka banget. Terima kasih seller!</p>
-                                <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                                    <span>1 minggu yang lalu</span>
-                                    <button class="hover:text-amber-500">Suka</button>
-                                    <button class="hover:text-amber-500">Balas</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @empty
+                        <p class="text-sm text-gray-700 dark:text-gray-300">Belum ada ulasan.</p>
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -276,17 +214,18 @@
                             alt="Product" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1">
-                        <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">Vas Bunga Kayu Jati</h4>
-                        <p class="text-sm font-bold text-amber-600 dark:text-amber-400" id="modalProductPrice">Rp 125.000
+                        <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $produk->nama }}</h4>
+                        <p class="text-sm font-bold text-amber-600 dark:text-amber-400" id="modalProductPrice">Rp
+                            {{ number_format($produk->harga, 0, ',', '.') }}
                         </p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Stok: 25 pcs</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Stok: {{ $produk->stok }} pcs</p>
                     </div>
                 </div>
 
                 <!-- Form -->
                 <form id="addToCartForm">
                     <!-- Ukuran -->
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Pilih Ukuran</label>
                         <div class="grid grid-cols-3 gap-2">
                             <label
@@ -314,7 +253,7 @@
                                 </div>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Jumlah -->
                     <div class="mb-4">
@@ -338,7 +277,8 @@
                         class="mb-4 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-md border border-amber-200 dark:border-amber-800">
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-gray-700 dark:text-gray-300">Total Harga:</span>
-                            <span id="totalPrice" class="font-bold text-amber-600 dark:text-amber-400">Rp 125.000</span>
+                            <span id="totalPrice"
+                                class="font-bold text-amber-600 dark:text-amber-400">{{ $produk->harga }}</span>
                         </div>
                     </div>
 
@@ -391,7 +331,9 @@
     </style>
 
     <script>
-        let currentProductPrice = 125000;
+        let currentProductPrice = {{ $produk->harga }};
+        $('#totalPrice').text('Rp ' + currentProductPrice.toLocaleString('id-ID'));
+        console.log(currentProductPrice)
 
         // Change main product image
         function changeImage(imageUrl) {
@@ -429,8 +371,6 @@
             // Reset form
             document.getElementById('addToCartForm').reset();
             document.getElementById('quantity').value = 1;
-            document.querySelector('input[name="color"][value="natural"]').checked = true;
-            document.querySelector('input[name="size"][value="Medium"]').checked = true;
             updateTotalPrice();
         }
 
@@ -448,6 +388,7 @@
         function updateTotalPrice() {
             const quantity = parseInt(document.getElementById('quantity').value);
             const total = currentProductPrice * quantity;
+            console.log(total);
             document.getElementById('totalPrice').textContent = 'Rp ' + total.toLocaleString('id-ID');
         }
 

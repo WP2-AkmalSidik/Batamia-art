@@ -20,11 +20,11 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('role:admin')->group(function () {
 
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('laporan.index');
 
     Route::resource('/kategori', App\Http\Controllers\Admin\KategoriController::class)->names('kategori');
-    Route::resource('/produk', App\Http\Controllers\Admin\ProdukController::class)->names('produk');
+    Route::resource('admin/produk', App\Http\Controllers\Admin\ProdukController::class)->names('admin.produk');
     Route::resource('/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('pesanan');
     Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
@@ -47,6 +47,9 @@ Route::prefix('wilayah')->name('wilayah.')->group(function () {
     Route::get('kecamatan/{kota_id}', [WilayahController::class, 'getKecamatan'])->name('kecamatan');
     Route::get('kelurahan/{kecamatan_id}', [WilayahController::class, 'getKelurahan'])->name('kelurahan');
 
+    Route::get('tujuan', [App\Http\Controllers\KurirController::class, 'getDestination'])->name('tujuan');
+    Route::get('ongkir', [App\Http\Controllers\KurirController::class, 'getOngkir'])->name('ongkir');
+
     // Advanced endpoints
     Route::get('search', [WilayahController::class, 'searchWilayah'])->name('search');
     Route::get('lengkap', [WilayahController::class, 'getWilayahLengkap'])->name('lengkap');
@@ -61,3 +64,7 @@ Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard
 Route::get('/detail-produk', [DetailProdukController::class, 'index'])->name('user.detail');
 Route::view('/masuk', 'pages.login');
 Route::view('/signin', 'pages.signin');
+
+Route::get('/produk', [UserDashboardController::class, 'index'])->name('user.produk');
+Route::get('/produk/{id}/detail', [UserDashboardController::class, 'show'])->name('user.produk.detail');
+Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->name('user.detail-produk');

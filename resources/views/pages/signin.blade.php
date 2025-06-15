@@ -129,7 +129,7 @@
                         </div>
                         <p class="text-sm text-gray-600 dark:text-slate-400">
                             Sudah punya akun?
-                            <a href="/masuk"
+                            <a href="{{ route('login') }}"
                                 class="text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400 font-medium transition-colors duration-300">
                                 Masuk di sini
                             </a>
@@ -184,6 +184,75 @@
                 this.classList.remove('border-red-500');
                 this.classList.add('border-gray-300', 'dark:border-slate-600');
             }
+        });
+
+        $(document).ready(function() {
+            // Real-time password confirmation check
+            $("#password_confirmation").on('keyup', function() {
+                const password = $("#password").val();
+                const confirmPassword = $(this).val();
+                const feedback = $("#password-feedback");
+
+                if (confirmPassword.length === 0) {
+                    feedback.addClass("hidden");
+                    return;
+                }
+
+                feedback.removeClass("hidden");
+
+                if (password === confirmPassword) {
+                    feedback.removeClass("password-mismatch").addClass("password-match");
+                    feedback.text("Passwords match!");
+                    $("#register-button").prop("disabled", false);
+                } else {
+                    feedback.removeClass("password-match").addClass("password-mismatch");
+                    feedback.text("Passwords do not match!");
+                    $("#register-button").prop("disabled", true);
+                }
+            });
+
+            // Also check when typing in password field
+            $("#password").on('keyup', function() {
+                if ($("#password_confirmation").val().length > 0) {
+                    $("#password_confirmation").trigger('keyup');
+                }
+            });
+
+            $("#Register").submit(function(e) {
+                e.preventDefault();
+
+                // Check passwords match before submitting
+                const password = $("#password").val();
+                const confirmPassword = $("#password_confirmation").val();
+
+                if (password !== confirmPassword) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Passwords do not match!'
+                    });
+                    return;
+                }
+
+                setButtonLoadingState("#Register .btn.btn-primary", true, "Registering");
+
+                const url = "{{ route('register.store') }}";
+                const data = new FormData(this);
+
+                const successCallback = function(response) {
+                    setButtonLoadingState("#Register .btn.btn-primary", false,
+                        "Register");
+                    handleSuccess(response, null, null, "/");
+                };
+
+                const errorCallback = function(error) {
+                    setButtonLoadingState("#Register .btn.btn-primary", false,
+                        "Register");
+                    handleValidationErrors(error, "Register", ["email", "password", "nama"]);
+                };
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
+            });
         });
     </script>
 </body>
