@@ -1,10 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
+use App\Models\Keranjang;
 use App\Models\User;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -49,13 +52,47 @@ class AuthController extends Controller
     public function storeRegister(Request $request)
     {
         $validator = $request->validate([
-            'nama'     => 'required',
-            'email'    => 'required|email',
-            'password' => 'required',
+            'nama'           => 'required',
+            'email'          => 'required|email',
+            'password'       => 'required',
+            'nomor_hp'          => ['required', 'string', 'max:100'],
+            'provinsi'       => ['required', 'string', 'max:100'],
+            'kota'           => ['required', 'string', 'max:100'],
+            'kecamatan'      => ['required', 'string', 'max:100'],
+            'kelurahan'      => ['required', 'string', 'max:100'],
+            'kode_pos'       => ['required', 'string', 'max:100'],
+            'alamat_lengkap' => ['required', 'string'],
         ]);
 
-        $user = User::create($validator);
-        return $this->successResponse($user, 'Berhasil Registrasi.');
+        DB::beginTransaction();
+
+        try {
+            $user = User::create($validator);
+
+            Keranjang::create([
+                'user_id' => $user->id,
+            ]);
+
+            Alamat::create([
+                'user_id'        => $user->id,
+                'nama'           => $validator['nama'],
+                'nomor_hp'          => $request->nomor_hp,
+                'provinsi'       => $request->provinsi,
+                'kota'           => $request->kota,
+                'kecamatan'      => $request->kecamatan,
+                'kelurahan'      => $request->kelurahan,
+                'kode_pos'       => $request->kode_pos,
+                'alamat_lengkap' => $request->alamat_lengkap,
+            ]);
+
+            DB::commit();
+
+            return $this->successResponse($user, 'Berhasil Registrasi.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->errorResponse(null, 'Registrasi gagal: ' . $e->getMessage());
+        }
+
     }
 
     public function logout(Request $request)
