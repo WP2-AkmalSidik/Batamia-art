@@ -37,28 +37,41 @@ class KurirService
     }
 
     /**
-     * Ambil data provinsi
+     * Ambil data destination ID
      *
+     * @param string $search
      * @return array
      * @throws \Exception
      */
-    public function getDestinationId($search): array
+    public function getDestinationId(string $search): array
     {
-        return Cache::remember("destination:id:{$search}", $this->cacheTimeout, function () use ($search) {
+        $cacheKey = $this->generateCacheKey('destination_id', ['search' => $search]);
+
+        return Cache::remember($cacheKey, $this->cacheTimeout, function () use ($search) {
             return $this->makeRequest('destination/domestic-destination', ['search' => $search]);
         });
     }
 
     /**
-     * Ambil data kota/kabupaten berdasarkan ID provinsi
+     * Ambil data ongkir
      *
-     * @param string|int $provinsiId
+     * @param string|int $origin
+     * @param string|int $destination
+     * @param int $weight
+     * @param string $courier
      * @return array
      * @throws \Exception
      */
     public function getOngkir($origin, $destination, $weight, $courier): array
     {
-        return Cache::remember("ongkir:{$origin}-{$destination}-{$weight}-{$courier}", $this->cacheTimeout, function () use ($origin, $destination, $weight, $courier) {
+        $cacheKey = $this->generateCacheKey('ongkir', [
+            'origin' => $origin,
+            'destination' => $destination,
+            'weight' => $weight,
+            'courier' => $courier
+        ]);
+
+        return Cache::remember($cacheKey, $this->cacheTimeout, function () use ($origin, $destination, $weight, $courier) {
             return $this->makePostRequest('calculate/domestic-cost', [
                 'weight'      => $weight,
                 'courier'     => $courier,
@@ -81,7 +94,7 @@ class KurirService
     {
         $allowedTypes = ['provinsi', 'kabupaten', 'kecamatan', 'kelurahan'];
 
-        if (! in_array($type, $allowedTypes)) {
+        if (!in_array($type, $allowedTypes)) {
             throw new InvalidArgumentException('Type harus salah satu dari: ' . implode(', ', $allowedTypes));
         }
 
@@ -89,7 +102,10 @@ class KurirService
             throw new InvalidArgumentException('Query pencarian minimal 2 karakter');
         }
 
-        $cacheKey = "wilayah:search:" . md5($query . $type);
+        $cacheKey = $this->generateCacheKey('wilayah_search', [
+            'type' => $type,
+            'query' => $query
+        ]);
 
         return Cache::remember($cacheKey, 3600, function () use ($query, $type) { // Cache 1 jam untuk pencarian
             return $this->makeRequest($type, ['nama' => trim($query)]);
@@ -97,40 +113,46 @@ class KurirService
     }
 
     /**
-     * Clear cache untuk wilayah tertentu
+     * Generate consistent cache key
      *
-     * @param string|null $type
-     * @param string|int|null $id
+     * @param string $prefix
+     * @param array $params
+     * @return string
+     */
+    public function generateCacheKey(string $prefix, array $params): string
+    {
+        // Sort parameters by key to ensure consistent ordering
+        ksort($params);
+
+        // Create a unique hash of the parameters
+        $paramHash = md5(json_encode($params));
+
+        return "kurir_service:{$prefix}:{$paramHash}";
+    }
+
+    /**
+     * Clear cache untuk data tertentu
+     *
+     * @param string $prefix
+     * @param array|null $params
      * @return bool
      */
-    public function clearCache(?string $type = null, $id = null): bool
+    public function clearCache(string $prefix, ?array $params = null): bool
     {
-        if ($type && $id) {
-            return Cache::forget("wilayah:{$type}:{$id}");
+        if ($params) {
+            $cacheKey = $this->generateCacheKey($prefix, $params);
+            return Cache::forget($cacheKey);
         }
 
-        if ($type) {
-            return Cache::forget("wilayah:{$type}");
+        // Clear all cache with prefix (requires Redis or similar)
+        // Note: This implementation may vary based on your cache driver
+        $keys = Cache::getStore()->getPrefix() . "kurir_service:{$prefix}:*";
+        if (method_exists(Cache::getStore(), 'deleteMultiple')) {
+            $matchingKeys = Cache::getStore()->getRedis()->keys($keys);
+            return Cache::getStore()->deleteMultiple($matchingKeys);
         }
 
-        // Clear semua cache wilayah
-        $keys = [
-            'wilayah:provinsi',
-            'wilayah:kota:*',
-            'wilayah:kecamatan:*',
-            'wilayah:kelurahan:*',
-            'wilayah:search:*',
-        ];
-
-        foreach ($keys as $key) {
-            if (str_contains($key, '*')) {
-                // Untuk wildcard, perlu implementasi custom atau gunakan Redis
-                continue;
-            }
-            Cache::forget($key);
-        }
-
-        return true;
+        return false;
     }
 
     /**
