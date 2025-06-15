@@ -30,46 +30,36 @@
                 <!-- Filter Options -->
                 <div id="filterOptions"
                     class="hidden mt-4 p-4 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-600">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kategori</label>
-                            <select
+                            <select id="filterKategori"
                                 class="w-full text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2">
-                                <option>Semua Kategori</option>
-                                <option>Kerajinan Kayu</option>
-                                <option>Perhiasan</option>
-                                <option>Dekorasi Rumah</option>
+                                <option value="">Semua Kategori</option>
+                                @foreach (getKategori() as $kategori)
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Harga</label>
-                            <select
+                            <select id="filterHarga"
                                 class="w-full text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2">
                                 <option>Semua Harga</option>
-                                <option>
-                                    < Rp 50.000</option>
-                                <option>Rp 50.000 - 100.000</option>
-                                <option>> Rp 100.000</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bahan</label>
-                            <select
-                                class="w-full text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2">
-                                <option>Semua Bahan</option>
-                                <option>Kayu</option>
-                                <option>Bambu</option>
-                                <option>Logam</option>
+                                <option value="0-50000">
+                                    Kurang dari Rp 50.000</option>
+                                <option value="50000-100000">Rp 50.000 sampai 100.000</option>
+                                <option value="100000-1000000">Lebih dari Rp 100.000</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Urutkan</label>
-                            <select
+                            <select id="filterUrutkan"
                                 class="w-full text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2">
-                                <option>Terpopuler</option>
-                                <option>Harga Terendah</option>
-                                <option>Harga Tertinggi</option>
-                                <option>Terbaru</option>
+                                <option value="populer">Terpopuler</option>
+                                <option value="termurah">Harga Terendah</option>
+                                <option value="termahal">Harga Tertinggi</option>
+                                <option value="terbaru">Terbaru</option>
                             </select>
                         </div>
                     </div>
@@ -80,88 +70,16 @@
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto px-4 py-6">
             <!-- Grid Produk -->
-            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+                id="produk-grid">
 
-                <!-- Product Card 1 - Vas Bunga Kayu Jati -->
-                <a href="{{ route('user.detail') }}" class="block h-full">
-                    <div
-                        class="product-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-600 p-3 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col h-full">
-                        <!-- Konten card yang sama persis -->
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
-                                alt="Vas Bunga Kayu Jati" class="w-full h-32 object-cover rounded-lg mb-3">
-                            <div
-                                class="absolute top-2 right-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
-                                Populer
-                            </div>
-                        </div>
-                        <div class="flex-1 flex flex-col">
-                            <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 flex-1">Vas
-                                Bunga Kayu Jati Handmade</h3>
-                            <p class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-3">Rp 125.000</p>
-                            <button
-                                onclick="event.stopPropagation(); openCartModal('Vas Bunga Kayu Jati Handmade', 125000, 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center')"
-                                class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2">
-                                <span>🛒</span>
-                                <span>Tambah</span>
-                            </button>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Product Card 2 - Gelang Perak Ukiran -->
-                <div
-                    class="product-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-600 p-3 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col h-full">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center"
-                            alt="Gelang Perak Ukiran" class="w-full h-32 object-cover rounded-lg mb-3">
-                        <div
-                            class="absolute top-2 right-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
-                            Populer
-                        </div>
-                    </div>
-                    <div class="flex-1 flex flex-col">
-                        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 flex-1">Gelang
-                            Perak Ukiran Tradisional</h3>
-                        <p class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-3">Rp 85.000</p>
-                        <button
-                            onclick="openCartModal('Gelang Perak Ukiran Tradisional', 85000, 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&fit=crop&crop=center')"
-                            class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2">
-                            <span>🛒</span>
-                            <span>Tambah</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product Card 3 - Tempat Pensil Bambu -->
-                <div
-                    class="product-card bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-600 p-3 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer flex flex-col h-full">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center"
-                            alt="Tempat Pensil Bambu" class="w-full h-32 object-cover rounded-lg mb-3">
-                        <div
-                            class="absolute top-2 right-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
-                            Populer
-                        </div>
-                    </div>
-                    <div class="flex-1 flex flex-col">
-                        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 flex-1">Tempat
-                            Pensil Bambu Eco-Friendly</h3>
-                        <p class="text-lg font-bold text-amber-600 dark:text-amber-400 mb-3">Rp 45.000</p>
-                        <button
-                            onclick="openCartModal('Tempat Pensil Bambu Eco-Friendly', 45000, 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=center')"
-                            class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2">
-                            <span>🛒</span>
-                            <span>Tambah</span>
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <!-- Load More Button -->
             <div class="text-center mt-15">
                 <button
-                    class="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white px-6 py-3 text-sm font-medium rounded-xl transition-colors duration-200">
+                    class="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white px-6 py-3 text-sm font-medium rounded-xl transition-colors duration-200"
+                    id="loadMoreBtn">
                     <i class="fas fa-plus mr-2"></i>Muat Lebih Banyak
                 </button>
             </div>
@@ -197,7 +115,7 @@
                 <!-- Form Options -->
                 <form id="addToCartForm">
                     <!-- Warna -->
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Warna</label>
                         <div class="flex gap-2">
                             <label class="flex items-center">
@@ -225,10 +143,10 @@
                                 </div>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Ukuran -->
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ukuran</label>
                         <div class="grid grid-cols-3 gap-2">
                             <label
@@ -247,7 +165,7 @@
                                 <span class="text-sm font-medium">L</span>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Kuantitas -->
                     <div class="mb-4">
@@ -257,7 +175,7 @@
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                 <i class="fas fa-minus text-sm"></i>
                             </button>
-                            <input type="number" id="quantity" value="1" min="1" max="10"
+                            <input type="number" id="quantity" value="1" min="1" max="{{ $produk->stok }}"
                                 class="w-16 text-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                             <button type="button" onclick="changeQuantity(1)"
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
@@ -437,6 +355,140 @@
                     closeCartModal();
                 }
             }
+        });
+        $(document).ready(function() {
+            let debounceTimeout;
+            const debounceDelay = 500;
+
+            // State
+            let currentPage = 1;
+            let currentQuery = '';
+            let isLoading = false;
+            let hasMore = true;
+            let currentKategori = '';
+            let currentHarga = '';
+            let currentUrutkan = '';
+
+            // Fungsi untuk reset state filter
+            function resetFilterState() {
+                currentPage = 1;
+                hasMore = true;
+                $('#produk-grid').html(''); // Kosongkan grid
+                $('#loadMoreBtn').show(); // Pastikan tombol load more visible
+            }
+
+            // Fungsi Load Data
+            function loadData(page = 1, query = currentQuery, append = false,
+                kategori = currentKategori,
+                harga = currentHarga,
+                urutkan = currentUrutkan) {
+
+                if (isLoading || (!append && !hasMore)) return;
+
+                isLoading = true;
+                $('#loadMoreBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
+
+                // Build query parameters
+                let params = {
+                    page: page,
+                    search: query,
+                    kategori: kategori,
+                    harga: harga,
+                    urutkan: urutkan
+                };
+
+                // Convert to query string
+                let queryString = Object.keys(params)
+                    .filter(key => params[key] !== '')
+                    .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                    .join('&');
+
+                $.ajax({
+                    url: `/produk?${queryString}`,
+                    type: 'GET',
+                    success: function(res) {
+                        if (!res.success || !res.data) {
+                            showToast('error', 'Gagal memuat data');
+                            return;
+                        }
+
+                        if (append) {
+                            $('#produk-grid').append(res.data.view);
+                        } else {
+                            $('#produk-grid').html(res.data.view);
+                        }
+
+                        // Update state
+                        hasMore = res.data.has_more;
+                        currentPage = page;
+                        currentQuery = query;
+                        currentKategori = kategori;
+                        currentHarga = harga;
+                        currentUrutkan = urutkan;
+
+                        // Update tombol load more
+                        $('#loadMoreBtn').toggle(hasMore)
+                            .prop('disabled', false)
+                            .html('Load More');
+
+                        // Tampilkan pesan jika tidak ada produk
+                        if (!append && $('#produk-grid').children().length === 0) {
+                            $('#produk-grid').html(
+                                '<div class="col-span-full text-center py-8">Tidak ada produk yang ditemukan</div>'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error:', xhr.responseText);
+                        showToast('error', 'Gagal memuat data');
+                    },
+                    complete: function() {
+                        isLoading = false;
+                    }
+                });
+            }
+
+            // Event Handlers
+            function handleFilterChange() {
+                resetFilterState();
+                currentPage = 1; // Reset to first page on any filter change
+                loadData(1, currentQuery, false, currentKategori, currentHarga, currentUrutkan);
+            }
+
+            // Search with debounce
+            $('#searchInput').on('keyup', function() {
+                clearTimeout(debounceTimeout);
+                currentQuery = $(this).val();
+                currentPage = 1; // Reset page when searching
+
+                debounceTimeout = setTimeout(() => {
+                    loadData(1, currentQuery, false);
+                }, debounceDelay);
+            });
+
+            // Regular filter changes
+            $('#filterKategori').on('change', function() {
+                currentKategori = $(this).val();
+                handleFilterChange();
+            });
+
+            $('#filterHarga').on('change', function() {
+                currentHarga = $(this).val();
+                handleFilterChange();
+            });
+
+            $('#filterUrutkan').on('change', function() {
+                currentUrutkan = $(this).val();
+                handleFilterChange();
+            });
+
+            // Load More button
+            $('#loadMoreBtn').on('click', function() {
+                loadData(currentPage + 1, currentQuery, true);
+            });
+
+            // Initial load
+            loadData();
         });
     </script>
 @endsection
