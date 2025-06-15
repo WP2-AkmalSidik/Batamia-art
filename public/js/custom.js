@@ -1,31 +1,29 @@
-const ajaxCall = (url, method, data, successCallback, errorCallback) => {
+const ajaxCall = (
+  url,
+  method = 'GET',
+  data = {},
+  successCallback = () => {},
+  errorCallback = () => {}
+) => {
   const isFormData = data instanceof FormData
   const isGet = method.toUpperCase() === 'GET'
 
   $.ajax({
     type: method,
-    enctype: 'multipart/form-data',
     url,
     cache: false,
-    data,
-    data: isGet ? data : data,
-    contentType: isGet
-      ? false
-      : isFormData
+    data: data,
+    contentType: isFormData
       ? false
       : 'application/x-www-form-urlencoded; charset=UTF-8',
-    processData: isGet ? true : !isFormData,
+    processData: !isFormData,
     headers: {
       Accept: 'application/json',
       'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr('content')
     },
     dataType: 'json',
-    success: function (response) {
-      successCallback(response)
-    },
-    error: function (error) {
-      errorCallback(error)
-    }
+    success: successCallback,
+    error: errorCallback
   })
 }
 
@@ -175,7 +173,7 @@ function showSwal (title, icon, message, redirect = null) {
       title: title,
       icon: icon,
       text: message,
-      theme: 'dark',
+      theme: getSavedTheme(),
       timer: 2000,
       buttons: false
     })
@@ -192,6 +190,10 @@ const handleSuccess = (response, modalId = null, redirect = null) => {
   if (modalId !== null) {
     $(`#${modalId}`).modal('hide')
   }
+}
+
+function getSavedTheme () {
+  return localStorage.getItem('theme') || 'light'
 }
 
 const handleValidationErrors = (error, formId = null, fields = null) => {
@@ -268,7 +270,11 @@ const loadSelectOptions = (selector, url, selectedValue = null) => {
     responseList.forEach(row => {
       const option = $('<option></option>')
         .attr('value', row.id)
-        .text(row.nama ?? row.judul ?? row.name ?? '')
+        .text(
+          row.cost
+            ? `${row.cost} - ${row.service} - ${row.etd}`
+            : row.label ?? row.nama ?? row.judul ?? row.name
+        )
       selectElem.append(option)
     })
 

@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\Bank;
 use App\Models\User;
 use App\Models\Alamat;
+use App\Models\OrderProduk;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -21,5 +22,9 @@ class Order extends Model
     public function bank()
     {
         return $this->belongsTo(Bank::class);
+    }
+    public function orderProduks()
+    {
+        return $this->hasMany(OrderProduk::class);
     }
 }

@@ -108,9 +108,6 @@
 
             ajaxCall(url, "POST", null, successCallback, errorCallback);
         }
-        $(document).ready(function() {
-
-        })
     </script>
     @stack('scripts')
 </body>

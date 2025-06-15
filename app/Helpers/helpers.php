@@ -1,44 +1,8 @@
 <?php
 
+use App\Models\Kategori;
 use App\Models\Pengaturan;
 
-// if (! function_exists('activeUser')) {
-//     function activeUser()
-//     {
-//         foreach (['guru', 'siswa', 'orangtua', 'web', 'admin'] as $guard) {
-//             if (auth($guard)->check()) {
-//                 return auth($guard)->user();
-//             }
-//         }
-
-//         return null;
-//     }
-// }
-
-// if (! function_exists('activeGuard')) {
-//     function activeGuard(): ?string
-//     {
-//         foreach (['guru', 'siswa', 'orangtua', 'web', 'admin'] as $guard) {
-//             if (auth($guard)->check()) {
-//                 return $guard;
-//             }
-//         }
-
-//         return null;
-//     }
-// }
-
-// if (! function_exists('authAny')) {
-//     /**
-//      * Check if the user is authenticated with any of the specified guards
-//      *
-//      * @return bool
-//      */
-//     function authAny()
-//     {
-//         return Auth::guard('siswa')->check() || Auth::guard('guru')->check() || Auth::guard('orangtua')->check();
-//     }
-// }
 
 if (! function_exists('getPengaturan')) {
     function getPengaturan(): ?Pengaturan
@@ -132,5 +96,12 @@ if (! function_exists('percentage')) {
     function percentage($value, $decimals = 0)
     {
         return number_format($value * 100, $decimals);
+    }
+}
+
+if (! function_exists('getKategori')) {
+    function getKategori()
+    {
+        return Kategori::all();
     }
 }

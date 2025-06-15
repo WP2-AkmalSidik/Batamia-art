@@ -42,5 +42,12 @@ return [
         'connect_timeout' => env('WILAYAH_CONNECT_TIMEOUT', 10),
         'cache_timeout'   => env('WILAYAH_CACHE_TIMEOUT', 86400),
     ],
+    'ongkir'   => [
+        'api_key'         => env('ONGKIR_API_KEY'),
+        'base_url'        => env('WILAYAH_BASE_URL', 'https://rajaongkir.komerce.id/api/v1'),
+        'timeout'         => env('WILAYAH_TIMEOUT', 30),
+        'connect_timeout' => env('WILAYAH_CONNECT_TIMEOUT', 10),
+        'cache_timeout'   => env('WILAYAH_CACHE_TIMEOUT', 86400),
+    ],
 
 ];
