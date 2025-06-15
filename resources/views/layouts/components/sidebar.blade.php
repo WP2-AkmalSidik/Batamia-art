@@ -22,7 +22,7 @@
         <div class="flex-1 overflow-y-auto px-6 custom-scrollbar space-y-1">
             <nav class="space-y-1">
                 @if (auth()->check() && auth()->user()->role === 'admin')
-                    <a href="{{ route('dashboard') }}"
+                    <a href="{{ route('admin.dashboard') }}"
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         <i class="fas fa-tachometer-alt w-5 mr-3"></i>
                         <span>Dashboard</span>
@@ -41,7 +41,7 @@
                         <i class="fas fa-tags w-5 mr-3"></i>
                         <span>Kategori Produk</span>
                     </a>
-                    <a href="{{ route('produk.index') }}"
+                    <a href="{{ route('admin.produk.index') }}"
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('produk.index') ? 'active' : '' }}">
                         <i class="fas fa-box w-5 mr-3"></i>
                         <span>Produk</span>
@@ -89,6 +89,14 @@
                         <span>Logout</span>
                     </button>
                 @endif
+
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                        <i class="fa-solid fa-sign-in mr-3"></i>
+                        <span>Login</span>
+                    </a>
+                @endguest
             </nav>
         </div>
 
