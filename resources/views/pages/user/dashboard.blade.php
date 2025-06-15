@@ -175,7 +175,7 @@
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                 <i class="fas fa-minus text-sm"></i>
                             </button>
-                            <input type="number" id="quantity" value="1" min="1" max="{{ $produk->stok }}"
+                            <input type="number" id="quantity" value="1" min="1" max="100"
                                 class="w-16 text-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                             <button type="button" onclick="changeQuantity(1)"
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
