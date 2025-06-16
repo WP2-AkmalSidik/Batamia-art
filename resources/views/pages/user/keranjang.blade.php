@@ -3,289 +3,278 @@
 @section('title', 'Keranjang Belanja')
 
 @section('content')
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
 
-            <!-- Select All & Actions -->
-            <div
-                class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 mb-6 transition-colors duration-300">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <label class="flex items-center cursor-pointer">
-                            <input type="checkbox" id="selectAll"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Semua</span>
-                        </label>
-                        <span class="text-sm text-gray-500 dark:text-gray-400" id="selectedCount">(0 item dipilih)</span>
+        <!-- Select All & Actions - Responsive -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-3 sm:p-4 mb-4 sm:mb-6 transition-colors duration-300">
+            <div class="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-3 sm:gap-4">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="selectAll"
+                            class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                        <span class="ml-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Pilih Semua</span>
+                    </label>
+                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400" id="selectedCount">(0 item dipilih)</span>
+                </div>
+                <div class="flex items-center gap-1 sm:gap-2">
+                    <button id="deleteSelected"
+                        class="px-3 py-1 sm:px-4 sm:py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors text-xs sm:text-sm font-medium disabled:opacity-50"
+                        disabled>
+                        <i class="fas fa-trash text-xs sm:text-sm mr-1"></i>
+                        Hapus Terpilih
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content - Responsive Layout -->
+        <div class="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8">
+            <!-- Cart Items - Mobile First -->
+            <div class="lg:col-span-8">
+                <!-- Cart Item 1 - Responsive -->
+                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
+                    data-price="225000" data-id="1">
+                    <div class="flex items-start gap-3 sm:gap-4">
+                        <!-- Checkbox -->
+                        <div class="flex-shrink-0 pt-0 sm:pt-1">
+                            <input type="checkbox"
+                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                        </div>
+
+                        <!-- Product Image - Responsive -->
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
+                                <i class="fas fa-dragon text-xl sm:text-2xl text-amber-600 dark:text-amber-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Product Details - Responsive -->
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Kerajinan Kayu Ukir Naga</h3>
+                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Ukiran tradisional dengan detail tinggi</p>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
+                                <!-- Price - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 225.000</span>
+                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
+                                </div>
+
+                                <!-- Quantity Controls - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+                                    <div
+                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                        <button
+                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                        <input type="number" value="2" min="1"
+                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                                        <button
+                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Total Price - Responsive -->
+                                    <div class="text-right">
+                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 450.000</p>
+                                    </div>
+
+                                    <!-- Delete Button - Responsive -->
+                                    <button
+                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button id="deleteSelected"
-                            class="px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors text-sm font-medium disabled:opacity-50"
-                            disabled>
-                            <i class="fas fa-trash mr-1"></i>
-                            Hapus Terpilih
-                        </button>
+                </div>
+
+                <!-- Cart Item 2 - Responsive -->
+                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
+                    data-price="280000" data-id="2">
+                    <div class="flex items-start gap-3 sm:gap-4">
+                        <!-- Checkbox -->
+                        <div class="flex-shrink-0 pt-0 sm:pt-1">
+                            <input type="checkbox"
+                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                        </div>
+
+                        <!-- Product Image - Responsive -->
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
+                                <i class="fas fa-tshirt text-xl sm:text-2xl text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Product Details - Responsive -->
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Batik Handmade Motif Parang</h3>
+                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Batik tulis asli dengan motif klasik</p>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
+                                <!-- Price - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 280.000</span>
+                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
+                                </div>
+
+                                <!-- Quantity Controls - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+                                    <div
+                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                        <button
+                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                        <input type="number" value="1" min="1"
+                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                                        <button
+                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Total Price - Responsive -->
+                                    <div class="text-right">
+                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 280.000</p>
+                                    </div>
+
+                                    <!-- Delete Button - Responsive -->
+                                    <button
+                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Item 3 - Responsive -->
+                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
+                    data-price="350000" data-id="3">
+                    <div class="flex items-start gap-3 sm:gap-4">
+                        <!-- Checkbox -->
+                        <div class="flex-shrink-0 pt-0 sm:pt-1">
+                            <input type="checkbox"
+                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                        </div>
+
+                        <!-- Product Image - Responsive -->
+                        <div class="flex-shrink-0">
+                            <div
+                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
+                                <i class="fas fa-palette text-xl sm:text-2xl text-purple-600 dark:text-purple-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Product Details - Responsive -->
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Tenun Tradisional Songket</h3>
+                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Kain tenun dengan benang emas</p>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
+                                <!-- Price - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2">
+                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 350.000</span>
+                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
+                                </div>
+
+                                <!-- Quantity Controls - Responsive -->
+                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+                                    <div
+                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                        <button
+                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                        <input type="number" value="1" min="1"
+                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                                        <button
+                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
+                                        </button>
+                                    </div>
+
+                                    <!-- Total Price - Responsive -->
+                                    <div class="text-right">
+                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 350.000</p>
+                                    </div>
+
+                                    <!-- Delete Button - Responsive -->
+                                    <button
+                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Main Content -->
-            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
-                <!-- Cart Items -->
-                <div class="lg:col-span-8">
-                    <!-- Cart Item 1 -->
-                    <div class="cart-item bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                        data-price="225000" data-id="1">
-                        <div class="flex items-start gap-4">
-                            <!-- Checkbox -->
-                            <div class="flex-shrink-0 pt-1">
-                                <input type="checkbox"
-                                    class="item-checkbox w-5 h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                            </div>
+            <!-- Order Summary - Responsive -->
+            <div class="lg:col-span-4 mt-4 sm:mt-6 lg:mt-0">
+                <div
+                    class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 sticky top-4 sm:top-6 lg:top-8 transition-colors duration-300">
+                    <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">Ringkasan Pesanan</h2>
 
-                            <!-- Product Image -->
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-24 h-24 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-dragon text-2xl text-amber-600 dark:text-amber-400"></i>
-                                </div>
-                            </div>
+                    <!-- Selected Items Info - Responsive -->
+                    <div class="mb-3 sm:mb-4 p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <p class="text-xs sm:text-sm text-blue-800 dark:text-blue-200" id="selectedItemsInfo">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Pilih item yang ingin di-checkout
+                        </p>
+                    </div>
 
-                            <!-- Product Details -->
-                            <div class="flex-1 min-w-0">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Kerajinan Kayu Ukir
-                                    Naga</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Ukiran tradisional dengan detail
-                                    tinggi</p>
-
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                    <!-- Price -->
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg font-bold text-gray-900 dark:text-white">Rp 225.000</span>
-                                        <span class="text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                    </div>
-
-                                    <!-- Quantity Controls -->
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <button
-                                                class="qty-minus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                            <input type="number" value="2" min="1"
-                                                class="qty-input w-16 text-center border-0 bg-transparent focus:ring-0 text-sm font-medium text-gray-900 dark:text-white">
-                                            <button
-                                                class="qty-plus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Total Price -->
-                                        <div class="text-right">
-                                            <p class="item-total text-lg font-bold text-blue-600 dark:text-blue-400">Rp
-                                                450.000</p>
-                                        </div>
-
-                                        <!-- Delete Button -->
-                                        <button
-                                            class="delete-item p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                            <i class="fas fa-trash text-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Summary Items - Responsive -->
+                    <div class="space-y-3 sm:space-y-4 mb-4 sm:mb-6" id="summaryItems">
+                        <div class="flex justify-between text-xs sm:text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Subtotal <span id="itemCount">(0 items)</span></span>
+                            <span class="font-medium text-gray-900 dark:text-white" id="subtotal">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-xs sm:text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
+                            <span class="font-medium text-gray-900 dark:text-white" id="shipping">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between text-xs sm:text-sm">
+                            <span class="text-gray-600 dark:text-gray-400">Biaya Admin</span>
+                            <span class="font-medium text-gray-900 dark:text-white" id="adminFee">Rp 0</span>
+                        </div>
+                        <hr class="border-gray-200 dark:border-gray-600">
+                        <div class="flex justify-between">
+                            <span class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">Total</span>
+                            <span class="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400" id="grandTotal">Rp 0</span>
                         </div>
                     </div>
 
-                    <!-- Cart Item 2 -->
-                    <div class="cart-item bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                        data-price="280000" data-id="2">
-                        <div class="flex items-start gap-4">
-                            <!-- Checkbox -->
-                            <div class="flex-shrink-0 pt-1">
-                                <input type="checkbox"
-                                    class="item-checkbox w-5 h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                            </div>
+                    <!-- Checkout Button - Responsive -->
+                    <button id="checkoutBtn" onclick="openCheckoutModal()"
+                        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
+                        disabled>
+                        <i class="fas fa-shopping-cart text-sm sm:text-base"></i>
+                        <span class="text-sm sm:text-base">Checkout Sekarang</span>
+                    </button>
 
-                            <!-- Product Image -->
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-24 h-24 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-tshirt text-2xl text-blue-600 dark:text-blue-400"></i>
-                                </div>
-                            </div>
-
-                            <!-- Product Details -->
-                            <div class="flex-1 min-w-0">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Batik Handmade Motif
-                                    Parang</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Batik tulis asli dengan motif
-                                    klasik</p>
-
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                    <!-- Price -->
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg font-bold text-gray-900 dark:text-white">Rp 280.000</span>
-                                        <span class="text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                    </div>
-
-                                    <!-- Quantity Controls -->
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <button
-                                                class="qty-minus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                            <input type="number" value="1" min="1"
-                                                class="qty-input w-16 text-center border-0 bg-transparent focus:ring-0 text-sm font-medium text-gray-900 dark:text-white">
-                                            <button
-                                                class="qty-plus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Total Price -->
-                                        <div class="text-right">
-                                            <p class="item-total text-lg font-bold text-blue-600 dark:text-blue-400">Rp
-                                                280.000</p>
-                                        </div>
-
-                                        <!-- Delete Button -->
-                                        <button
-                                            class="delete-item p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                            <i class="fas fa-trash text-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cart Item 3 -->
-                    <div class="cart-item bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                        data-price="350000" data-id="3">
-                        <div class="flex items-start gap-4">
-                            <!-- Checkbox -->
-                            <div class="flex-shrink-0 pt-1">
-                                <input type="checkbox"
-                                    class="item-checkbox w-5 h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                            </div>
-
-                            <!-- Product Image -->
-                            <div class="flex-shrink-0">
-                                <div
-                                    class="w-24 h-24 bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-palette text-2xl text-purple-600 dark:text-purple-400"></i>
-                                </div>
-                            </div>
-
-                            <!-- Product Details -->
-                            <div class="flex-1 min-w-0">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Tenun Tradisional
-                                    Songket</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Kain tenun dengan benang emas</p>
-
-                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                    <!-- Price -->
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg font-bold text-gray-900 dark:text-white">Rp 350.000</span>
-                                        <span class="text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                    </div>
-
-                                    <!-- Quantity Controls -->
-                                    <div class="flex items-center gap-3">
-                                        <div
-                                            class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <button
-                                                class="qty-minus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                            <input type="number" value="1" min="1"
-                                                class="qty-input w-16 text-center border-0 bg-transparent focus:ring-0 text-sm font-medium text-gray-900 dark:text-white">
-                                            <button
-                                                class="qty-plus p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                                <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                            </button>
-                                        </div>
-
-                                        <!-- Total Price -->
-                                        <div class="text-right">
-                                            <p class="item-total text-lg font-bold text-blue-600 dark:text-blue-400">Rp
-                                                350.000</p>
-                                        </div>
-
-                                        <!-- Delete Button -->
-                                        <button
-                                            class="delete-item p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                            <i class="fas fa-trash text-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Order Summary -->
-                <div class="lg:col-span-4 mt-8 lg:mt-0">
-                    <div
-                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 sticky top-8 transition-colors duration-300">
-                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Ringkasan Pesanan</h2>
-
-                        <!-- Selected Items Info -->
-                        <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                            <p class="text-sm text-blue-800 dark:text-blue-200" id="selectedItemsInfo">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                Pilih item yang ingin di-checkout
-                            </p>
-                        </div>
-
-                        <!-- Summary Items -->
-                        <div class="space-y-4 mb-6" id="summaryItems">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-600 dark:text-gray-400">Subtotal <span id="itemCount">(0
-                                        items)</span></span>
-                                <span class="font-medium text-gray-900 dark:text-white" id="subtotal">Rp 0</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
-                                <span class="font-medium text-gray-900 dark:text-white" id="shipping">Rp 0</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-600 dark:text-gray-400">Biaya Admin</span>
-                                <span class="font-medium text-gray-900 dark:text-white" id="adminFee">Rp 0</span>
-                            </div>
-                            <hr class="border-gray-200 dark:border-gray-600">
-                            <div class="flex justify-between">
-                                <span class="text-lg font-bold text-gray-900 dark:text-white">Total</span>
-                                <span class="text-xl font-bold text-blue-600 dark:text-blue-400" id="grandTotal">Rp
-                                    0</span>
-                            </div>
-                        </div>
-
-                        <!-- Checkout Button -->
-                        <button id="checkoutBtn" onclick="openCheckoutModal()"
-                            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
-                            disabled>
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Checkout Sekarang</span>
-                        </button>
-
-                        <!-- Continue Shopping -->
-                        <div class="mt-4 text-center">
-                            <a href="#"
-                                class="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                <i class="fas fa-arrow-left mr-1"></i>
-                                Lanjut Belanja
-                            </a>
-                        </div>
+                    <!-- Continue Shopping - Responsive -->
+                    <div class="mt-3 sm:mt-4 text-center">
+                        <a href="#"
+                            class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            <i class="fas fa-arrow-left mr-1"></i>
+                            Lanjut Belanja
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Enhanced Checkout Modal -->
     <div id="checkoutModal"
