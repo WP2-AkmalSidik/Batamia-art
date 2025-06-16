@@ -42,12 +42,12 @@
                         <span>Kategori Produk</span>
                     </a>
                     <a href="{{ route('admin.produk.index') }}"
-                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('produk.index') ? 'active' : '' }}">
+                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('admin.produk.index') ? 'active' : '' }}">
                         <i class="fas fa-box w-5 mr-3"></i>
                         <span>Produk</span>
                     </a>
-                    <a href="{{ route('pesanan.index') }}"
-                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('pesanan.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.pesanan.index') }}"
+                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('admin.pesanan.index') ? 'active' : '' }}">
                         <i class="fas fa-shopping-cart w-5 mr-3"></i>
                         <span>Pesanan</span>
                     </a>
