@@ -74,8 +74,8 @@
                     <span>Keranjang</span>
                 </a>
 
-                @if (auth()->check() && auth()->user()->role === 'admin')
-                    <a href="#"
+                @if (auth()->check() && auth()->user()->role === 'user')
+                    <a href="/list-pesanan"
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                         <i class="fas fa-clipboard-list w-5 mr-3"></i>
                         <span>List Pesanan</span>
