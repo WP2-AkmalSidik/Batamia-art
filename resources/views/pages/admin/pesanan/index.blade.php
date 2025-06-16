@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto rounded-lg">
+        <div class="overflow-x-auto rounded-lg" id="table-pesanan">
             <table class="w-full text-sm text-left whitespace-nowrap">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-700">
@@ -166,34 +166,95 @@
             </table>
         </div>
     </div>
-
+    @include('pages.admin.pesanan.components.modal')
     <script>
         function openDetailModal(id) {
-            // Di sini bisa fetch data orderan berdasarkan ID
+            initDetailModal({
+                modalId: 'detailModal',
+                endpoint: `admin/pesanan/${id}`,
+                fields: [],
+                callback: function(data) {
+                    console.log(data);
+                    // Update order information
+                    $('#detailModal h3').text(`Order #${data.id}`);
+                    $('#detailModal p.text-sm').text(formatTanggal(data.created_at));
+
+                    const produkContainer = $('#produk-container');
+                    const produkTemplate = $('.produk-template').clone().removeClass('produk-template hidden');
+
+                    // Kosongkan container produk
+                    produkContainer.empty();
+
+                    // Asumsi data.items adalah array dari produk dalam pesanan
+                    data.order_produks.forEach(item => {
+                        const produkElement = produkTemplate.clone();
+
+                        // Isi data produk
+                        const product = item.produk; // Asumsi struktur data produk
+                        const imageUrl = product.image.startsWith('http') ?
+                            product.image :
+                            `{{ asset('storage') }}/${product.image}`;
+
+                        produkElement.find('.produk-image').attr('src', imageUrl);
+                        produkElement.find('.produk-nama').text(item.produk.nama);
+                        produkElement.find('.produk-kuantitas').text(`${item.kuantitas} pcs`);
+                        produkElement.find('.produk-harga').text(formatRupiah(product.harga));
+                        produkElement.find('.produk-subtotal').text(formatRupiah(product.harga * item
+                            .kuantitas));
+
+                        // Tambahkan ke container
+                        produkContainer.append(produkElement);
+                    });
+
+                    // Jika tidak ada produk, tampilkan pesan
+                    if (data.order_produks.length === 0) {
+                        produkContainer.html(
+                            '<p class="text-gray-500 dark:text-gray-400 text-center py-4">Tidak ada produk dalam pesanan ini</p>'
+                        );
+                    }
+                    // Update customer information
+                    $('#detail-user-nama').text(data.user.nama);
+                    $('#detail-user-email').text(data.user.email);
+                    $('#detail-user-telepon').text(data.alamat.nomor_hp || '-');
+                    $('#detail-user-alamat').text(data.alamat.alamat_lengkap || '-');
+
+                    // Update shipping information
+                    $('#detail-kurir').text(`${data.kurir}`);
+                    $('#detail-estimasi').text(data.etd || '-');
+                    $('#resiInput').val(data.no_resi || '');
+
+                    // Update payment status and total
+                    $('#detail-status').text(data.status);
+                    $('#detail-total-harga').text(formatRupiah(data.total_harga));
+
+                    // Update payment proof information
+                    $('#detail-bank').text(data.bank || '-');
+                    $('#detail-jumlah').text(formatRupiah(data.total_harga));
+                    $('#detail-no-rekening').text(data.no_rekening || '-');
+                    $('#detail-tanggal-transfer').text(data.tanggal_transfer ?
+                        formatTanggal(data.tanggal_transfer) : '-');
+
+                    $('#resiInput').val(data.resi || '');
+
+                    // Update created/updated dates if needed
+                    $('#created_at-detail').text(formatTanggal(data.created_at));
+                    $('#updated_at-detail').text(formatTanggal(data.updated_at));
+                }
+            });
             openModal('detailModal');
         }
 
         function openStatusModal(id) {
-            // Di sini bisa fetch current status berdasarkan ID
+            initEditModal({
+                modalId: 'statusModal',
+                endpoint: `admin/pesanan/${id}`,
+                fields: ['status'],
+                callback: function(data) {
+                    const status = data.status;
+                    $('#statusSelect').val(status);
+                }
+            });
             openModal('statusModal');
-        }
-
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }, 300);
         }
 
         function saveResi() {
@@ -262,6 +323,61 @@
                     closeModal(openModal.id);
                 }
             }
+        });
+        $(document).ready(function() {
+            console.log('ready')
+            // Debounce untuk search input
+            let debounceTimeout;
+            const debounceDelay = 500;
+
+            // State
+            let currentPage = 1;
+            let currentQuery = '';
+            console.log(currentPage, currentQuery);
+
+            // Fungsi Load Data
+            function loadData(page = 1, query = '') {
+                $.ajax({
+                    url: `/admin/pesanan?page=${page}&search=${encodeURIComponent(query)}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('#table-pesanan').html(res.data.view);
+                        $('#paginationLinks').html(res.data.pagination);
+
+                        currentPage = page;
+                        currentQuery = query;
+                    },
+                    error: function() {
+                        showToast('error', 'Gagal memuat data.');
+                    }
+                });
+            }
+
+            // Event: Search input (debounced)
+            $('#searchInput').on('keyup', function() {
+                clearTimeout(debounceTimeout);
+
+                const query = $(this).val();
+                currentQuery = query;
+
+                debounceTimeout = setTimeout(() => {
+                    loadData(1, currentQuery); // reset ke page 1 saat search
+                }, debounceDelay);
+            });
+
+            // Event: Klik link pagination
+            $(document).on('click', '.pagination a', function(e) {
+                e.preventDefault();
+
+                const href = $(this).attr('href');
+                const urlParams = new URLSearchParams(href.split('?')[1]);
+                const page = urlParams.get('page') || 1;
+                console.log(href, urlParams, page);
+
+                loadData(page, currentQuery);
+            });
+
+            loadData(currentPage, currentQuery);
         });
     </script>
 @endsection

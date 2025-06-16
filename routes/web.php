@@ -25,7 +25,7 @@ Route::middleware('role:admin')->group(function () {
 
     Route::resource('/kategori', App\Http\Controllers\Admin\KategoriController::class)->names('kategori');
     Route::resource('admin/produk', App\Http\Controllers\Admin\ProdukController::class)->names('admin.produk');
-    Route::resource('/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('pesanan');
+    Route::resource('admin/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('admin.pesanan');
     Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
 

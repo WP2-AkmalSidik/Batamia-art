@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('alamat_id')->nullable();
             $table->string('bukti_pembayaran')->nullable();
             $table->string('kurir');
+            $table->string('etd')->nullable();
             $table->string('resi')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
