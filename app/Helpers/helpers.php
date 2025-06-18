@@ -2,7 +2,9 @@
 
 use App\Models\Bank;
 use App\Models\Alamat;
+use App\Models\Produk;
 use App\Models\Kategori;
+use App\Models\Keranjang;
 use App\Models\Pengaturan;
 
 if (! function_exists('getPengaturan')) {
@@ -93,10 +95,35 @@ if (! function_exists('format_tanggal')) {
     }
 }
 
+if (! function_exists('cekReviews')) {
+    function cekReviews($produkId, $orderId)
+    {
+        $produk = Produk::with('reviews')->where('id', $produkId)->first();
+        return $produk->reviews()->where('order_id', $orderId)->first();
+    }
+}
+
 if (! function_exists('percentage')) {
     function percentage($value, $decimals = 0)
     {
         return number_format($value * 100, $decimals);
+    }
+}
+
+if (! function_exists('isLogin')) {
+    function isLogin()
+    {
+        return auth()->check();
+    }
+}
+
+if (! function_exists('getKeranjangId')) {
+    function getKeranjangId()
+    {
+        if (auth()->check()) {
+            return Keranjang::where('user_id', auth()->user()->id)->first()->id;
+        }
+        return;
     }
 }
 

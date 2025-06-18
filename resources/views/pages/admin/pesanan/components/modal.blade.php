@@ -204,8 +204,8 @@
                             <div class="space-y-4">
                                 <div
                                     class="bg-white dark:bg-gray-600 rounded-lg overflow-hidden border border-gray-100 dark:border-gray-600">
-                                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=800&fit=crop"
-                                        alt="Bukti Transfer" class="w-full h-auto max-h-[400px] object-contain">
+                                    <img id="bukti-transfer" alt="Bukti Transfer"
+                                        class="w-full h-auto max-h-[400px] object-contain">
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 text-sm">
                                     <div>
@@ -268,7 +268,7 @@
             <form id="statusForm">
                 <div class="mb-4">
                     <label class="form-label">Status Orderan</label>
-                    <select class="form-input w-full" id="statusSelect" required>
+                    <select class="form-input w-full" id="statusSelect" name="status" required>
                         <option value="">Pilih Status</option>
                         <option value="belum_bayar">Belum Dibayar</option>
                         <option value="dibayar">Dibayar</option>
@@ -281,13 +281,13 @@
 
                 <div class="mb-4" id="resiSection" style="display: none;">
                     <label class="form-label">Nomor Resi (Khusus Status Dikirim)</label>
-                    <input type="text" class="form-input w-full" id="resiNumber"
+                    <input type="text" class="form-input w-full" id="resiNumber" name="resi"
                         placeholder="Masukkan nomor resi...">
                 </div>
 
                 <div class="mb-4" id="rejectSection" style="display: none;">
                     <label class="form-label">Alasan Penolakan</label>
-                    <textarea class="form-input w-full" rows="3" placeholder="Masukkan alasan penolakan..."></textarea>
+                    <textarea class="form-input w-full" rows="3" name="alasan" placeholder="Masukkan alasan penolakan..."></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-2">

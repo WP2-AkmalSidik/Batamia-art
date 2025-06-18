@@ -26,6 +26,8 @@ Route::middleware('role:admin')->group(function () {
     Route::resource('/kategori', App\Http\Controllers\Admin\KategoriController::class)->names('kategori');
     Route::resource('admin/produk', App\Http\Controllers\Admin\ProdukController::class)->names('admin.produk');
     Route::resource('admin/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('admin.pesanan');
+    Route::put('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('admin.pesanan.update.status');
+
     Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
 
@@ -43,6 +45,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/keranjang', App\Http\Controllers\User\KeranjangController::class)->names('keranjang');
     Route::post('/keranjang/{id}/kuantitas', [App\Http\Controllers\User\KeranjangController::class, 'updateKuantitas'])->name('keranjang.update.kuantitas');
+
+    Route::resource('/pesanan', App\Http\Controllers\User\PesananController::class)->names('pesanan');
+    Route::post('/pesanan/pembayaran', [App\Http\Controllers\User\PesananController::class, 'updatePembayaran'])->name('pesanan.update.pembayaran');
 });
 
 Route::prefix('wilayah')->name('wilayah.')->group(function () {
