@@ -33,6 +33,13 @@ class DatabaseSeeder extends Seeder
             'role'     => 'admin',
         ]);
 
+        User::create([
+            'nama'     => 'ari',
+            'email'    => 'ari@gmail.com',
+            'password' => bcrypt('123123123'),
+            'role'     => 'user',
+        ]);
+
         User::factory(10)->create();
 
         // Kategori
@@ -109,7 +116,7 @@ class DatabaseSeeder extends Seeder
                 'bukti_pembayaran' => null,
                 'kurir'            => 'J&T',
                 'resi'             => strtoupper($faker->bothify('??######')),
-                'status'           => 'pending',
+                'status'           => 'Belum Bayar',
             ]);
 
             foreach (range(1, 2) as $i) {
@@ -125,9 +132,10 @@ class DatabaseSeeder extends Seeder
         }
 
         // Reviews
-        foreach (range(1, 30) as $i) {
+        foreach (Order::all() as $order) {
             Review::create([
                 'user_id'   => User::inRandomOrder()->first()->id,
+                'order_id'  => $order->id,
                 'produk_id' => Produk::inRandomOrder()->first()->id,
                 'rating'    => $faker->numberBetween(1, 5),
                 'komen'     => $faker->sentence,
@@ -137,7 +145,7 @@ class DatabaseSeeder extends Seeder
         Pengaturan::create([
             'nama_toko' => 'Batamia Art',
             'provinsi'  => 'Jawa Barat',
-            'kota' => 'Kab. Tasikmalaya',
+            'kota'      => 'Kab. Tasikmalaya',
             'kecamatan' => 'Jamanis',
             'kelurahan' => 'condong',
             'kode_pos'  => '46175',

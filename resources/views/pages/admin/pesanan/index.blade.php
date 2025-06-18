@@ -229,6 +229,9 @@
 
                     // Update payment proof information
                     $('#detail-bank').text(data.bank || '-');
+                    $('#bukti-transfer').attr('src', `{{ asset('storage/') }}/${data.bukti_pembayaran}`);
+                    console.log(data.bukti_pembayaran)
+                    console.log(`{{ asset('storage/') }}/${data.bukti_pembayaran}`)
                     $('#detail-jumlah').text(formatRupiah(data.total_harga));
                     $('#detail-no-rekening').text(data.no_rekening || '-');
                     $('#detail-tanggal-transfer').text(data.tanggal_transfer ?
@@ -293,17 +296,12 @@
             if (status === 'dikirim') {
                 const resi = document.getElementById('resiNumber').value;
                 if (resi.trim() === '') {
-                    alert('Mohon masukkan nomor resi untuk status dikirim!');
+                    showToast('error','Mohon masukkan nomor resi untuk status dikirim!');
                     return;
                 }
             }
 
-            // Implementasi update status
-            alert('Status orderan berhasil diupdate!');
-            closeModal('statusModal');
 
-            // Refresh halaman atau update UI
-            location.reload();
         });
 
         // Tutup modal klik diluar

@@ -14,8 +14,6 @@ class UserDashboardController extends Controller
     {
         if ($request->ajax()) {
 
-            // dd($request->all());
-
             $perPage = 25;
             $page    = $request->input('page', 1);
 

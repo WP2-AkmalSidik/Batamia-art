@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('kurir');
             $table->string('etd')->nullable();
             $table->string('resi')->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Belum Bayar');
             $table->timestamps();
             $table->foreign('bank_id')->references('id')->on('banks')->onDelete('set null');
             $table->foreign('alamat_id')->references('id')->on('alamats')->onDelete('set null');

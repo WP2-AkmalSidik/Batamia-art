@@ -42,10 +42,20 @@ class PesananController extends Controller
     }
     public function show(string $id)
     {
-        $pesanan = Order::with('orderProduks.produk', 'alamat', 'bank','user')->where('id', $id)->first();
+        $pesanan = Order::with('orderProduks.produk', 'alamat', 'bank', 'user')->where('id', $id)->first();
         if (! $pesanan) {
             return $this->errorResponse(null, 'Data gagal ditemukan');
         }
+        return $this->successResponse($pesanan, 'Data berhasil ditemukan');
+    }
+    public function updateStatus(Request $request, string $id)
+    {
+        $pesanan = Order::where('id', $id)->first();
+        if (! $pesanan) {
+            return $this->errorResponse(null, 'Data gagal ditemukan');
+        }
+        $pesanan->status = $request->status;
+        $pesanan->save();
         return $this->successResponse($pesanan, 'Data berhasil ditemukan');
     }
 }
