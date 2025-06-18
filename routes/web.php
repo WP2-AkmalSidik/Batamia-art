@@ -74,3 +74,4 @@ Route::get('/produk', [UserDashboardController::class, 'index'])->name('user.pro
 Route::get('/produk/{id}/detail', [UserDashboardController::class, 'show'])->name('user.produk.detail');
 Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->name('user.detail-produk');
 Route::view('/list-pesanan', 'pages/user/list-pesanan');
+Route::view('/profile', 'pages/user/profile');
