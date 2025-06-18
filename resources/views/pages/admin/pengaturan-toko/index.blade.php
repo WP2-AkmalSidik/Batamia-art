@@ -11,7 +11,7 @@
     <div class="space-y-6">
         <div class="card rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-900">
             <div class="absolute top-6 right-6">
-                <button onclick="saveAllSettings()" class="btn-accent px-6 py-2.5">
+                <button id="savePengaturan" class="btn-accent px-6 py-2.5">
                     <i class="fas fa-save mr-2"></i>Simpan Semua
                 </button>
             </div>
@@ -29,7 +29,7 @@
             <form id="storeInfoForm" class="space-y-6">
                 <div>
                     <label class="form-label">Nama Toko</label>
-                    <input type="text" class="form-input w-full" value="{{ getPengaturan()->nama_toko }}"
+                    <input type="text" id="nama_toko" class="form-input w-full" value="{{ getPengaturan()->nama_toko }}"
                         placeholder="Masukkan nama toko" required>
                 </div>
 
@@ -41,15 +41,15 @@
                         <!-- Provinsi -->
                         <div>
                             <label class="form-label">Provinsi</label>
-                            <select id="provinsi" class="form-input w-full" required>
-                            </select>
+                            <input type='text' id="provinsi" value="{{ getPengaturan()->provinsi }}"
+                                class="form-input w-full" required>
                         </div>
 
                         <!-- Kota/Kabupaten -->
                         <div>
                             <label class="form-label">Kota/Kabupaten</label>
-                            <select id="kota" class="form-input w-full" disabled required>
-                            </select>
+                            <input type='text' id="kota" class="form-input w-full"
+                                value="{{ getPengaturan()->kota }}" required>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -57,28 +57,31 @@
                         <!-- Kecamatan -->
                         <div>
                             <label class="form-label">Kecamatan</label>
-                            <select id="kecamatan" class="form-input w-full" disabled required>
-                            </select>
+                            <input type='text' id="kecamatan" class="form-input w-full"
+                                value="{{ getPengaturan()->kecamatan }}" required>
                         </div>
 
                         <!-- Desa/Kelurahan -->
                         <div>
                             <label class="form-label">Desa/Kelurahan</label>
-                            <select id="kelurahan" class="form-input w-full" disabled required>
-                            </select>
+                            <input type='text' id="kelurahan" class="form-input w-full"
+                                value="{{ getPengaturan()->kelurahan }}" required>
                         </div>
                         <!-- Kode Post -->
                         <div>
                             <label class="form-label">Kode Pos</label>
-                            <input type="text" name="kode_pos" id="kode_pos" class="form-input w-full">
+                            <select type="text" name="kode_pos" id="kode_pos" class="form-input w-full">
+                                <option value="{{ getPengaturan()->kode_pos }}">{{ getPengaturan()->kode_pos }}</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="mt-4">
                         <label class="form-label">Alamat Lengkap / Nama Jalan</label>
                         <textarea id="alamat" name="alamat" class="form-input w-full" rows="3"
-                            placeholder="Contoh: Jl. Raya Tawang No. 123, RT 01/RW 05" required></textarea>
+                            placeholder="Contoh: Jl. Raya Tawang No. 123, RT 01/RW 05" required>{{ getPengaturan()->alamat }}</textarea>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -109,21 +112,6 @@
     @include('pages.admin.pengaturan-toko.components.modal')
 
     <script>
-        function saveAllSettings() {
-            // Collect store info
-            const storeForm = document.getElementById('storeInfoForm');
-            const formData = new FormData(storeForm);
-
-            // Collect payment methods status
-            const paymentMethods = {};
-            document.querySelectorAll('.toggle-switch input, .toggle-switch-sm input').forEach(toggle => {
-                // Collect toggle states
-            });
-
-            // Send AJAX request to save data
-            showNotification('Pengaturan berhasil disimpan!', 'success');
-        }
-
         function openAddPaymentModal() {
             cropperAdd.reset();
             $('#modal-title').html('Tambah Metode Pembayaran')
@@ -332,66 +320,45 @@
 
         $(document).ready(function() {
             cropperAdd = initCropperHandlers("add");
+            let provinsi = '{{ getPengaturan()->provinsi }}';
+            let kota = '{{ getPengaturan()->kota }}';;
+            let kecamatan = '{{ getPengaturan()->kecamatan }}';
+            let kelurahan = '{{ getPengaturan()->kelurahan }}';
+            let kode_pos = '{{ getPengaturan()->kode_pos }}';
+            let search = `${provinsi} ${kota} ${kecamatan} ${kelurahan} `;
 
-            // 1. Load Provinsi dulu, lalu set dan trigger kota
-            loadSelectOptions('#provinsi', '/wilayah/provinsi', '{{ getPengaturan()->provinsi }}')
+            loadSelectOptions('#kode_pos', `/wilayah/tujuan?search=${search}`, '{{ getPengaturan()->kode_pos }}')
 
-            // 2. Load Kota berdasarkan Provinsi
-            loadSelectOptions('#kota', `/wilayah/kota/{{ getPengaturan()->provinsi }}`,
-                '{{ getPengaturan()->kabupaten }}')
-            $('#kota').prop('disabled', false)
+            $('#kode_pos').on('change', function() {
+                kode_pos = $(this).val()
+            })
 
-            // 3. Load Kecamatan berdasarkan Kota
-            loadSelectOptions('#kecamatan', `/wilayah/kecamatan/{{ getPengaturan()->kabupaten }}`,
-                '{{ getPengaturan()->kecamatan }}')
-            $('#kecamatan').prop('disabled', false)
-
-            // 4. Load Kelurahan berdasarkan Kecamatan
-            loadSelectOptions('#kelurahan', `/wilayah/kelurahan/{{ getPengaturan()->kecamatan }}`,
-                '{{ getPengaturan()->kelurahan }}')
-            $('#kelurahan').prop('disabled', false)
-
-            // 5. Isi kode pos dan alamat lengkap
-            $('#kode_pos').val('{{ getPengaturan()->kode_pos }}')
             $('#alamat').val('{{ getPengaturan()->alamat }}')
 
-            $('#provinsi').on('change', function() {
-                const provinsiId = $(this).val()
+            $('#savePengaturan').on('click', function(e) {
+                e.preventDefault();
 
-                if (provinsiId) {
-                    loadSelectOptions('#kota', `/wilayah/kota/${provinsiId}`)
-                    $('#kota').prop('disabled', false)
-                } else {
-                    $('#kota').empty().prop('disabled', true)
+                const data = {
+                    provinsi: $('#provinsi').val(),
+                    kota: $('#kota').val(),
+                    kecamatan: $('#kecamatan').val(),
+                    kelurahan: $('#kelurahan').val(),
+                    kode_pos: $('#kode_pos').val(),
+                    alamat: $('#alamat').val(),
+                    nama_toko: $('#nama_toko').val()
                 }
 
-                // Reset child select
-                $('#kecamatan').empty().prop('disabled', true)
-                $('#kelurahan').empty().prop('disabled', true)
-            })
+                const url = '{{ route('pengaturan.update') }}';
 
-            $('#kota').on('change', function() {
-                const kotaId = $(this).val()
+                const successCallback = function(response) {
+                    showToast('success', response.message);
+                };
 
-                if (kotaId) {
-                    loadSelectOptions('#kecamatan', `/wilayah/kecamatan/${kotaId}`)
-                    $('#kecamatan').prop('disabled', false)
-                } else {
-                    $('#kecamatan').empty().prop('disabled', true)
-                }
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "storeInfoForm");
+                };
 
-                $('#kelurahan').empty().prop('disabled', true)
-            })
-
-            $('#kecamatan').on('change', function() {
-                const kecamatanId = $(this).val()
-
-                if (kecamatanId) {
-                    loadSelectOptions('#kelurahan', `/wilayah/kelurahan/${kecamatanId}`)
-                    $('#kelurahan').prop('disabled', false)
-                } else {
-                    $('#kelurahan').empty().prop('disabled', true)
-                }
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
             })
 
             $(document).on('change', '.update-status', function(e) {
