@@ -70,3 +70,4 @@ Route::get('/produk/{id}/detail', [UserDashboardController::class, 'show'])->nam
 Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->name('user.detail-produk');
 Route::view('/keranjang', 'pages/user/keranjang');
 Route::view('/list-pesanan', 'pages/user/list-pesanan');
+Route::view('/profile', 'pages/user/profile');
