@@ -39,6 +39,7 @@
                         <span>Kategori Produk</span>
                     </a>
                     <a href="{{ route('admin.produk.index') }}"
+
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('produk.*') || request()->routeIs('admin.produk.*') ? 'active' : '' }}">
                         <i class="fas fa-box w-5 mr-3"></i>
                         <span>Produk</span>

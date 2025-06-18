@@ -37,23 +37,39 @@
                                 </div>
                                 <h4 class="font-semibold text-gray-800 dark:text-gray-200">Detail Produk</h4>
                             </div>
-                            <div
-                                class="flex items-start space-x-4 p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-100 dark:border-gray-600">
-                                <div
-                                    class="w-16 h-16 rounded-lg overflow-hidden border bg-white dark:bg-gray-500 flex-shrink-0">
-                                    <img src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=200&h=200&fit=crop"
-                                        alt="Produk" class="w-full h-full object-cover">
-                                </div>
-                                <div class="flex-1">
-                                    <h5 class="font-medium text-gray-800 dark:text-white">Kerajinan Kayu Ukir Naga</h5>
-                                    <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
-                                        <div>
-                                            <p class="text-gray-500 dark:text-gray-400">Kuantitas</p>
-                                            <p class="font-medium text-gray-800 dark:text-white">2 pcs</p>
+
+                            <!-- Container untuk daftar produk -->
+                            <div class="space-y-3" id="produk-container">
+                                <!-- Template untuk satu produk (akan diisi oleh JavaScript) -->
+                                <div class="hidden produk-template">
+                                    <div
+                                        class="flex items-start space-x-4 p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-100 dark:border-gray-600">
+                                        <div
+                                            class="w-16 h-16 rounded-lg overflow-hidden border bg-white dark:bg-gray-500 flex-shrink-0">
+                                            <img src="" alt="Produk"
+                                                class="w-full h-full object-cover produk-image">
                                         </div>
-                                        <div>
-                                            <p class="text-gray-500 dark:text-gray-400">Harga Satuan</p>
-                                            <p class="font-medium text-gray-800 dark:text-white">Rp 225.000</p>
+                                        <div class="flex-1">
+                                            <h5 class="font-medium text-gray-800 dark:text-white produk-nama"></h5>
+                                            <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+                                                <div>
+                                                    <p class="text-gray-500 dark:text-gray-400">Kuantitas</p>
+                                                    <p
+                                                        class="font-medium text-gray-800 dark:text-white produk-kuantitas">
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-500 dark:text-gray-400">Harga Satuan</p>
+                                                    <p class="font-medium text-gray-800 dark:text-white produk-harga">
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-gray-500 dark:text-gray-400">Subtotal</p>
+                                                    <p
+                                                        class="font-medium text-gray-800 dark:text-white produk-subtotal">
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -76,19 +92,23 @@
                             <div class="space-y-3 text-sm">
                                 <div class="flex">
                                     <span class="text-gray-500 dark:text-gray-400 w-24">Nama</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">Ahmad Wijaya</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="detail-user-nama">Ahmad
+                                        Wijaya</span>
                                 </div>
                                 <div class="flex">
                                     <span class="text-gray-500 dark:text-gray-400 w-24">Email</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">ahmad@email.com</span>
+                                    <span class="font-medium text-gray-800 dark:text-white"
+                                        id="detail-user-email">ahmad@email.com</span>
                                 </div>
                                 <div class="flex">
                                     <span class="text-gray-500 dark:text-gray-400 w-24">Telepon</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">+62 812-3456-7890</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="detail-user-telepon">+62
+                                        812-3456-7890</span>
                                 </div>
                                 <div class="flex">
                                     <span class="text-gray-500 dark:text-gray-400 w-24">Alamat</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">Jl. Merdeka No. 123, Jakarta
+                                    <span class="font-medium text-gray-800 dark:text-white" id="detail-user-alamat">Jl.
+                                        Merdeka No. 123, Jakarta
                                         Pusat</span>
                                 </div>
                             </div>
@@ -111,18 +131,20 @@
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-500 dark:text-gray-400">Kurir</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">JNE - REG</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="detail-kurir">JNE -
+                                        REG</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-500 dark:text-gray-400">Estimasi</span>
-                                    <span class="font-medium text-gray-800 dark:text-white">2-3 hari kerja</span>
+                                    <span class="font-medium text-gray-800 dark:text-white" id="detail-estimasi">2-3
+                                        hari kerja</span>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nomor
                                         Resi</label>
                                     <div class="flex space-x-2">
-                                        <input type="text" id="resiInput" class="form-input flex-1 rounded-lg"
-                                            placeholder="Masukkan nomor resi...">
+                                        <input type="text" id="resiInput" name="no_resi"
+                                            class="form-input flex-1 rounded-lg" placeholder="Masukkan nomor resi...">
                                         <button onclick="saveResi()"
                                             class="btn-accent px-4 py-2 text-sm rounded-lg flex items-center space-x-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -151,7 +173,8 @@
                                         STATUS ORDER</h4>
                                     <div class="flex items-center mt-1">
                                         <span
-                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                            id="detail-status">
                                             Dibayar
                                         </span>
                                     </div>
@@ -160,7 +183,8 @@
                                     <h4
                                         class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                         TOTAL</h4>
-                                    <p class="text-2xl font-bold text-gray-800 dark:text-white mt-1">Rp 450.000</p>
+                                    <p class="text-2xl font-bold text-gray-800 dark:text-white mt-1"
+                                        id="detail-total-harga">Rp 450.000</p>
                                 </div>
                             </div>
                         </div>
@@ -186,19 +210,23 @@
                                 <div class="grid grid-cols-2 gap-4 text-sm">
                                     <div>
                                         <p class="text-gray-500 dark:text-gray-400">Bank</p>
-                                        <p class="font-medium text-gray-800 dark:text-white">Bank BRI</p>
+                                        <p class="font-medium text-gray-800 dark:text-white" id="detail-bank">Bank BRI
+                                        </p>
                                     </div>
                                     <div>
                                         <p class="text-gray-500 dark:text-gray-400">Jumlah</p>
-                                        <p class="font-medium text-gray-800 dark:text-white">Rp 450.000</p>
+                                        <p class="font-medium text-gray-800 dark:text-white" id="detail-jumlah">Rp
+                                            450.000</p>
                                     </div>
                                     <div>
                                         <p class="text-gray-500 dark:text-gray-400">No Rekening</p>
-                                        <p class="font-medium text-gray-800 dark:text-white">00123456789</p>
+                                        <p class="font-medium text-gray-800 dark:text-white" id="detail-no-rekening">
+                                            00123456789</p>
                                     </div>
                                     <div>
                                         <p class="text-gray-500 dark:text-gray-400">Tanggal</p>
-                                        <p class="font-medium text-gray-800 dark:text-white">15 Jan 2024, 14:30</p>
+                                        <p class="font-medium text-gray-800 dark:text-white"
+                                            id="detail-tanggal-transfer">15 Jan 2024, 14:30</p>
                                     </div>
                                 </div>
                             </div>

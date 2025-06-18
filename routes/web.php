@@ -25,9 +25,11 @@ Route::middleware('role:admin')->group(function () {
 
     Route::resource('/kategori', App\Http\Controllers\Admin\KategoriController::class)->names('kategori');
     Route::resource('admin/produk', App\Http\Controllers\Admin\ProdukController::class)->names('admin.produk');
-    Route::resource('/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('pesanan');
+    Route::resource('admin/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('admin.pesanan');
     Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
+
+    Route::post('/pengaturan/update', [PengaturanController::class, 'updatePengaturan'])->name('pengaturan.update');
 
     Route::post('/pengaturan/bank', [PengaturanController::class, 'storeBank'])->name('bank.store');
     Route::get('/pengaturan/bank/{id}', [PengaturanController::class, 'showBank'])->name('bank.show');
@@ -38,6 +40,9 @@ Route::middleware('role:admin')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::resource('/keranjang', App\Http\Controllers\User\KeranjangController::class)->names('keranjang');
+    Route::post('/keranjang/{id}/kuantitas', [App\Http\Controllers\User\KeranjangController::class, 'updateKuantitas'])->name('keranjang.update.kuantitas');
 });
 
 Route::prefix('wilayah')->name('wilayah.')->group(function () {
@@ -68,6 +73,5 @@ Route::view('/signin', 'pages.signin');
 Route::get('/produk', [UserDashboardController::class, 'index'])->name('user.produk');
 Route::get('/produk/{id}/detail', [UserDashboardController::class, 'show'])->name('user.produk.detail');
 Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->name('user.detail-produk');
-Route::view('/keranjang', 'pages/user/keranjang');
 Route::view('/list-pesanan', 'pages/user/list-pesanan');
 Route::view('/profile', 'pages/user/profile');

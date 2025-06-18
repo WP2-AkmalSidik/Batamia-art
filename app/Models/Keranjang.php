@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use App\Models\User;
 use App\Models\KeranjangProduk;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Keranjang extends Model
@@ -15,6 +15,6 @@ class Keranjang extends Model
     }
     public function keranjangProduks()
     {
-        return $this->belongsTo(KeranjangProduk::class);
+        return $this->hasMany(KeranjangProduk::class);
     }
 }

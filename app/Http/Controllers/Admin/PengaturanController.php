@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\Pengaturan;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -25,6 +26,28 @@ class PengaturanController extends Controller
             return $this->successResponse($data, 'Data berhasil ditemukan.');
         }
         return view('pages.admin.pengaturan-toko.index');
+    }
+
+    public function updatePengaturan(Request $request)
+    {
+        $pengaturan = Pengaturan::where('id', 1)->first();
+        $validated  = $request->validate([
+            'nama_toko' => 'required',
+            'alamat'    => 'required',
+            'provinsi'  => 'required',
+            'kota'      => 'required',
+            'kecamatan' => 'required',
+            'kelurahan' => 'required',
+            'kode_pos'  => 'required',
+        ]);
+
+        try {
+            $pengaturan->update($validated);
+            return $this->successResponse($pengaturan, 'Data berhasil disimpan.');
+        } catch (\Exception $e) {
+            \Log::error('Gagal menyimpan Pengaturan: ' . $e->getMessage());
+            return $this->errorResponse(null, 'Data gagal disimpan. ' . $e->getMessage());
+        }
     }
     public function storeBank(Request $request)
     {
