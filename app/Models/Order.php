@@ -1,10 +1,10 @@
 <?php
 namespace App\Models;
 
-use App\Models\Bank;
-use App\Models\User;
 use App\Models\Alamat;
+use App\Models\Bank;
 use App\Models\OrderProduk;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model

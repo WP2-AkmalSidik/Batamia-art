@@ -215,6 +215,7 @@ const handleValidationErrors = (error, formId = null, fields = null) => {
 }
 
 const handleSimpleError = error => {
+  console.log(error)
   const errors = error.responseJSON.message || error?.message || '-'
   showSwal('Gagal', 'error', errors)
 }

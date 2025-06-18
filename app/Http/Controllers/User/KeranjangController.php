@@ -29,8 +29,9 @@ class KeranjangController extends Controller
     public function store()
     {
         $validated = request()->validate([
-            'produk_id' => 'required',
-            'kuantitas' => 'required',
+            'produk_id'    => 'required',
+            'keranjang_id' => 'required',
+            'kuantitas'    => 'required',
         ]);
 
         try {
