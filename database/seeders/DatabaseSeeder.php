@@ -78,8 +78,9 @@ class DatabaseSeeder extends Seeder
                 'nomor_hp'       => $faker->phoneNumber,
                 'alamat_lengkap' => $faker->address,
                 'provinsi'       => 'Jawa Barat',
-                'kota'           => 'Bandung',
-                'kecamatan'      => 'Coblong',
+                'kota'           => 'Kab. Tasikmalaya',
+                'kecamatan'      => 'Jamanis',
+                'kelurahan'      => 'Condong',
                 'kode_pos'       => $faker->postcode,
             ]);
         }
@@ -89,9 +90,9 @@ class DatabaseSeeder extends Seeder
             $cart = Keranjang::create(['user_id' => $user->id]);
             foreach (range(1, 3) as $i) {
                 KeranjangProduk::create([
-                    'cart_id'   => $cart->id,
-                    'produk_id' => Produk::inRandomOrder()->first()->id,
-                    'kuantitas' => $faker->numberBetween(1, 5),
+                    'keranjang_id' => $cart->id,
+                    'produk_id'    => Produk::inRandomOrder()->first()->id,
+                    'kuantitas'    => $faker->numberBetween(1, 5),
                 ]);
             }
         }
@@ -135,10 +136,10 @@ class DatabaseSeeder extends Seeder
 
         Pengaturan::create([
             'nama_toko' => 'Batamia Art',
-            'provinsi'  => '32',
-            'kabupaten' => '32.06',
-            'kecamatan' => '32.06.35',
-            'kelurahan' => '32.06.35.2002',
+            'provinsi'  => 'Jawa Barat',
+            'kota' => 'Kab. Tasikmalaya',
+            'kecamatan' => 'Jamanis',
+            'kelurahan' => 'condong',
             'kode_pos'  => '46175',
             'alamat'    => 'Jln. Sekbrong desa condong jamanis tasikmalaya 46175',
         ]);

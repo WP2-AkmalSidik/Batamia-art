@@ -65,10 +65,10 @@ class KurirService
     public function getOngkir($origin, $destination, $weight, $courier): array
     {
         $cacheKey = $this->generateCacheKey('ongkir', [
-            'origin' => $origin,
+            'origin'      => $origin,
             'destination' => $destination,
-            'weight' => $weight,
-            'courier' => $courier
+            'weight'      => $weight,
+            'courier'     => $courier,
         ]);
 
         return Cache::remember($cacheKey, $this->cacheTimeout, function () use ($origin, $destination, $weight, $courier) {
@@ -94,7 +94,7 @@ class KurirService
     {
         $allowedTypes = ['provinsi', 'kabupaten', 'kecamatan', 'kelurahan'];
 
-        if (!in_array($type, $allowedTypes)) {
+        if (! in_array($type, $allowedTypes)) {
             throw new InvalidArgumentException('Type harus salah satu dari: ' . implode(', ', $allowedTypes));
         }
 
@@ -103,8 +103,8 @@ class KurirService
         }
 
         $cacheKey = $this->generateCacheKey('wilayah_search', [
-            'type' => $type,
-            'query' => $query
+            'type'  => $type,
+            'query' => $query,
         ]);
 
         return Cache::remember($cacheKey, 3600, function () use ($query, $type) { // Cache 1 jam untuk pencarian

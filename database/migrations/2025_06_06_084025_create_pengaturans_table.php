@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_toko');
             $table->string('provinsi');
-            $table->string('kabupaten');
+            $table->string('kota');
             $table->string('kecamatan');
             $table->string('kelurahan');
             $table->string('kode_pos');
