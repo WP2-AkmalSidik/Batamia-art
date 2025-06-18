@@ -4,277 +4,160 @@
 
 @section('content')
     <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 sm:py-8 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
 
-        <!-- Select All & Actions - Responsive -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-3 sm:p-4 mb-4 sm:mb-6 transition-colors duration-300">
-            <div class="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-3 sm:gap-4">
-                <div class="flex items-center gap-2 sm:gap-3">
-                    <label class="flex items-center cursor-pointer">
-                        <input type="checkbox" id="selectAll"
-                            class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                        <span class="ml-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Pilih Semua</span>
-                    </label>
-                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400" id="selectedCount">(0 item dipilih)</span>
-                </div>
-                <div class="flex items-center gap-1 sm:gap-2">
-                    <button id="deleteSelected"
-                        class="px-3 py-1 sm:px-4 sm:py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors text-xs sm:text-sm font-medium disabled:opacity-50"
-                        disabled>
-                        <i class="fas fa-trash text-xs sm:text-sm mr-1"></i>
-                        Hapus Terpilih
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content - Responsive Layout -->
-        <div class="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8">
-            <!-- Cart Items - Mobile First -->
-            <div class="lg:col-span-8">
-                <!-- Cart Item 1 - Responsive -->
-                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                    data-price="225000" data-id="1">
-                    <div class="flex items-start gap-3 sm:gap-4">
-                        <!-- Checkbox -->
-                        <div class="flex-shrink-0 pt-0 sm:pt-1">
-                            <input type="checkbox"
-                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                        </div>
-
-                        <!-- Product Image - Responsive -->
-                        <div class="flex-shrink-0">
-                            <div
-                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                                <i class="fas fa-dragon text-xl sm:text-2xl text-amber-600 dark:text-amber-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- Product Details - Responsive -->
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Kerajinan Kayu Ukir Naga</h3>
-                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Ukiran tradisional dengan detail tinggi</p>
-
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
-                                <!-- Price - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 225.000</span>
-                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                </div>
-
-                                <!-- Quantity Controls - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
-                                    <div
-                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                        <button
-                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                        <input type="number" value="2" min="1"
-                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                        <button
-                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                    </div>
-
-                                    <!-- Total Price - Responsive -->
-                                    <div class="text-right">
-                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 450.000</p>
-                                    </div>
-
-                                    <!-- Delete Button - Responsive -->
-                                    <button
-                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Select All & Actions - Responsive -->
+            <div
+                class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-3 sm:p-4 mb-4 sm:mb-6 transition-colors duration-300">
+                <div class="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-3 sm:gap-4">
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="selectAll"
+                                class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                            <span class="ml-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">Pilih
+                                Semua</span>
+                        </label>
+                        <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400" id="selectedCount">(0 item
+                            dipilih)</span>
                     </div>
-                </div>
-
-                <!-- Cart Item 2 - Responsive -->
-                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                    data-price="280000" data-id="2">
-                    <div class="flex items-start gap-3 sm:gap-4">
-                        <!-- Checkbox -->
-                        <div class="flex-shrink-0 pt-0 sm:pt-1">
-                            <input type="checkbox"
-                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                        </div>
-
-                        <!-- Product Image - Responsive -->
-                        <div class="flex-shrink-0">
-                            <div
-                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                                <i class="fas fa-tshirt text-xl sm:text-2xl text-blue-600 dark:text-blue-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- Product Details - Responsive -->
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Batik Handmade Motif Parang</h3>
-                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Batik tulis asli dengan motif klasik</p>
-
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
-                                <!-- Price - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 280.000</span>
-                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                </div>
-
-                                <!-- Quantity Controls - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
-                                    <div
-                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                        <button
-                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                        <input type="number" value="1" min="1"
-                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                        <button
-                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                    </div>
-
-                                    <!-- Total Price - Responsive -->
-                                    <div class="text-right">
-                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 280.000</p>
-                                    </div>
-
-                                    <!-- Delete Button - Responsive -->
-                                    <button
-                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cart Item 3 - Responsive -->
-                <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
-                    data-price="350000" data-id="3">
-                    <div class="flex items-start gap-3 sm:gap-4">
-                        <!-- Checkbox -->
-                        <div class="flex-shrink-0 pt-0 sm:pt-1">
-                            <input type="checkbox"
-                                class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
-                        </div>
-
-                        <!-- Product Image - Responsive -->
-                        <div class="flex-shrink-0">
-                            <div
-                                class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                                <i class="fas fa-palette text-xl sm:text-2xl text-purple-600 dark:text-purple-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- Product Details - Responsive -->
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">Tenun Tradisional Songket</h3>
-                            <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">Kain tenun dengan benang emas</p>
-
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
-                                <!-- Price - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2">
-                                    <span class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp 350.000</span>
-                                    <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
-                                </div>
-
-                                <!-- Quantity Controls - Responsive -->
-                                <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
-                                    <div
-                                        class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                        <button
-                                            class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                        <input type="number" value="1" min="1"
-                                            class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                        <button
-                                            class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                                            <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
-                                        </button>
-                                    </div>
-
-                                    <!-- Total Price - Responsive -->
-                                    <div class="text-right">
-                                        <p class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">Rp 350.000</p>
-                                    </div>
-
-                                    <!-- Delete Button - Responsive -->
-                                    <button
-                                        class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                        <i class="fas fa-trash text-xs sm:text-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="flex items-center gap-1 sm:gap-2">
+                        <button id="deleteSelected"
+                            class="px-3 py-1 sm:px-4 sm:py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors text-xs sm:text-sm font-medium disabled:opacity-50"
+                            disabled>
+                            <i class="fas fa-trash text-xs sm:text-sm mr-1"></i>
+                            Hapus Terpilih
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Order Summary - Responsive -->
-            <div class="lg:col-span-4 mt-4 sm:mt-6 lg:mt-0">
-                <div
-                    class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 sticky top-4 sm:top-6 lg:top-8 transition-colors duration-300">
-                    <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">Ringkasan Pesanan</h2>
+            <!-- Main Content - Responsive Layout -->
+            <div class="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8">
+                <!-- Cart Items - Mobile First -->
+                <div class="lg:col-span-8">
+                    <!-- Cart Item 1 - Responsive -->
 
-                    <!-- Selected Items Info - Responsive -->
-                    <div class="mb-3 sm:mb-4 p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                        <p class="text-xs sm:text-sm text-blue-800 dark:text-blue-200" id="selectedItemsInfo">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Pilih item yang ingin di-checkout
-                        </p>
-                    </div>
+                    @foreach ($keranjangs->keranjangProduks as $keranjang)
+                        <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
+                            data-price="{{ $keranjang->produk->harga }}" data-id="{{ $keranjang->id }}"
+                            data-berat={{ $keranjang->produk->berat }}>
+                            <div class="flex items-start gap-3 sm:gap-4">
+                                <!-- Checkbox -->
+                                <div class="flex-shrink-0 pt-0 sm:pt-1">
+                                    <input type="checkbox"
+                                        class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                                </div>
 
-                    <!-- Summary Items - Responsive -->
-                    <div class="space-y-3 sm:space-y-4 mb-4 sm:mb-6" id="summaryItems">
-                        <div class="flex justify-between text-xs sm:text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Subtotal <span id="itemCount">(0 items)</span></span>
-                            <span class="font-medium text-gray-900 dark:text-white" id="subtotal">Rp 0</span>
-                        </div>
-                        <div class="flex justify-between text-xs sm:text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
-                            <span class="font-medium text-gray-900 dark:text-white" id="shipping">Rp 0</span>
-                        </div>
-                        <div class="flex justify-between text-xs sm:text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Biaya Admin</span>
-                            <span class="font-medium text-gray-900 dark:text-white" id="adminFee">Rp 0</span>
-                        </div>
-                        <hr class="border-gray-200 dark:border-gray-600">
-                        <div class="flex justify-between">
-                            <span class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">Total</span>
-                            <span class="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400" id="grandTotal">Rp 0</span>
-                        </div>
-                    </div>
+                                <!-- Product Image - Responsive -->
+                                <div class="flex-shrink-0">
+                                    <div
+                                        class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-dragon text-xl sm:text-2xl text-amber-600 dark:text-amber-400"></i>
+                                    </div>
+                                </div>
 
-                    <!-- Checkout Button - Responsive -->
-                    <button id="checkoutBtn" onclick="openCheckoutModal()"
-                        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
-                        disabled>
-                        <i class="fas fa-shopping-cart text-sm sm:text-base"></i>
-                        <span class="text-sm sm:text-base">Checkout Sekarang</span>
-                    </button>
+                                <!-- Product Details - Responsive -->
+                                <div class="flex-1 min-w-0">
+                                    <h3
+                                        class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                                        {{ $keranjang->produk->nama }}</h3>
+                                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">
+                                        {{ $keranjang->produk->deskripsi }}</p>
 
-                    <!-- Continue Shopping - Responsive -->
-                    <div class="mt-3 sm:mt-4 text-center">
-                        <a href="#"
-                            class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            <i class="fas fa-arrow-left mr-1"></i>
-                            Lanjut Belanja
-                        </a>
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
+                                        <!-- Price - Responsive -->
+                                        <div class="flex items-center gap-1 sm:gap-2">
+                                            <span
+                                                class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp
+                                                {{ $keranjang->produk->harga }}</span>
+                                            <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
+                                        </div>
+
+                                        <!-- Quantity Controls - Responsive -->
+                                        <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+                                            <div
+                                                class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                                <button
+                                                    class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
+                                                </button>
+                                                <input type="number" value="{{ $keranjang->kuantitas }}" min="1"
+                                                    class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
+                                                <button
+                                                    class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
+                                                </button>
+                                            </div>
+
+                                            <!-- Total Price - Responsive -->
+                                            <div class="text-right">
+                                                <p
+                                                    class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">
+                                                    Rp {{ $keranjang->kuantitas * $keranjang->produk->harga }}</p>
+                                            </div>
+
+                                            <!-- Delete Button - Responsive -->
+                                            <button
+                                                class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                                <i class="fas fa-trash text-xs sm:text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Order Summary - Responsive -->
+                <div class="lg:col-span-4 mt-4 sm:mt-6 lg:mt-0">
+                    <div
+                        class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 sticky top-4 sm:top-6 lg:top-8 transition-colors duration-300">
+                        <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">Ringkasan
+                            Pesanan</h2>
+
+                        <!-- Selected Items Info - Responsive -->
+                        <div class="mb-3 sm:mb-4 p-2 sm:p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <p class="text-xs sm:text-sm text-blue-800 dark:text-blue-200" id="selectedItemsInfo">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Pilih item yang ingin di-checkout
+                            </p>
+                        </div>
+
+                        <!-- Summary Items - Responsive -->
+                        <div class="space-y-3 sm:space-y-4 mb-4 sm:mb-6" id="summaryItems">
+
+                            <hr class="border-gray-200 dark:border-gray-600">
+                            <div class="flex justify-between">
+                                <span class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">Total</span>
+                                <span class="text-lg sm:text-xl font-bold text-blue-600 dark:text-blue-400"
+                                    id="grandTotal">Rp 0</span>
+                                <input type="hidden" id="totalWeight">
+                            </div>
+                        </div>
+
+                        <!-- Checkout Button - Responsive -->
+                        <button id="checkoutBtn" onclick="openCheckoutModal()"
+                            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed"
+                            disabled>
+                            <i class="fas fa-shopping-cart text-sm sm:text-base"></i>
+                            <span class="text-sm sm:text-base">Checkout Sekarang</span>
+                        </button>
+
+                        <!-- Continue Shopping - Responsive -->
+                        <div class="mt-3 sm:mt-4 text-center">
+                            <a href="#"
+                                class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <i class="fas fa-arrow-left mr-1"></i>
+                                Lanjut Belanja
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Enhanced Checkout Modal -->
     <div id="checkoutModal"
@@ -320,14 +203,12 @@
                                         <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
                                         <span class="font-medium" id="checkoutShipping">Rp 0</span>
                                     </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600 dark:text-gray-400">Biaya Admin</span>
-                                        <span class="font-medium" id="checkoutAdmin">Rp 0</span>
-                                    </div>
                                     <div
                                         class="flex justify-between font-bold text-lg pt-2 border-t border-gray-300 dark:border-gray-600">
                                         <span class="text-gray-900 dark:text-white">Total</span>
                                         <span class="text-blue-600 dark:text-blue-400" id="checkoutTotal">Rp 0</span>
+                                        <input type="hidden" id="checkoutWeight">
+                                        <input type="hidden" id="checkoutTotalPrice">
                                     </div>
                                 </div>
                             </div>
@@ -339,41 +220,21 @@
                                     Metode Pembayaran
                                 </label>
                                 <div class="space-y-2">
-                                    <label
-                                        class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
-                                        <input type="radio" name="payment" value="transfer"
-                                            class="mr-3 text-blue-600 focus:ring-blue-500">
-                                        <i class="fas fa-university text-blue-600 mr-3"></i>
-                                        <div>
-                                            <span class="font-medium text-gray-900 dark:text-white">Transfer
-                                                Bank</span>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">BCA, Mandiri, BNI,
-                                                BRI</p>
-                                        </div>
-                                    </label>
-                                    <label
-                                        class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
-                                        <input type="radio" name="payment" value="ewallet"
-                                            class="mr-3 text-blue-600 focus:ring-blue-500">
-                                        <i class="fas fa-mobile-alt text-green-600 mr-3"></i>
-                                        <div>
-                                            <span class="font-medium text-gray-900 dark:text-white">E-Wallet</span>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">GoPay, OVO, Dana,
-                                                ShopeePay</p>
-                                        </div>
-                                    </label>
-                                    <label
-                                        class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
-                                        <input type="radio" name="payment" value="cod"
-                                            class="mr-3 text-blue-600 focus:ring-blue-500">
-                                        <i class="fas fa-money-bill text-yellow-600 mr-3"></i>
-                                        <div>
-                                            <span class="font-medium text-gray-900 dark:text-white">Bayar di Tempat
-                                                (COD)</span>
-                                            <p class="text-xs text-gray-500 dark:text-gray-400">Bayar saat barang
-                                                sampai</p>
-                                        </div>
-                                    </label>
+                                    @foreach (getBanks() as $bank)
+                                        <label
+                                            class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+                                            <input type="radio" name="payment" value="transfer"
+                                                class="mr-3 text-blue-600 focus:ring-blue-500">
+                                            <i
+                                                class="fas {{ $bank->jenis == 'bank' ? 'fa-university' : 'fa-mobile-alt' }} text-blue-600 mr-3"></i>
+                                            <div>
+                                                <span
+                                                    class="font-medium text-gray-900 dark:text-white">{{ Str::ucfirst($bank->jenis) }}</span>
+                                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                    {{ Str::ucfirst($bank->nama_bank) }}</p>
+                                            </div>
+                                        </label>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -392,7 +253,7 @@
                                             <i class="fas fa-user mr-1"></i>
                                             Nama Lengkap
                                         </label>
-                                        <input type="text" name="name" required
+                                        <input type="text" name="name" required value="{{ auth()->user()->nama }}"
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
                                             placeholder="Masukkan nama lengkap">
                                     </div>
@@ -405,6 +266,7 @@
                                                 Nomor HP
                                             </label>
                                             <input type="tel" name="phone" required
+                                                value="{{ getAlamat()->nomor_hp }}"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
                                                 placeholder="08xxxxxxxxxx">
                                         </div>
@@ -414,6 +276,7 @@
                                                 Email
                                             </label>
                                             <input type="email" name="email" required
+                                                value="{{ auth()->user()->email }}"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
                                                 placeholder="email@contoh.com">
                                         </div>
@@ -426,22 +289,19 @@
                                                 <i class="fas fa-map mr-1"></i>
                                                 Provinsi
                                             </label>
-                                            <select name="province" required
+                                            <input type="text" name="province" required
+                                                value="{{ getAlamat()->provinsi }}" id="provinsi"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
-                                                <option value="">Pilih Provinsi</option>
-                                                <!-- Options will be populated by JavaScript -->
-                                            </select>
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 <i class="fas fa-city mr-1"></i>
                                                 Kota/Kabupaten
                                             </label>
-                                            <select name="city" required
+                                            <input type="text" name="kota" required
+                                                value="{{ getAlamat()->kota }}" id="kota"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
-                                                <option value="">Pilih Kota/Kabupaten</option>
-                                                <!-- Options will be populated by JavaScript -->
-                                            </select>
+
                                         </div>
                                     </div>
 
@@ -452,34 +312,33 @@
                                                 <i class="fas fa-map-marked-alt mr-1"></i>
                                                 Kecamatan
                                             </label>
-                                            <select name="district" required
+                                            <input type="text" name="kecamatan" required
+                                                value="{{ getAlamat()->kecamatan }}" id="kecamatan"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
-                                                <option value="">Pilih Kecamatan</option>
-                                                <!-- Options will be populated by JavaScript -->
-                                            </select>
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 <i class="fas fa-map-pin mr-1"></i>
                                                 Kelurahan
                                             </label>
-                                            <select name="village" required
+                                            <input type="text" name="village" required
+                                                value="{{ getAlamat()->kelurahan }}" id="kelurahan"
                                                 class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
-                                                <option value="">Pilih Kelurahan</option>
-                                                <!-- Options will be populated by JavaScript -->
-                                            </select>
+
                                         </div>
                                     </div>
 
                                     <!-- Kode Pos dan Alamat Lengkap -->
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                <i class="fas fa-mail-bulk mr-1"></i>
-                                                Kode Pos
-                                            </label>
-                                        <input type="text" name="postal_code" required
-                                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
-                                                placeholder="12345">
+                                            <i class="fas fa-mail-bulk mr-1"></i>
+                                            Kode Pos
+                                        </label>
+                                        <select type="text" name="postal_code" required id="kode_pos"
+                                            value="{{ getAlamat()->kode_pos }}"
+                                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
+                                            placeholder="12345">
+                                        </select>
                                     </div>
 
                                     <div>
@@ -487,9 +346,34 @@
                                             <i class="fas fa-map-marker-alt mr-1"></i>
                                             Alamat Lengkap
                                         </label>
-                                        <textarea name="address" required rows="3"
+                                        <textarea name="alamat_lengkap" required rows="3"
                                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none transition-colors"
-                                            placeholder="Masukkan alamat lengkap (jalan, nomor rumah, gedung, dll)"></textarea>
+                                            placeholder="Masukkan alamat lengkap (jalan, nomor rumah, gedung, dll)">{{ getAlamat()->alamat_lengkap }}</textarea>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            <i class="fas fa-mail-bulk mr-1"></i>
+                                            Kurir
+                                        </label>
+                                        <select type="text" name="kurir" required id="kurir"
+                                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
+                                            placeholder="12345">
+                                            <option value="">Pilih Kurir</option>
+                                            <option value="jne">JNE</option>
+                                            <option value="jnt">J&T</option>
+                                            <option value="sicepat">Sicepat</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            <i class="fas fa-mail-bulk mr-1"></i>
+                                            Ongkir
+                                        </label>
+                                        <select type="text" name="ongkir" required id="ongkir"
+                                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors"
+                                            placeholder="12345">
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -518,29 +402,32 @@
         // Global variables
         let selectedItems = new Set();
         let cartData = {};
+        let totalWeight = 0;
 
         // Initialize cart data
         function initializeCart() {
-            document.querySelectorAll('.cart-item').forEach(item => {
-                const id = item.dataset.id;
-                const price = parseInt(item.dataset.price);
-                const qtyInput = item.querySelector('.qty-input');
-                const quantity = parseInt(qtyInput.value);
+            $('.cart-item').each(function() {
+                const $item = $(this);
+                const id = $item.data('id');
+                const price = parseInt($item.data('price'));
+                const berat = parseInt($item.data('berat'));
+                const $qtyInput = $item.find('.qty-input');
+                const quantity = parseInt($qtyInput.val());
 
                 cartData[id] = {
                     id: id,
                     price: price,
                     quantity: quantity,
-                    element: item,
-                    checkbox: item.querySelector('.item-checkbox'),
-                    totalElement: item.querySelector('.item-total'),
-                    deleteBtn: item.querySelector('.delete-item'),
-                    qtyMinus: item.querySelector('.qty-minus'),
-                    qtyPlus: item.querySelector('.qty-plus')
+                    element: $item,
+                    berat: berat,
+                    checkbox: $item.find('.item-checkbox'),
+                    totalElement: $item.find('.item-total'),
+                    deleteBtn: $item.find('.delete-item'),
+                    qtyMinus: $item.find('.qty-minus'),
+                    qtyPlus: $item.find('.qty-plus'),
+                    qtyInput: $qtyInput
                 };
 
-                // Update total price for this item
-                updateItemTotal(id);
             });
 
             // Set up event listeners
@@ -551,12 +438,12 @@
         // Set up all event listeners
         function setupEventListeners() {
             // Select all checkbox
-            document.getElementById('selectAll').addEventListener('change', function() {
-                const isChecked = this.checked;
+            $('#selectAll').on('change', function() {
+                const isChecked = $(this).prop('checked');
                 selectedItems.clear();
 
                 Object.keys(cartData).forEach(id => {
-                    cartData[id].checkbox.checked = isChecked;
+                    cartData[id].checkbox.prop('checked', isChecked);
                     if (isChecked) {
                         selectedItems.add(id);
                     }
@@ -571,12 +458,12 @@
             Object.keys(cartData).forEach(id => {
                 const item = cartData[id];
 
-                item.checkbox.addEventListener('change', function() {
-                    if (this.checked) {
+                item.checkbox.on('change', function() {
+                    if ($(this).prop('checked')) {
                         selectedItems.add(id);
                     } else {
                         selectedItems.delete(id);
-                        document.getElementById('selectAll').checked = false;
+                        $('#selectAll').prop('checked', false);
                     }
 
                     updateSelectedCount();
@@ -585,46 +472,68 @@
                 });
 
                 // Quantity minus button
-                item.qtyMinus.addEventListener('click', function() {
+                item.qtyMinus.on('click', function() {
                     if (item.quantity > 1) {
                         item.quantity--;
-                        item.qtyInput.value = item.quantity;
+                        item.qtyInput.val(item.quantity);
+                        const data = {
+                            id: id,
+                            kuantitas: item.quantity
+                        }
+                        const url = `/keranjang/${id}/kuantitas`;
+
+                        ajaxCall(url, 'POST', data, null, null)
                         updateItemTotal(id);
                         updateSummary();
                     }
                 });
 
                 // Quantity plus button
-                item.qtyPlus.addEventListener('click', function() {
+                item.qtyPlus.on('click', function() {
                     item.quantity++;
-                    item.qtyInput.value = item.quantity;
+                    item.qtyInput.val(item.quantity);
+                    console.log(item.quantity);
+                    const data = {
+                        id: id,
+                        kuantitas: item.quantity
+                    }
+                    const url = `/keranjang/${id}/kuantitas`;
+
+                    ajaxCall(url, 'POST', data, null, null)
                     updateItemTotal(id);
                     updateSummary();
                 });
 
                 // Quantity input change
-                item.qtyInput.addEventListener('change', function() {
-                    const newQty = parseInt(this.value) || 1;
+                item.qtyInput.on('change', function() {
+                    const newQty = parseInt($(this).val()) || 1;
                     item.quantity = Math.max(1, newQty);
-                    this.value = item.quantity;
+                    $(this).val(item.quantity);
+                    const data = {
+                        id: id,
+                        kuantitas: item.quantity
+                    }
+                    const url = `/keranjang/${id}/kuantitas`;
+
+                    ajaxCall(url, 'POST', data, null, null)
                     updateItemTotal(id);
                     updateSummary();
                 });
 
                 // Delete item button
-                item.deleteBtn.addEventListener('click', function() {
+                item.deleteBtn.on('click', function() {
                     deleteItem(id);
                 });
             });
 
             // Delete selected items button
-            document.getElementById('deleteSelected').addEventListener('click', function() {
+            $('#deleteSelected').on('click', function() {
                 if (selectedItems.size > 0 && confirm('Apakah Anda yakin ingin menghapus item yang dipilih?')) {
                     selectedItems.forEach(id => {
                         deleteItem(id);
                     });
                     selectedItems.clear();
-                    document.getElementById('selectAll').checked = false;
+                    $('#selectAll').prop('checked', false);
                     updateSelectedCount();
                     updateSummary();
                     toggleCheckoutButton();
@@ -632,12 +541,6 @@
             });
         }
 
-        // Update total price for a single item
-        function updateItemTotal(id) {
-            const item = cartData[id];
-            const total = item.price * item.quantity;
-            item.totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-        }
 
         // Update the summary section
         function updateSummary() {
@@ -650,43 +553,43 @@
                 itemCount += item.quantity;
             });
 
-            // Calculate shipping (10% of subtotal, min 20k)
-            const shipping = Math.max(20000, subtotal * 0.1);
-            // Calculate admin fee (5% of subtotal, min 5k)
-            const adminFee = Math.max(5000, subtotal * 0.05);
-            const grandTotal = subtotal + shipping + adminFee;
+            const grandTotal = subtotal
 
             // Update summary elements
-            document.getElementById('itemCount').textContent = `(${itemCount} ${itemCount === 1 ? 'item' : 'items'})`;
-            document.getElementById('subtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
-            document.getElementById('shipping').textContent = `Rp ${shipping.toLocaleString('id-ID')}`;
-            document.getElementById('adminFee').textContent = `Rp ${adminFee.toLocaleString('id-ID')}`;
-            document.getElementById('grandTotal').textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+            $('#itemCount').text(`(${itemCount} ${itemCount === 1 ? 'item' : 'items'})`);
+            $('#grandTotal').text(`Rp ${grandTotal.toLocaleString('id-ID')}`);
 
             // Update selected items info
-            const infoElement = document.getElementById('selectedItemsInfo');
+            const $infoElement = $('#selectedItemsInfo');
             if (itemCount > 0) {
-                infoElement.innerHTML =
-                    `<i class="fas fa-check-circle mr-1"></i> ${itemCount} ${itemCount === 1 ? 'item' : 'items'} dipilih untuk checkout`;
-                infoElement.className = 'text-sm text-green-800 dark:text-green-200';
+                $infoElement.html(
+                    `<i class="fas fa-check-circle mr-1"></i> ${itemCount} ${itemCount === 1 ? 'item' : 'items'} dipilih untuk checkout`
+                );
+                $infoElement.removeClass().addClass('text-sm text-green-800 dark:text-green-200');
             } else {
-                infoElement.innerHTML = '<i class="fas fa-info-circle mr-1"></i> Pilih item yang ingin di-checkout';
-                infoElement.className = 'text-sm text-blue-800 dark:text-blue-200';
+                $infoElement.html('<i class="fas fa-info-circle mr-1"></i> Pilih item yang ingin di-checkout');
+                $infoElement.removeClass().addClass('text-sm text-blue-800 dark:text-blue-200');
             }
+        }
+
+        function updateItemTotal(id) {
+            const item = cartData[id];
+            const total = item.price * item.quantity;
+            item.totalElement.text(`Rp ${total.toLocaleString('id-ID')}`);
         }
 
         // Update selected items count
         function updateSelectedCount() {
             const count = selectedItems.size;
-            document.getElementById('selectedCount').textContent = `(${count} ${count === 1 ? 'item' : 'items'} dipilih)`;
+            $('#selectedCount').text(`(${count} ${count === 1 ? 'item' : 'items'} dipilih)`);
 
             // Enable/disable delete selected button
-            document.getElementById('deleteSelected').disabled = count === 0;
+            $('#deleteSelected').prop('disabled', count === 0);
         }
 
         // Toggle checkout button state
         function toggleCheckoutButton() {
-            document.getElementById('checkoutBtn').disabled = selectedItems.size === 0;
+            $('#checkoutBtn').prop('disabled', selectedItems.size === 0);
         }
 
         // Delete an item from cart
@@ -701,67 +604,66 @@
         function openCheckoutModal() {
             if (selectedItems.size === 0) return;
 
-            const modal = document.getElementById('checkoutModal');
-            const modalContent = document.getElementById('modalContent');
+            const $modal = $('#checkoutModal');
+            const $modalContent = $('#modalContent');
 
             // Populate checkout items
-            const checkoutItems = document.getElementById('checkoutItems');
-            checkoutItems.innerHTML = '';
+            const $checkoutItems = $('#checkoutItems');
+            $checkoutItems.empty();
 
             let subtotal = 0;
+            totalWeight = 0;
             selectedItems.forEach(id => {
                 const item = cartData[id];
                 subtotal += item.price * item.quantity;
+                console.log(item.berat, item.quantity);
+                totalWeight = item.berat * item.quantity
 
-                const itemElement = document.createElement('div');
-                itemElement.className = 'flex items-start gap-3 p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg';
-                itemElement.innerHTML = `
+                const $itemElement = $(`
+                <div class="flex items-start gap-3 p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
                     <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg flex items-center justify-center">
                         <i class="fas fa-box text-blue-600 dark:text-blue-400"></i>
                     </div>
                     <div class="flex-1">
-                        <h4 class="font-medium text-gray-900 dark:text-white">${item.element.querySelector('h3').textContent}</h4>
+                        <h4 class="font-medium text-gray-900 dark:text-white">${item.element.find('h3').text()}</h4>
                         <p class="text-xs text-gray-500 dark:text-gray-400">${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}</p>
                     </div>
                     <div class="font-medium text-gray-900 dark:text-white">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
-                `;
-                checkoutItems.appendChild(itemElement);
+                </div>
+            `);
+                $checkoutItems.append($itemElement);
             });
 
-            // Calculate totals (same as in updateSummary)
-            const shipping = Math.max(20000, subtotal * 0.1);
-            const adminFee = Math.max(5000, subtotal * 0.05);
-            const grandTotal = subtotal + shipping + adminFee;
+            const grandTotal = subtotal;
+            console.log(grandTotal);
 
             // Update checkout summary
-            document.getElementById('checkoutSubtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
-            document.getElementById('checkoutShipping').textContent = `Rp ${shipping.toLocaleString('id-ID')}`;
-            document.getElementById('checkoutAdmin').textContent = `Rp ${adminFee.toLocaleString('id-ID')}`;
-            document.getElementById('checkoutTotal').textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+            $('#checkoutSubtotal').text(`Rp ${subtotal.toLocaleString('id-ID')}`);
+            $('#checkoutTotal').text(`Rp ${grandTotal.toLocaleString('id-ID')}`);
+            $('#checkoutWeight').val(totalWeight);
+            console.log(totalWeight, 'update checkout weight');
 
             // Show modal with animation
-            modal.classList.remove('hidden');
+            $modal.removeClass('hidden');
             setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
+                $modalContent.removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
             }, 10);
         }
 
         // Close checkout modal
         function closeCheckoutModal() {
-            const modal = document.getElementById('checkoutModal');
-            const modalContent = document.getElementById('modalContent');
+            const $modal = $('#checkoutModal');
+            const $modalContent = $('#modalContent');
 
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
+            $modalContent.removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
 
             setTimeout(() => {
-                modal.classList.add('hidden');
+                $modal.addClass('hidden');
             }, 300);
         }
 
         // Handle form submission
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        $('#checkoutForm').on('submit', function(e) {
             e.preventDefault();
 
             // Here you would typically send the data to your backend
@@ -773,6 +675,42 @@
         });
 
         // Initialize the cart when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initializeCart);
+        $(document).ready(function() {
+            initializeCart();
+
+
+            let provinsi = '{{ getAlamat()->provinsi }}';
+            let kota = '{{ getAlamat()->kota }}';
+            let kecamatan = '{{ getAlamat()->kecamatan }}';
+            let kelurahan = '{{ getAlamat()->kelurahan }}';
+            let kode_pos = '{{ getAlamat()->kode_pos }}';
+            let origin = '{{ getPengaturan()->kode_pos }}';
+            let weight = 0;
+
+            $('#checkoutBtn').on('click', function() {
+                weight = $('#checkoutWeight').val()
+                console.log(weight);
+            });
+            $('#ongkir').on('change', function() {
+                const ongkir = $('#ongkir option:selected').text();
+                const harga = ongkir.split(' - ')[0];
+                $('#checkoutShipping').text(harga);
+                console.log(harga, grandTotal, 'ongkir');
+            });
+            let search = `${provinsi} ${kota} ${kecamatan} ${kelurahan} `;
+
+            loadSelectOptions('#kode_pos', `/wilayah/tujuan?search=${search}`, kode_pos)
+
+            $('#kode_pos').on('change', function() {
+                kode_pos = $(this).val()
+            })
+
+            $('#kurir').on('change', function() {
+                kurir = $(this).val()
+                loadSelectOptions('#ongkir',
+                    `/wilayah/ongkir?origin=${origin}&destination=${kode_pos}&courier=${kurir}&weight=${weight}`
+                )
+            })
+        }); 
     </script>
 @endsection

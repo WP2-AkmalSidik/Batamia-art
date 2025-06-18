@@ -260,7 +260,6 @@
             let kelurahan;
             let kode_pos;
 
-            console.log('halo')
             loadSelectOptions('#provinsi', '/wilayah/provinsi');
 
             $('#provinsi').on('change', function() {

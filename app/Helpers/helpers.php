@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Bank;
+use App\Models\Alamat;
 use App\Models\Kategori;
 use App\Models\Pengaturan;
-
 
 if (! function_exists('getPengaturan')) {
     function getPengaturan(): ?Pengaturan
@@ -103,5 +104,17 @@ if (! function_exists('getKategori')) {
     function getKategori()
     {
         return Kategori::all();
+    }
+}
+
+if (! function_exists('getBanks')) {
+    function getBanks()
+    {return Bank::all();}
+}
+
+if (! function_exists('getAlamat')) {
+    function getAlamat()
+    {
+        return Alamat::where('user_id', auth()->user()->id)->first();
     }
 }

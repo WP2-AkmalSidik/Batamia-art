@@ -114,60 +114,8 @@
 
                 <!-- Form Options -->
                 <form id="addToCartForm">
-                    <!-- Warna -->
-                    {{-- <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Warna</label>
-                        <div class="flex gap-2">
-                            <label class="flex items-center">
-                                <input type="radio" name="color" value="merah" class="sr-only peer">
-                                <div
-                                    class="w-8 h-8 bg-red-500 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:ring-2 peer-checked:ring-amber-200 cursor-pointer">
-                                </div>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="color" value="biru" class="sr-only peer">
-                                <div
-                                    class="w-8 h-8 bg-blue-500 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:ring-2 peer-checked:ring-amber-200 cursor-pointer">
-                                </div>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="color" value="hijau" class="sr-only peer">
-                                <div
-                                    class="w-8 h-8 bg-green-500 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:ring-2 peer-checked:ring-amber-200 cursor-pointer">
-                                </div>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="color" value="natural" class="sr-only peer" checked>
-                                <div
-                                    class="w-8 h-8 bg-amber-600 rounded-full border-2 border-gray-300 peer-checked:border-amber-500 peer-checked:ring-2 peer-checked:ring-amber-200 cursor-pointer">
-                                </div>
-                            </label>
-                        </div>
-                    </div> --}}
-
-                    <!-- Ukuran -->
-                    {{-- <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ukuran</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <label
-                                class="flex items-center justify-center p-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20">
-                                <input type="radio" name="size" value="S" class="sr-only">
-                                <span class="text-sm font-medium">S</span>
-                            </label>
-                            <label
-                                class="flex items-center justify-center p-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20">
-                                <input type="radio" name="size" value="M" class="sr-only" checked>
-                                <span class="text-sm font-medium">M</span>
-                            </label>
-                            <label
-                                class="flex items-center justify-center p-2 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20">
-                                <input type="radio" name="size" value="L" class="sr-only">
-                                <span class="text-sm font-medium">L</span>
-                            </label>
-                        </div>
-                    </div> --}}
-
                     <!-- Kuantitas -->
+                    <input type="hidden" name="produk_id" id="produk_id">
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kuantitas</label>
                         <div class="flex items-center gap-3">
@@ -175,7 +123,7 @@
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                 <i class="fas fa-minus text-sm"></i>
                             </button>
-                            <input type="number" id="quantity" value="1" min="1" max="100"
+                            <input type="number" id="quantity" value="1" min="1" max="100" name="kuantitas"
                                 class="w-16 text-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                             <button type="button" onclick="changeQuantity(1)"
                                 class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
@@ -201,7 +149,7 @@
                             Batal
                         </button>
                         <button type="submit"
-                            class="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            class="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2 tambah-ke-keranjang">
                             <i class="fas fa-shopping-cart"></i>
                             Tambah ke Keranjang
                         </button>
@@ -264,12 +212,14 @@
         });
 
         // Modal functions
-        function openCartModal(productName, price, imageUrl) {
+        function openCartModal(productName, price, imageUrl, productId) {
             currentProductPrice = price;
 
             document.getElementById('modalProductName').textContent = productName;
             document.getElementById('modalProductPrice').textContent = 'Rp ' + price.toLocaleString('id-ID');
             document.getElementById('modalProductImage').src = imageUrl;
+
+            $('#produk_id').val(productId);
 
             updateTotalPrice();
 
@@ -315,30 +265,6 @@
 
         // Event listeners
         document.getElementById('quantity').addEventListener('input', updateTotalPrice);
-
-        document.getElementById('addToCartForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            const cartData = {
-                product: document.getElementById('modalProductName').textContent,
-                price: currentProductPrice,
-                quantity: parseInt(document.getElementById('quantity').value),
-                color: formData.get('color'),
-                size: formData.get('size'),
-                total: currentProductPrice * parseInt(document.getElementById('quantity').value)
-            };
-
-            console.log('Data keranjang:', cartData);
-            alert('Produk berhasil ditambahkan ke keranjang!\n\n' +
-                'Produk: ' + cartData.product + '\n' +
-                'Warna: ' + cartData.color + '\n' +
-                'Ukuran: ' + cartData.size + '\n' +
-                'Jumlah: ' + cartData.quantity + '\n' +
-                'Total: Rp ' + cartData.total.toLocaleString('id-ID'));
-
-            closeCartModal();
-        });
 
         // Close modal when clicking outside
         document.getElementById('cartModal').addEventListener('click', function(e) {
@@ -486,6 +412,24 @@
             $('#loadMoreBtn').on('click', function() {
                 loadData(currentPage + 1, currentQuery, true);
             });
+
+            $(document).on('submit', '#addToCartForm', function(e) {
+                e.preventDefault();
+                const url = '{{ route('keranjang.store') }}';
+                const method = 'POST'
+                const formData = new FormData(this);
+
+                const successCallback = function(response) {
+                    handleSuccess(response);
+                    loadData();
+                };
+
+                const errorCallback = function(error) {
+                    handleSimpleError(error)
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
 
             // Initial load
             loadData();

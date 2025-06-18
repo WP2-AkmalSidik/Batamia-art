@@ -224,38 +224,8 @@
 
                 <!-- Form -->
                 <form id="addToCartForm">
-                    <!-- Ukuran -->
-                    {{-- <div class="mb-4">
-                        <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Pilih Ukuran</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <label
-                                class="p-2 border rounded-lg text-center cursor-pointer text-xs has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                <input type="radio" name="size" value="Small" class="sr-only">
-                                <div>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">Small</div>
-                                    <div class="text-[10px] text-gray-500 dark:text-gray-400">12×18cm</div>
-                                </div>
-                            </label>
-                            <label
-                                class="p-2 border rounded-lg text-center cursor-pointer text-xs has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                <input type="radio" name="size" value="Medium" class="sr-only" checked>
-                                <div>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">Medium</div>
-                                    <div class="text-[10px] text-gray-500 dark:text-gray-400">15×20cm</div>
-                                </div>
-                            </label>
-                            <label
-                                class="p-2 border rounded-lg text-center cursor-pointer text-xs has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50 dark:has-[:checked]:bg-amber-900/20 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                <input type="radio" name="size" value="Large" class="sr-only">
-                                <div>
-                                    <div class="font-medium text-gray-900 dark:text-gray-100">Large</div>
-                                    <div class="text-[10px] text-gray-500 dark:text-gray-400">18×25cm</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div> --}}
-
                     <!-- Jumlah -->
+                    <input type="hidden" name="produk_id">
                     <div class="mb-4">
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">Jumlah</label>
                         <div class="flex items-center gap-2">
