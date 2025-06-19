@@ -151,8 +151,8 @@
                         </button>
                         <button type="submit"
                             class="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2 tambah-ke-keranjang">
+                            Tambah
                             <i class="fas fa-shopping-cart"></i>
-                            Tambah ke Keranjang
                         </button>
                     </div>
                 </form>
