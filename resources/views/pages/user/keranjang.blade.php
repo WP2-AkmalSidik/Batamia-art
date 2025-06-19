@@ -34,74 +34,140 @@
             <!-- Main Content - Responsive Layout -->
             <div class="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6 xl:gap-8">
                 <!-- Cart Items - Mobile First -->
-                <div class="lg:col-span-8">
-                    <!-- Cart Item 1 - Responsive -->
-
+                <div class="lg:col-span-8 space-y-3 sm:space-y-4">
                     @foreach ($keranjangs->keranjangProduks as $keranjang)
-                        <div class="cart-item bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 sm:p-6 mb-3 sm:mb-4 hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
+                        <div class="cart-item bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
                             data-price="{{ $keranjang->produk->harga }}" data-id="{{ $keranjang->id }}"
-                            data-berat={{ $keranjang->produk->berat }}>
-                            <div class="flex items-start gap-3 sm:gap-4">
+                            data-berat="{{ $keranjang->produk->berat }}">
+
+                            <!-- Desktop Layout (flex row) -->
+                            <div class="hidden sm:flex items-start p-4 gap-4">
                                 <!-- Checkbox -->
-                                <div class="flex-shrink-0 pt-0 sm:pt-1">
+                                <div class="flex-shrink-0 pt-1">
                                     <input type="checkbox"
-                                        class="item-checkbox w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2">
+                                        class="item-checkbox w-5 h-5 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500">
                                 </div>
 
-                                <!-- Product Image - Responsive -->
-                                <div class="flex-shrink-0">
-                                    <div
-                                        class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg sm:rounded-xl flex items-center justify-center">
-                                        <i class="fas fa-dragon text-xl sm:text-2xl text-amber-600 dark:text-amber-400"></i>
-                                    </div>
+                                <!-- Product Image -->
+                                <div
+                                    class="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 dark:from-gray-700 dark:to-gray-600">
+                                    <img src="{{ Str::startsWith($keranjang->produk->image, 'http') ? $keranjang->produk->image : asset('storage/' . $keranjang->produk->image) }}"
+                                        alt="{{ $keranjang->produk->nama }}" class="w-full h-full object-cover">
                                 </div>
 
-                                <!-- Product Details - Responsive -->
+                                <!-- Product Details -->
                                 <div class="flex-1 min-w-0">
-                                    <h3
-                                        class="text-sm sm:text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                                        {{ $keranjang->produk->nama }}</h3>
-                                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-2 sm:mb-3">
-                                        {{ $keranjang->produk->deskripsi }}</p>
+                                    <div class="flex justify-between items-start gap-2">
+                                        <div>
+                                            <h3
+                                                class="text-lg font-semibold text-gray-900 dark:text-white mb-1 line-clamp-1">
+                                                {{ $keranjang->produk->nama }}
+                                            </h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">
+                                                {{ $keranjang->produk->deskripsi }}
+                                            </p>
+                                        </div>
+                                        <button
+                                            class="delete-item p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
 
-                                    <div
-                                        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-4">
-                                        <!-- Price - Responsive -->
-                                        <div class="flex items-center gap-1 sm:gap-2">
-                                            <span
-                                                class="text-sm sm:text-base md:text-lg font-bold text-gray-900 dark:text-white">Rp
-                                                {{ $keranjang->produk->harga }}</span>
-                                            <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">per pcs</span>
+                                    <div class="flex items-center justify-between">
+                                        <!-- Price -->
+                                        <div class="text-lg font-bold text-amber-600 dark:text-amber-400">
+                                            Rp {{ number_format($keranjang->produk->harga, 0, ',', '.') }}
                                         </div>
 
-                                        <!-- Quantity Controls - Responsive -->
-                                        <div class="flex items-center gap-1 sm:gap-2 md:gap-3">
+                                        <!-- Quantity Controls -->
+                                        <div class="flex items-center gap-4">
                                             <div
                                                 class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
                                                 <button
-                                                    class="qty-minus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    class="qty-minus px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    <i class="fas fa-minus text-gray-600 dark:text-gray-300"></i>
+                                                </button>
+                                                <input type="number" value="{{ $keranjang->kuantitas }}" min="1"
+                                                    class="qty-input w-12 text-center border-0 bg-transparent focus:ring-0 font-medium text-gray-900 dark:text-white">
+                                                <button
+                                                    class="qty-plus px-3 py-1 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    <i class="fas fa-plus text-gray-600 dark:text-gray-300"></i>
+                                                </button>
+                                            </div>
+
+                                            <!-- Total Price -->
+                                            <div class="w-24 text-right">
+                                                <p class="item-total text-lg font-bold text-blue-600 dark:text-blue-400">
+                                                    Rp
+                                                    {{ number_format($keranjang->kuantitas * $keranjang->produk->harga, 0, ',', '.') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile Layout (stacked) -->
+                            <div class="sm:hidden p-3">
+                                <div class="flex items-start gap-3">
+                                    <!-- Checkbox -->
+                                    <div class="flex-shrink-0 pt-1">
+                                        <input type="checkbox"
+                                            class="item-checkbox w-4 h-4 text-blue-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500">
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="flex-1">
+                                        <div class="flex gap-3">
+                                            <!-- Product Image -->
+                                            <div
+                                                class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 dark:from-gray-700 dark:to-gray-600">
+                                                <img src="{{ Str::startsWith($keranjang->produk->image, 'http') ? $keranjang->produk->image : asset('storage/' . $keranjang->produk->image) }}"
+                                                    alt="{{ $keranjang->produk->nama }}"
+                                                    class="w-full h-full object-cover">
+                                            </div>
+
+                                            <!-- Product Info -->
+                                            <div class="flex-1 min-w-0">
+                                                <div class="flex justify-between items-start">
+                                                    <h3
+                                                        class="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2">
+                                                        {{ $keranjang->produk->nama }}
+                                                    </h3>
+                                                    <button class="delete-item p-1 text-red-500">
+                                                        <i class="fas fa-trash text-xs"></i>
+                                                    </button>
+                                                </div>
+
+                                                <!-- Price -->
+                                                <p class="text-sm font-bold text-amber-600 dark:text-amber-400 mt-1">
+                                                    Rp {{ number_format($keranjang->produk->harga, 0, ',', '.') }}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Quantity Controls -->
+                                        <div class="flex items-center justify-between mt-3">
+                                            <div
+                                                class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                                <button
+                                                    class="qty-minus px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
                                                     <i class="fas fa-minus text-xs text-gray-600 dark:text-gray-300"></i>
                                                 </button>
                                                 <input type="number" value="{{ $keranjang->kuantitas }}" min="1"
-                                                    class="qty-input w-12 sm:w-14 md:w-16 text-center border-0 bg-transparent focus:ring-0 text-xs sm:text-sm font-medium text-gray-900 dark:text-white">
-                                                <button
-                                                    class="qty-plus p-1 sm:p-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                                    class="qty-input w-10 text-center border-0 bg-transparent focus:ring-0 text-xs font-medium text-gray-900 dark:text-white">
+                                                <button class="qty-plus px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600">
                                                     <i class="fas fa-plus text-xs text-gray-600 dark:text-gray-300"></i>
                                                 </button>
                                             </div>
 
-                                            <!-- Total Price - Responsive -->
-                                            <div class="text-right">
-                                                <p
-                                                    class="item-total text-sm sm:text-base md:text-lg font-bold text-blue-600 dark:text-blue-400">
-                                                    Rp {{ $keranjang->kuantitas * $keranjang->produk->harga }}</p>
+                                            <!-- Total Price -->
+                                            <div>
+                                                <p class="item-total text-sm font-bold text-blue-600 dark:text-blue-400">
+                                                    Rp
+                                                    {{ number_format($keranjang->kuantitas * $keranjang->produk->harga, 0, ',', '.') }}
+                                                </p>
                                             </div>
-
-                                            <!-- Delete Button - Responsive -->
-                                            <button
-                                                class="delete-item p-1 sm:p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                                <i class="fas fa-trash text-xs sm:text-sm"></i>
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -711,6 +777,6 @@
                     `/wilayah/ongkir?origin=${origin}&destination=${kode_pos}&courier=${kurir}&weight=${weight}`
                 )
             })
-        }); 
+        });
     </script>
 @endsection
