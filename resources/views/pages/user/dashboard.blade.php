@@ -243,8 +243,6 @@
             // Reset form
             document.getElementById('addToCartForm').reset();
             document.getElementById('quantity').value = 1;
-            document.querySelector('input[name="color"][value="natural"]').checked = true;
-            document.querySelector('input[name="size"][value="M"]').checked = true;
         }
 
         function changeQuantity(change) {
@@ -423,12 +421,12 @@
                 formData.append('keranjang_id', '{{ getKeranjangId() }}');
 
                 const successCallback = function(response) {
-                    handleSuccess(response);
-                    loadData();
+                    closeCartModal();
+                    successToast(response);
                 };
 
                 const errorCallback = function(error) {
-                    handleSimpleError(error)
+                    errorToast(error)
                 };
 
                 ajaxCall(url, "POST", formData, successCallback, errorCallback);

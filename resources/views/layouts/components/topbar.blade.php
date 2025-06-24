@@ -14,17 +14,17 @@
             @if (auth()->check())
                 @if (auth()->user()->role === 'admin')
                     <!-- Is Admin -->
-                    <button class="relative ml-2">
+                    {{-- <button class="relative ml-2">
                         <i class="fas fa-bell text-gray-600 hover:text-gray-400"></i>
                         <span
                             class="absolute -top-2 -right-3 w-5 h-5 bg-gradient-to-r from-red-500 to-red-600 text-xs flex items-center justify-center text-white rounded-full animate-pulse">3</span>
-                    </button>
+                    </button> --}}
                 @elseif (auth()->user()->role === 'user')
                     <!-- Is Customers -->
                     <button class="relative ml-2">
                         <i class="fa-solid fa-cart-shopping text-gray-600 hover:text-gray-400"></i>
                         <span
-                            class="absolute -top-2 -right-3 w-5 h-5 bg-gradient-to-r from-red-500 to-red-600 text-xs flex items-center justify-center text-white rounded-full animate-pulse">3</span>
+                            class="absolute -top-2 -right-3 w-5 h-5 bg-gradient-to-r from-red-500 to-red-600 text-xs flex items-center justify-center text-white rounded-full animate-pulse">{{ getKeranjangProdukCount() }}</span>
                     </button>
                 @endif
             @endif

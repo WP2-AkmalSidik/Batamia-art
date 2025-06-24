@@ -15,11 +15,12 @@
                     <select
                         class="w-full px-4 py-2 text-sm rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">Semua Status</option>
-                        <option value="menunggu_pembayaran">Menunggu Pembayaran</option>
+                        <option value="belum_dibayar">Menunggu Pembayaran</option>
                         <option value="diproses">Diproses</option>
                         <option value="dikirim">Dikirim</option>
                         <option value="selesai">Selesai</option>
                         <option value="dibatalkan">Dibatalkan</option>
+                        <option value="ditolak">Ditolak</option>
                     </select>
                 </div>
             </div>
@@ -436,7 +437,8 @@
                 <!-- Product Info -->
                 <div class="flex items-center gap-4 mb-6">
                     <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0">
-                        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80" alt="Produk" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80"
+                            alt="Produk" class="w-full h-full object-cover">
                     </div>
                     <div>
                         <h4 class="font-medium text-gray-900 dark:text-white" id="ratingProductName">-</h4>

@@ -43,11 +43,19 @@
                         <i class="fas fa-box w-5 mr-3"></i>
                         <span>Produk</span>
                     </a>
-                    <a href="{{ route('pesanan.index') }}"
-                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('pesanan.*') ? 'active' : '' }}">
-                        <i class="fas fa-shopping-cart w-5 mr-3"></i>
-                        <span>Pesanan</span>
-                    </a>
+                    @if (auth()->check() && auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.pesanan.index') }}"
+                            class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('admin/pesanan.*') ? 'active' : '' }}">
+                            <i class="fas fa-shopping-cart w-5 mr-3"></i>
+                            <span>Pesanan</span>
+                        </a>
+                    @elseif (auth()->check() && auth()->user()->role === 'user')
+                        <a href="{{ route('pesanan.index') }}"
+                            class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('pesanan.*') ? 'active' : '' }}">
+                            <i class="fas fa-shopping-cart w-5 mr-3"></i>
+                            <span>Pesanan</span>
+                        </a>
+                    @endif
                     <a href="{{ route('laporan.index') }}"
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
                         <i class="fas fa-chart-line w-5 mr-3"></i>
@@ -65,15 +73,15 @@
                     </a>
                 @endif
 
-                <a href="/keranjang"
-                    class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->is('keranjang') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-cart w-5 mr-3"></i>
-                    <span>Keranjang</span>
-                </a>
-
                 @if (auth()->check() && auth()->user()->role === 'user')
-                    <a href="/list-pesanan"
-                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->is('list-pesanan') ? 'active' : '' }}">
+                    <a href="/keranjang"
+                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->is('keranjang') ? 'active' : '' }}">
+                        <i class="fas fa-shopping-cart w-5 mr-3"></i>
+                        <span>Keranjang</span>
+                    </a>
+
+                    <a href="/pesanan"
+                        class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->is('pesanan') ? 'active' : '' }}">
                         <i class="fas fa-clipboard-list w-5 mr-3"></i>
                         <span>List Pesanan</span>
                     </a>
@@ -103,16 +111,15 @@
                     class="flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition cursor-pointer {{ request()->is('profile') ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border-l-3 border-amber-500 dark:border-amber-400' : 'text-gray-700 dark:text-gray-300' }}">
                     <div class="relative mr-3">
                         <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                            <img src="https://ui-avatars.com/api/?name=AB&background=d4a574&color=fff&format=svg"
-                                alt="A">
+                            <img src="{{ getUiAvatar(auth()->user()->nama) }}" alt="{{ auth()->user()->nama }}">
                         </div>
                         <div
                             class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-gray-800">
                         </div>
                     </div>
                     <div>
-                        <p class="text-sm font-semibold">Admin Batamia</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">admin@batamia.com</p>
+                        <p class="text-sm font-semibold">{{ auth()->user()->nama }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
             </a>

@@ -38,7 +38,7 @@
                     @foreach ($keranjangs->keranjangProduks as $keranjang)
                         <div class="cart-item bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md dark:hover:shadow-lg transition-all duration-300"
                             data-price="{{ $keranjang->produk->harga }}" data-id="{{ $keranjang->id }}"
-                            data-berat="{{ $keranjang->produk->berat }}">
+                            data-berat="{{ $keranjang->produk->berat }}" data-produk_id={{ $keranjang->produk_id }}>
 
                             <!-- Desktop Layout (flex row) -->
                             <div class="hidden sm:flex items-start p-4 gap-4">
@@ -67,7 +67,7 @@
                                                 {{ $keranjang->produk->deskripsi }}
                                             </p>
                                         </div>
-                                        <button
+                                        <button data-id="{{ $keranjang->id }}"
                                             class="delete-item p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full">
                                             <i class="fas fa-trash text-sm"></i>
                                         </button>
@@ -248,66 +248,70 @@
             <!-- Modal Content -->
             <div class="overflow-y-auto max-h-[calc(95vh-80px)]">
                 <div class="p-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Left Column - Order Summary -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                                <i class="fas fa-list-ul mr-2 text-blue-600"></i>
-                                Ringkasan Pesanan
-                            </h3>
-                            <div class="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-4 mb-4">
-                                <div id="checkoutItems" class="space-y-3">
-                                    <!-- Selected items will be populated here -->
-                                </div>
-                                <hr class="border-gray-300 dark:border-gray-600 my-4">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
-                                        <span class="font-medium" id="checkoutSubtotal">Rp 0</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
-                                        <span class="font-medium" id="checkoutShipping">Rp 0</span>
-                                    </div>
-                                    <div
-                                        class="flex justify-between font-bold text-lg pt-2 border-t border-gray-300 dark:border-gray-600">
-                                        <span class="text-gray-900 dark:text-white">Total</span>
-                                        <span class="text-blue-600 dark:text-blue-400" id="checkoutTotal">Rp 0</span>
-                                        <input type="hidden" id="checkoutWeight">
-                                        <input type="hidden" id="checkoutTotalPrice">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Payment Method -->
+                    <form id="checkoutForm">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="keranjang_id" value="{{ getKeranjangId() }}">
+                            <!-- Left Column - Order Summary -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                                    <i class="fas fa-credit-card mr-1"></i>
-                                    Metode Pembayaran
-                                </label>
-                                <div class="space-y-2">
-                                    @foreach (getBanks() as $bank)
-                                        <label
-                                            class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
-                                            <input type="radio" name="payment" value="transfer"
-                                                class="mr-3 text-blue-600 focus:ring-blue-500">
-                                            <i
-                                                class="fas {{ $bank->jenis == 'bank' ? 'fa-university' : 'fa-mobile-alt' }} text-blue-600 mr-3"></i>
-                                            <div>
-                                                <span
-                                                    class="font-medium text-gray-900 dark:text-white">{{ Str::ucfirst($bank->jenis) }}</span>
-                                                <p class="text-xs text-gray-500 dark:text-gray-400">
-                                                    {{ Str::ucfirst($bank->nama_bank) }}</p>
-                                            </div>
-                                        </label>
-                                    @endforeach
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                    <i class="fas fa-list-ul mr-2 text-blue-600"></i>
+                                    Ringkasan Pesanan
+                                </h3>
+                                <div class="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-4 mb-4">
+                                    <div id="checkoutItems" class="space-y-3">
+                                        <!-- Selected items will be populated here -->
+                                    </div>
+                                    <hr class="border-gray-300 dark:border-gray-600 my-4">
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
+                                            <input type="hidden" id="subTotalCheckout">
+                                            <span class="font-medium" id="checkoutSubtotal">Rp 0</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-600 dark:text-gray-400">Ongkos Kirim</span>
+                                            <span class="font-medium" id="checkoutShipping">Rp 0</span>
+                                        </div>
+                                        <div
+                                            class="flex justify-between font-bold text-lg pt-2 border-t border-gray-300 dark:border-gray-600">
+                                            <span class="text-gray-900 dark:text-white">Total</span>
+                                            <span class="text-blue-600 dark:text-blue-400" id="checkoutTotal">Rp 0</span>
+                                            <input type="hidden" id="checkoutWeight">
+                                            <input type="hidden" name="etd" id="etd">
+                                            <input type="hidden" name="total_harga" id="checkoutTotalPrice">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Payment Method -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                        <i class="fas fa-credit-card mr-1"></i>
+                                        Metode Pembayaran
+                                    </label>
+                                    <div class="space-y-2">
+                                        @foreach (getBanks() as $bank)
+                                            <label
+                                                class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+                                                <input type="radio" name="payment" value="{{ $bank->id }}"
+                                                    class="mr-3 text-blue-600 focus:ring-blue-500" required>
+                                                <i
+                                                    class="fas {{ $bank->jenis == 'bank' ? 'fa-university' : 'fa-mobile-alt' }} text-blue-600 mr-3"></i>
+                                                <div>
+                                                    <span
+                                                        class="font-medium text-gray-900 dark:text-white">{{ Str::ucfirst($bank->jenis) }}</span>
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                        {{ Str::ucfirst($bank->nama_bank) }}</p>
+                                                </div>
+                                            </label>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Right Column - Shipping Form -->
-                        <div>
-                            <form id="checkoutForm">
+                            <!-- Right Column - Shipping Form -->
+                            <div>
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                                     <i class="fas fa-shipping-fast mr-2 text-green-600"></i>
                                     Informasi Pengiriman
@@ -408,6 +412,7 @@
                                     </div>
 
                                     <div>
+                                        <input type="hidden" name="alamat_id" value="{{ getAlamat()->id }}">
                                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                             <i class="fas fa-map-marker-alt mr-1"></i>
                                             Alamat Lengkap
@@ -442,9 +447,9 @@
                                         </select>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                    </form>
 
                     <!-- Action Buttons -->
                     <div class="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
@@ -475,12 +480,14 @@
             $('.cart-item').each(function() {
                 const $item = $(this);
                 const id = $item.data('id');
+                const produk_id = $item.data('produk_id');
                 const price = parseInt($item.data('price'));
                 const berat = parseInt($item.data('berat'));
                 const $qtyInput = $item.find('.qty-input');
                 const quantity = parseInt($qtyInput.val());
 
                 cartData[id] = {
+                    produk_id: produk_id,
                     id: id,
                     price: price,
                     quantity: quantity,
@@ -594,19 +601,38 @@
 
             // Delete selected items button
             $('#deleteSelected').on('click', function() {
-                if (selectedItems.size > 0 && confirm('Apakah Anda yakin ingin menghapus item yang dipilih?')) {
-                    selectedItems.forEach(id => {
-                        deleteItem(id);
+                if (selectedItems.size > 0) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Item yang dipilih akan dihapus.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            selectedItems.forEach(id => {
+                                deleteItem(id);
+                            });
+                            selectedItems.clear();
+                            $('#selectAll').prop('checked', false);
+                            updateSelectedCount();
+                            updateSummary();
+                            toggleCheckoutButton();
+
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Item yang dipilih telah dihapus.',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                        }
                     });
-                    selectedItems.clear();
-                    $('#selectAll').prop('checked', false);
-                    updateSelectedCount();
-                    updateSummary();
-                    toggleCheckoutButton();
                 }
             });
-        }
 
+        }
 
         // Update the summary section
         function updateSummary() {
@@ -660,6 +686,13 @@
 
         // Delete an item from cart
         function deleteItem(id) {
+
+            const url = `/keranjang/${id}`;
+
+            ajaxCall(url, 'DELETE', null, null, null)
+            updateSelectedCount();
+            updateSummary();
+            toggleCheckoutButton();
             const item = cartData[id];
             item.element.remove();
             delete cartData[id];
@@ -679,11 +712,15 @@
 
             let subtotal = 0;
             totalWeight = 0;
+            console.log(totalWeight, 'sebelum loop');
             selectedItems.forEach(id => {
                 const item = cartData[id];
+                console.log(item);
                 subtotal += item.price * item.quantity;
                 console.log(item.berat, item.quantity);
-                totalWeight = item.berat * item.quantity
+                totalWeight = totalWeight + (item.berat * item.quantity);
+                console.log(totalWeight, 'ini adalah total berat looping');
+                console.log(item.berat, item.quantity, 'ini adalah total berat looping');
 
                 const $itemElement = $(`
                 <div class="flex items-start gap-3 p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
@@ -692,6 +729,9 @@
                     </div>
                     <div class="flex-1">
                         <h4 class="font-medium text-gray-900 dark:text-white">${item.element.find('h3').text()}</h4>
+                        <input type="hidden" name="produk_id[${id}][id]" value="${item.produk_id}">
+                        <input type="hidden" name="produk_id[${id}][quantity]" value="${item.quantity}">
+                        <input type="hidden" name="produk_id[${id}][total_harga]" value="${item.price * item.quantity}">
                         <p class="text-xs text-gray-500 dark:text-gray-400">${item.quantity} x Rp ${item.price.toLocaleString('id-ID')}</p>
                     </div>
                     <div class="font-medium text-gray-900 dark:text-white">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
@@ -701,13 +741,15 @@
             });
 
             const grandTotal = subtotal;
-            console.log(grandTotal);
+            console.log(grandTotal, totalWeight, 'diluar loop');
 
             // Update checkout summary
             $('#checkoutSubtotal').text(`Rp ${subtotal.toLocaleString('id-ID')}`);
+            $('#subTotalCheckout').val(grandTotal);
+
             $('#checkoutTotal').text(`Rp ${grandTotal.toLocaleString('id-ID')}`);
             $('#checkoutWeight').val(totalWeight);
-            console.log(totalWeight, 'update checkout weight');
+            console.log(totalWeight, 'update checkout weight', grandTotal);
 
             // Show modal with animation
             $modal.removeClass('hidden');
@@ -732,10 +774,28 @@
         $('#checkoutForm').on('submit', function(e) {
             e.preventDefault();
 
-            // Here you would typically send the data to your backend
-            // For this example, we'll just show an alert
-            alert('Pesanan berhasil diproses! Terima kasih telah berbelanja.');
-            closeCheckoutModal();
+            const formData = new FormData(this);
+
+            // Cara 1: Menggunakan for...of
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+
+            const url = '{{ route('pesanan.store') }}';
+            const method = "POST"
+
+            const successCallback = function(response) {
+                successToast(response);
+                closeCheckoutModal();
+                window.location.reload();
+            };
+
+            const errorCallback = function(error) {
+                closeCheckoutModal();
+                errorToast(error)
+            };
+
+            ajaxCall(url, method, formData, successCallback, errorCallback);
 
             // In a real app, you would redirect to a success page or show a confirmation
         });
@@ -743,7 +803,6 @@
         // Initialize the cart when DOM is loaded
         $(document).ready(function() {
             initializeCart();
-
 
             let provinsi = '{{ getAlamat()->provinsi }}';
             let kota = '{{ getAlamat()->kota }}';
@@ -757,11 +816,18 @@
                 weight = $('#checkoutWeight').val()
                 console.log(weight);
             });
+
             $('#ongkir').on('change', function() {
+                let subTotal = $('#subTotalCheckout').val();
                 const ongkir = $('#ongkir option:selected').text();
                 const harga = ongkir.split(' - ')[0];
-                $('#checkoutShipping').text(harga);
-                console.log(harga, grandTotal, 'ongkir');
+                const etd = ongkir.split(' - ')[1] + ' ' + ongkir.split(' - ')[2];
+                $('#checkoutShipping').text(`Rp ${harga.toLocaleString('id-ID')}`);
+                $('#etd').val(etd)
+                totalPrice = parseInt(subTotal) + parseInt(harga);
+                console.log(totalPrice, subTotal, harga, etd);
+                $('#checkoutTotal').text(`Rp ${totalPrice.toLocaleString('id-ID')}`);
+                $('#checkoutTotalPrice').val(totalPrice);
             });
             let search = `${provinsi} ${kota} ${kecamatan} ${kelurahan} `;
 
@@ -772,6 +838,7 @@
             })
 
             $('#kurir').on('change', function() {
+                console.log(weight, 'berat');
                 kurir = $(this).val()
                 loadSelectOptions('#ongkir',
                     `/wilayah/ongkir?origin=${origin}&destination=${kode_pos}&courier=${kurir}&weight=${weight}`

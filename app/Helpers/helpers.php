@@ -6,6 +6,7 @@ use App\Models\Produk;
 use App\Models\Kategori;
 use App\Models\Keranjang;
 use App\Models\Pengaturan;
+use App\Models\KeranjangProduk;
 
 if (! function_exists('getPengaturan')) {
     function getPengaturan(): ?Pengaturan
@@ -103,11 +104,59 @@ if (! function_exists('cekReviews')) {
     }
 }
 
+if (! function_exists('sepuluhTahunTerakhir')) {
+    function sepuluhTahunTerakhir()
+    {
+        $tahunTerakhir = date('Y');
+        $tahun         = [];
+        for ($i = 0; $i < 10; $i++) {
+            $tahun[] = $tahunTerakhir - $i;
+        }
+        return $tahun;
+    }
+}
+
+if (! function_exists('bulan')) {
+    function bulan()
+    {
+        $bulan  = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $bulans = [];
+        for ($i = 0; $i < 12; $i++) {
+            $bulans[] = $bulan[$i];
+        }
+        return $bulans;
+    }
+}
+
 if (! function_exists('percentage')) {
     function percentage($value, $decimals = 0)
     {
         return number_format($value * 100, $decimals);
     }
+}
+
+/**
+ * Memisahkan underscore dan mengubah ke Judul Case (contoh: "Belum Dibayar")
+ */
+function toTitleCase(string $text): string
+{
+    return Str::title(str_replace('_', ' ', $text));
+}
+
+/**
+ * Memisahkan underscore dan mengubah ke Sentence Case (contoh: "Belum dibayar")
+ */
+function toSentenceCase(string $text): string
+{
+    return ucfirst(str_replace('_', ' ', $text));
+}
+
+/**
+ * Memisahkan underscore tanpa mengubah kapitalisasi (contoh: "belum dibayar")
+ */
+function replaceUnderscore(string $text): string
+{
+    return str_replace('_', ' ', $text);
 }
 
 if (! function_exists('isLogin')) {
@@ -125,7 +174,19 @@ if (! function_exists('getKeranjangId')) {
         }
         return;
     }
+
 }
+if (! function_exists('getKeranjangProdukCount')) {
+    function getKeranjangProdukCount()
+    {
+        if (auth()->check()) {
+            return KeranjangProduk::where('keranjang_id', getKeranjangId())->count();
+        }
+        return;
+    }
+}
+
+
 
 if (! function_exists('getKategori')) {
     function getKategori()

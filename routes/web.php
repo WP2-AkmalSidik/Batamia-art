@@ -22,11 +22,14 @@ Route::middleware('role:admin')->group(function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan-penjualan/export-excel', [LaporanPenjualanController::class, 'exportExcel'])->name('laporan.excel');
+    Route::get('/laporan-penjualan/export-pdf', [LaporanPenjualanController::class, 'exportPdf'])->name('laporan.pdf');
 
     Route::resource('/kategori', App\Http\Controllers\Admin\KategoriController::class)->names('kategori');
     Route::resource('admin/produk', App\Http\Controllers\Admin\ProdukController::class)->names('admin.produk');
     Route::resource('admin/pesanan', App\Http\Controllers\Admin\PesananController::class)->names('admin.pesanan');
-    Route::put('/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('admin.pesanan.update.status');
+    Route::put('admin/pesanan/{id}/status', [App\Http\Controllers\Admin\PesananController::class, 'updateStatus'])->name('admin.pesanan.update.status');
+    Route::post('admin/pesanan/{id}/resi', [App\Http\Controllers\Admin\PesananController::class, 'updateResi'])->name('admin.pesanan.update.resi');
 
     Route::resource('/pengguna', App\Http\Controllers\Admin\PenggunaController::class)->names('pengguna');
     Route::get('/pengaturan', [PengaturanController::class, 'index'])->name('pengaturan.index');
@@ -48,6 +51,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/pesanan', App\Http\Controllers\User\PesananController::class)->names('pesanan');
     Route::post('/pesanan/pembayaran', [App\Http\Controllers\User\PesananController::class, 'updatePembayaran'])->name('pesanan.update.pembayaran');
+    Route::post('/pesanan/cancel', [App\Http\Controllers\User\PesananController::class, 'cancelPesanan'])->name('pesanan.update.cancel');
+    Route::put('/profile/update', [App\Http\Controllers\Admin\PenggunaController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/password', [App\Http\Controllers\Admin\PenggunaController::class, 'updatePassword'])->name('password.update');
+
+    Route::get('/profile', [App\Http\Controllers\Admin\PenggunaController::class, 'profile'])->name('profile');
+
 });
 
 Route::prefix('wilayah')->name('wilayah.')->group(function () {
@@ -79,4 +88,3 @@ Route::get('/produk', [UserDashboardController::class, 'index'])->name('user.pro
 Route::get('/produk/{id}/detail', [UserDashboardController::class, 'show'])->name('user.produk.detail');
 Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->name('user.detail-produk');
 Route::view('/list-pesanan', 'pages/user/list-pesanan');
-Route::view('/profile', 'pages/user/profile');
