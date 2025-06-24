@@ -25,14 +25,6 @@
                             <i class="fas fa-lock text-lg"></i>
                             <span class="font-medium">Ubah Password</span>
                         </button>
-
-                        <!-- Alamat Pengiriman -->
-                        <button onclick="showSection('address')"
-                            class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-                            data-section="address">
-                            <i class="fas fa-map-marker-alt text-lg"></i>
-                            <span class="font-medium">Alamat Pengiriman</span>
-                        </button>
                     </nav>
                 </div>
             </div>
@@ -55,46 +47,105 @@
                             <!-- Profile Picture -->
                             <div class="flex items-center space-x-6">
                                 <div class="relative">
-                                    <div
+
+                                    <img src="{{ getUiAvatar($user->nama) }}" alt="{{ $user->nama }}"
                                         class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-user text-white text-2xl"></i>
-                                    </div>
-                                    <button type="button"
-                                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-colors">
-                                        <i class="fas fa-camera text-xs"></i>
-                                    </button>
                                 </div>
                                 <div>
-                                    <h3 class="font-medium text-gray-900 dark:text-gray-100">Foto Profil</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">JPG, PNG. Maksimal 2MB</p>
+                                    {{-- <h3 class="font-medium text-gray-900 dark:text-gray-100">Foto Profil</h3> --}}
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="form-label text-gray-700 dark:text-gray-300">Nama Lengkap</label>
-                                    <input type="text" value="John Doe"
+                                    <input type="text" value="{{ auth()->user()->nama }}" name="nama"
                                         class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                                 <div>
                                     <label class="form-label text-gray-700 dark:text-gray-300">Email</label>
-                                    <input type="email" value="john.doe@example.com"
+                                    <input type="email" value="{{ auth()->user()->email }}" name="email"
                                         class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="form-label text-gray-700 dark:text-gray-300">Nomor Telepon</label>
-                                    <input type="tel" value="+62 812-3456-7890"
-                                        class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            @if (auth()->user()->role == 'user')
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="form-label text-gray-700 dark:text-gray-300">Nomor Telepon</label>
+                                        <input type="tel" value="{{ $user->alamat->nomor_hp }}" name="nomor_hp"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+
+                                    <!-- Province Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="provinsi">
+                                            <i class="fas fa-map mr-2 text-amber-600"></i>Provinsi
+                                        </label>
+                                        <input type="text" id="provinsi" value="{{ $user->alamat->provinsi }}"
+                                            name="provinsi"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Masukkan provinsi" required>
+                                    </div>
+
+                                    <!-- City Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="kota">
+                                            <i class="fas fa-city mr-2 text-amber-600"></i>Kota/Kabupaten
+                                        </label>
+                                        <input type="text" id="kota" value="{{ $user->alamat->kota }}"
+                                            name="kota"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Masukkan kota/kabupaten" required>
+                                    </div>
+
+                                    <!-- District Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="kecamatan">
+                                            <i class="fas fa-map-pin mr-2 text-amber-600"></i>Kecamatan
+                                        </label>
+                                        <input type="text" id="kecamatan" value="{{ $user->alamat->kecamatan }}"
+                                            name="kecamatan"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Masukkan kecamatan" required>
+                                    </div>
+                                    <!-- District Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="kelurahan">
+                                            <i class="fas fa-map-pin mr-2 text-amber-600"></i>Kelurahan
+                                        </label>
+                                        <input type="text" id="kelurahan" value="{{ $user->alamat->kelurahan }}"
+                                            name="kelurahan"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Masukkan kelurahan" required>
+                                    </div>
+
+                                    <!-- Postal Code Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="kode_pos">
+                                            <i class="fas fa-mail-bulk mr-2 text-amber-600"></i>Kode Pos
+                                        </label>
+                                        <select name="kode_pos" id="kode_pos"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"></select>
+                                    </div>
+
+                                    <!-- Address Input -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-2"
+                                            for="alamat_lengkap">
+                                            <i class="fas fa-map-marker-alt mr-2 text-amber-600"></i>Alamat Lengkap
+                                        </label>
+                                        <textarea id="alamat_lengkap" name="alamat_lengkap" rows="3"
+                                            class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            placeholder="Masukkan alamat lengkap" required>{{ $user->alamat->alamat_lengkap }}</textarea>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="form-label text-gray-700 dark:text-gray-300">Tanggal Lahir</label>
-                                    <input type="date" value="1990-01-01"
-                                        class="form-input w-full mt-2 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                            </div>
+                            @endif
 
                             <div class="flex justify-end">
                                 <button type="submit"
@@ -136,9 +187,9 @@
                             <div>
                                 <label class="form-label text-gray-700 dark:text-gray-300">Password Saat Ini</label>
                                 <div class="relative mt-2">
-                                    <input type="password" id="currentPassword"
+                                    <input type="password" id="currentPassword" name="password_lama"
                                         class="form-input w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <button type="button" onclick="togglePassword('currentPassword')"
+                                    <button type="button" onclick="togglePassword('currentPassword')" name
                                         class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -148,7 +199,7 @@
                             <div>
                                 <label class="form-label text-gray-700 dark:text-gray-300">Password Baru</label>
                                 <div class="relative mt-2">
-                                    <input type="password" id="newPassword"
+                                    <input type="password" id="newPassword" name="password_baru"
                                         class="form-input w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <button type="button" onclick="togglePassword('newPassword')"
                                         class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
@@ -171,7 +222,7 @@
                             <div>
                                 <label class="form-label text-gray-700 dark:text-gray-300">Konfirmasi Password Baru</label>
                                 <div class="relative mt-2">
-                                    <input type="password" id="confirmPassword"
+                                    <input type="password" id="confirmPassword" name="password_konfirmasi"
                                         class="form-input w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <button type="button" onclick="togglePassword('confirmPassword')"
                                         class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
@@ -267,102 +318,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal Tambah/Edit Alamat -->
-    <div id="addressModal" class="modal fixed inset-0 bg-black/30 z-50 hidden flex items-center justify-center p-4">
-        <div
-            class="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
-            <!-- Header Modal -->
-            <div
-                class="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center z-10">
-                <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Tambah Alamat Baru</h3>
-                <button onclick="closeModal('addressModal')"
-                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
-
-            <!-- Address Form -->
-            <form id="addressForm" class="p-5 space-y-4">
-                <!-- Nama dan Nomor HP -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Lengkap</label>
-                        <input type="text"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor HP</label>
-                        <input type="tel"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition">
-                    </div>
-                </div>
-
-                <!-- Provinsi dan Kota -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Provinsi</label>
-                        <select
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition">
-                            <option value="">Pilih Provinsi</option>
-                            <option>Jawa Barat</option>
-                            <option>Jawa Tengah</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label
-                            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kota/Kabupaten</label>
-                        <select
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition">
-                            <option value="">Pilih Kota</option>
-                            <option>Tasikmalaya</option>
-                            <option>Bandung</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Kecamatan dan Kode Pos -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kecamatan</label>
-                        <select
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition">
-                            <option value="">Pilih Kecamatan</option>
-                            <option>Indihiang</option>
-                            <option>Tawang</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kode Pos</label>
-                        <input type="text"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition"
-                            placeholder="46151">
-                    </div>
-                </div>
-
-                <!-- Alamat Lengkap -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Alamat Lengkap</label>
-                    <textarea rows="3"
-                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition"
-                        placeholder="Nama jalan, nomor rumah, RT/RW"></textarea>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="closeModal('addressModal')"
-                        class="btn-secondary flex-1 py-3 rounded-lg font-medium transition-all duration-200">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="btn-accent flex-1 py-3 rounded-lg font-medium transition-all duration-200 hover:shadow-lg">
-                        <i class="fas fa-save mr-2"></i>
-                        Simpan Alamat
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -504,12 +459,6 @@
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menyimpan...';
             submitBtn.disabled = true;
-
-            setTimeout(() => {
-                alert('Informasi pribadi berhasil diperbarui!');
-                submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Simpan Perubahan';
-                submitBtn.disabled = false;
-            }, 2000);
         });
 
         document.getElementById('passwordForm').addEventListener('submit', function(e) {
@@ -520,17 +469,17 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (!currentPassword || !newPassword || !confirmPassword) {
-                alert('Mohon lengkapi semua field password!');
+                errorToast('error', 'Mohon lengkapi semua field password!');
                 return;
             }
 
             if (newPassword !== confirmPassword) {
-                alert('Konfirmasi password tidak cocok!');
+                errorToast('error', 'Konfirmasi password tidak cocok!');
                 return;
             }
 
             if (newPassword.length < 8) {
-                alert('Password baru minimal 8 karakter!');
+                errorToast('error', 'Password baru minimal 8 karakter!');
                 return;
             }
 
@@ -539,7 +488,6 @@
             submitBtn.disabled = true;
 
             setTimeout(() => {
-                alert('Password berhasil diperbarui!');
                 e.target.reset();
                 document.getElementById('strengthBar').style.width = '0%';
                 document.getElementById('strengthText').textContent = 'Kekuatan password';
@@ -548,52 +496,6 @@
             }, 2000);
         });
 
-        document.getElementById('addressForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(e.target);
-            const requiredFields = ['nama', 'nomor_hp', 'alamat_lengkap', 'provinsi', 'kota', 'kecamatan',
-                'kode_pos'
-            ];
-            const inputs = e.target.querySelectorAll('input, select, textarea');
-
-            let isValid = true;
-            inputs.forEach(input => {
-                if (input.hasAttribute('required') && !input.value.trim()) {
-                    input.classList.add('border-red-500');
-                    isValid = false;
-                } else {
-                    input.classList.remove('border-red-500');
-                }
-            });
-
-            if (!isValid) {
-                alert('Mohon lengkapi semua field yang diperlukan!');
-                return;
-            }
-
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menyimpan...';
-            submitBtn.disabled = true;
-
-            setTimeout(() => {
-                alert('Alamat berhasil disimpan!');
-                closeModal('addressModal');
-                e.target.reset();
-                submitBtn.innerHTML = '<i class="fas fa-save mr-2"></i>Simpan Alamat';
-                submitBtn.disabled = false;
-
-                // Refresh address list (in real app, this would fetch from server)
-                // location.reload();
-            }, 2000);
-        });
-
-        // Close modal on click outside
-        document.getElementById('addressModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal('addressModal');
-            }
-        });
 
         // Close modal on ESC key
         document.addEventListener('keydown', function(e) {
@@ -605,25 +507,72 @@
             }
         });
 
-        // Address validation
-        function validateAddress() {
-            const form = document.getElementById('addressForm');
-            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        $(document).ready(function() {
+            let provinsi = $('#provinsi').val();
+            let kota = $('#kota').val();
+            let kecamatan = $('#kecamatan').val();
+            let kelurahan = $('#kelurahan').val();
+            let kode_pos;
+            let search = `${provinsi} ${kota} ${kecamatan} ${kelurahan}`
 
-            inputs.forEach(input => {
-                input.addEventListener('blur', function() {
-                    if (!this.value.trim()) {
-                        this.classList.add('border-red-500');
-                    } else {
-                        this.classList.remove('border-red-500');
-                    }
-                });
-            });
-        }
+            $('#provinsi').on('change', function() {
+                provinsi = $(this).val()
+            })
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            validateAddress();
-        });
+            $('#kecamatan').on('change', function() {
+                kecamatan = $(this).val()
+            })
+
+            $('#kelurahan').on('change', function() {
+                kelurahan = $(this).val()
+
+                search = `${provinsi} ${kota} ${kecamatan} ${kelurahan}`
+
+                console.log(provinsi, kota, kecamatan, kelurahan, search);
+
+                loadSelectOptions('#kode_pos', `/wilayah/tujuan?search=${search}`,
+                    {{ $user->alamat->kode_pos }})
+            })
+
+            $('#kota').on('change', function() {
+                kota = $(this).val()
+            })
+
+            $('#kode_pos').on('change', function() {
+                kode_pos = $(this).val()
+            })
+
+            $('#personalForm').on('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                formData.append('_method', 'PUT');
+                const url = '{{ route('profile.update') }}';
+                const successCallback = function(response) {
+                    showToast('success', response.message);
+                    window.location.reload();
+                };
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "personalForm");
+                };
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            $('#passwordForm').on('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                formData.append('_method', 'PUT');
+                const url = '{{ route('password.update') }}';
+                const successCallback = function(response) {
+                    showToast('success', response.message);
+                    window.location.reload();
+                };
+                const errorCallback = function(error) {
+                    handleValidationErrors(error, "passwordForm");
+                };
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+
+            loadSelectOptions('#kode_pos', `/wilayah/tujuan?search=${search}`, {{ $user->alamat->kode_pos }})
+        })
     </script>
 @endsection
