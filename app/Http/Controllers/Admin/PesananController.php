@@ -22,7 +22,11 @@ class PesananController extends Controller
             $query    = Order::with('orderProduks.produk', 'alamat', 'bank');
 
             if ($request->has('search') && $request->search != '') {
-                $query->where('nama', 'like', '%' . $request->search . '%')->orWhere('deskripsi', 'like', '%' . $request->search . '%');
+                $query->where('nama', 'like', '%' . $request->search . '%');
+            }
+
+            if ($request->has('status') && $request->status != '') {
+                $query->where('status', 'like', '%' . $request->status . '%');
             }
 
             if ($request->filled('perPage') && $request->perPage != '') {
@@ -52,10 +56,29 @@ class PesananController extends Controller
     {
         $pesanan = Order::where('id', $id)->first();
         if (! $pesanan) {
-            return $this->errorResponse(null, 'Data gagal ditemukan');
+            return $this->errorResponse(null, 'Data tidak ditemukan');
         }
         $pesanan->status = $request->status;
+        if ($request->status == 'dibayar') {
+            $pesanan->bukti_pembayaran = $request->bukti_pembayaran;
+        } elseif ($request->status == 'dikirim') {
+            $pesanan->resi = $request->resi;
+        } elseif ($request->status == 'ditolak') {
+            $pesanan->ket = $request->ket;
+        }
+
         $pesanan->save();
-        return $this->successResponse($pesanan, 'Data berhasil ditemukan');
+        return $this->successResponse($pesanan, 'Status berhasil di update.');
+    }
+    public function updateResi(Request $request)
+    {
+        $id      = $request->id;
+        $pesanan = Order::where('id', $id)->first();
+        if (! $pesanan) {
+            return $this->errorResponse(null, 'Data tidak ditemukan');
+        }
+        $pesanan->resi = $request->resi;
+        $pesanan->save();
+        return $this->successResponse($pesanan, 'Resi berhasil di update.');
     }
 }

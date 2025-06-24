@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'nama'     => 'ari',
-            'email'    => 'ari@gmail.com',
+            'email'    => 'arizainalf@gmail.com',
             'password' => bcrypt('123123123'),
             'role'     => 'user',
         ]);
@@ -57,8 +57,8 @@ class DatabaseSeeder extends Seeder
                 'kategori_id' => Kategori::inRandomOrder()->first()->id,
                 'nama'        => $faker->unique()->words(2, true),
                 'deskripsi'   => $faker->paragraph,
-                'harga'       => $faker->randomFloat(2, 10000, 500000),
-                'berat'       => $faker->randomFloat(2, 0.1, 3.0),
+                'harga'       => $faker->numberBetween(45000, 500000),
+                'berat'       => $faker->numberBetween(150, 2500),
                 'stok'        => $faker->numberBetween(10, 100),
                 'image'       => getUiAvatar($faker->name),
                 'status'      => true,
@@ -84,11 +84,11 @@ class DatabaseSeeder extends Seeder
                 'nama'           => $faker->name,
                 'nomor_hp'       => $faker->phoneNumber,
                 'alamat_lengkap' => $faker->address,
-                'provinsi'       => 'Jawa Barat',
-                'kota'           => 'Kab. Tasikmalaya',
-                'kecamatan'      => 'Jamanis',
-                'kelurahan'      => 'Condong',
-                'kode_pos'       => $faker->postcode,
+                'provinsi'       => 'DKI JAKARTA',
+                'kota'           => 'JAKARTA PUSAT',
+                'kecamatan'      => 'GAMBIR',
+                'kelurahan'      => 'GAMBIR',
+                'kode_pos'       => '17601',
             ]);
         }
 
@@ -104,19 +104,20 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        $status = ['belum_dibayar', 'dibayar', 'diproses', 'dikirim', 'selesai', 'dibatalkan', 'ditolak'];
         // Order dan OrderProduk
         foreach (User::all() as $user) {
             $alamat = $user->alamat()->inRandomOrder()->first();
             $bank   = Bank::inRandomOrder()->first();
             $order  = Order::create([
                 'user_id'          => $user->id,
-                'total_harga'      => $faker->randomFloat(2, 50000, 500000),
+                'total_harga'      => $faker->numberBetween(45000, 5000000),
                 'bank_id'          => $bank->id,
                 'alamat_id'        => $alamat?->id,
                 'bukti_pembayaran' => null,
                 'kurir'            => 'J&T',
                 'resi'             => strtoupper($faker->bothify('??######')),
-                'status'           => 'Belum Bayar',
+                'status'           => $faker->randomElement($status),
             ]);
 
             foreach (range(1, 2) as $i) {
@@ -148,7 +149,7 @@ class DatabaseSeeder extends Seeder
             'kota'      => 'Kab. Tasikmalaya',
             'kecamatan' => 'Jamanis',
             'kelurahan' => 'condong',
-            'kode_pos'  => '46175',
+            'kode_pos'  => '77376',
             'alamat'    => 'Jln. Sekbrong desa condong jamanis tasikmalaya 46175',
         ]);
     }

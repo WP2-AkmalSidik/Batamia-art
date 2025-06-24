@@ -16,16 +16,6 @@ class KeranjangController extends Controller
         return view('pages.user.keranjang', compact('keranjangs'));
     }
 
-    public function detail()
-    {
-        return view('pages.user.keranjang.detail');
-    }
-
-    public function checkout()
-    {
-        return view('pages.user.keranjang.checkout');
-    }
-
     public function store()
     {
         $validated = request()->validate([
@@ -35,11 +25,18 @@ class KeranjangController extends Controller
         ]);
 
         try {
-            $validated['cart_id'] = Keranjang::where('user_id', auth()->user()->id)->first()->id;
+            $validated['keranjang_id'] = Keranjang::where('user_id', auth()->user()->id)->first()->id;
 
-            KeranjangProduk::create($validated);
+            $produk = KeranjangProduk::where('produk_id', $validated['produk_id'])->where('keranjang_id', $validated['keranjang_id']);
 
-            return $this->successResponse(null, 'Data berhasil disimpan.');
+            if ($produk->exists()) {
+                $validated['kuantitas'] = $validated['kuantitas'] + $produk->first()->kuantitas;
+                KeranjangProduk::where('produk_id', $validated['produk_id'])->update($validated);
+            } else {
+                KeranjangProduk::create($validated);
+            }
+
+            return $this->successResponse(null, 'Produk berhasil masuk ke keranjang.');
         } catch (\Exception $e) {
             return $this->errorResponse(null, 'Data gagal disimpan. ' . $e->getMessage());
         }
@@ -54,6 +51,15 @@ class KeranjangController extends Controller
             return $this->successResponse(null, 'Data berhasil disimpan.');
         } catch (\Exception $e) {
             return $this->errorResponse(null, 'Data gagal disimpan. ' . $e->getMessage());
+        }
+    }
+    public function destroy(string $id)
+    {
+        try {
+            KeranjangProduk::where('id', $id)->delete();
+            return $this->successResponse(null, 'Data berhasil dihapus.');
+        } catch (\Exception $e) {
+            return $this->errorResponse(null, 'Data gagal dihapus. ' . $e->getMessage());
         }
     }
 }

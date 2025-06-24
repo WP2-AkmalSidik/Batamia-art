@@ -16,15 +16,16 @@
                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
                      <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">
                          {{ $pesanans->firstItem() + $loop->index }}</td>
-                         <td class="py-3 px-4 text-gray-700 dark:text-gray-300">{{ $pesanan->user->nama }}</td>
+                     <td class="py-3 px-4 text-gray-700 dark:text-gray-300">{{ $pesanan->user->nama }}</td>
                      <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">
                          {{ $pesanan->orderProduks->first()->produk->nama }},..</td>
-                     <td class="py-3 px-4 text-gray-700 dark:text-gray-300">{{ $pesanan->orderProduks->count() }} Produk</td>
+                     <td class="py-3 px-4 text-gray-700 dark:text-gray-300">{{ $pesanan->orderProduks->count() }} Produk
+                     </td>
                      <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
                          {{ format_rp($pesanan->total_harga) }}</td>
                      <td class="py-3 px-4">
                          <span
-                             class="px-3 py-1 rounded-full text-sm text-white status-ditolak">{{ $pesanan->status }}</span>
+                             class="px-3 py-1 rounded-full text-sm text-white status-{{ $pesanan->status == 'belum_dibayar' ? 'belum-bayar' : ($pesanan->status == 'Diproses' ? 'diproses' : ($pesanan->status == 'Dikirim' ? 'dikirim' : $pesanan->status)) }}">{{ toTitleCase($pesanan->status) }}</span>
                      </td>
                      <td class="py-3 px-4 text-center">
                          <div class="inline-flex space-x-2">
