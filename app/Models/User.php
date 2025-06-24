@@ -48,6 +48,6 @@ class User extends Authenticatable
 
     public function alamat()
     {
-        return $this->hasMany(Alamat::class);
+        return $this->hasOne(Alamat::class);
     }
 }

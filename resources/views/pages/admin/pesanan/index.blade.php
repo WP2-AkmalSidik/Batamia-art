@@ -8,162 +8,21 @@
             <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-400">Daftar Orderan</h3>
             <div class="flex items-center space-x-3">
                 <!-- Filter Status -->
-                <select class="form-input text-sm px-3 py-2 rounded-md border border-gray-300">
+                <select class="form-input text-sm px-3 py-2 rounded-md border border-gray-300" id="statusFilter">
                     <option value="">Semua Status</option>
                     <option value="belum_bayar">Belum Dibayar</option>
                     <option value="dibayar">Dibayar</option>
+                    <option value="dibatalkan">Dibatalkan</option>
                     <option value="diproses">Diproses</option>
                     <option value="ditolak">Ditolak</option>
                     <option value="dikirim">Dikirim</option>
-                    <option value="sampai">Sampai Lokasi</option>
+                    <option value="diterima">Diterima</option>
                 </select>
             </div>
         </div>
 
         <div class="overflow-x-auto rounded-lg" id="table-pesanan">
-            <table class="w-full text-sm text-left whitespace-nowrap">
-                <thead>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">No Order</th>
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">Nama Produk</th>
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">Kuantitas</th>
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">Total Harga</th>
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">Status</th>
-                        <th class="text-left py-3 px-4 font-medium text-gray-600 dark:text-gray-400">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD001</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Kerajinan Kayu Ukir Naga</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">100 pcs</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 1.450.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-ditolak">Ditolak</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(1)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(1)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD001</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Kerajinan Kayu Ukir Naga</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">2 pcs</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 450.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-dibayar">Dibayar</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(1)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(1)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
 
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD002</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Batik Handmade Motif Parang</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">1 pcs</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 280.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-diproses">Diproses</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(2)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(2)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD003</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Tenun Tradisional Songket</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">3 pcs</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 750.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-belum-bayar">Belum Bayar</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(3)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(3)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD004</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Keramik Hias Tradisional</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">1 set</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 320.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-dikirim">Dikirim</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(4)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(4)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-400/80 transition-colors duration-200">
-                        <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">ORD004</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">Keramik Hias Tradisional</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300">1 set</td>
-                        <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">Rp 320.000</td>
-                        <td class="py-3 px-4">
-                            <span class="px-3 py-1 rounded-full text-sm text-white status-sampai">Diterima</span>
-                        </td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="inline-flex space-x-2">
-                                <button onclick="openDetailModal(4)"
-                                    class="btn-outline text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button onclick="openStatusModal(4)"
-                                    class="btn-outline text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
     @include('pages.admin.pesanan.components.modal')
@@ -222,18 +81,22 @@
                     $('#detail-kurir').text(`${data.kurir}`);
                     $('#detail-estimasi').text(data.etd || '-');
                     $('#resiInput').val(data.no_resi || '');
+                    $('#orderIdUpdate').val(data.id || '');
 
                     // Update payment status and total
                     $('#detail-status').text(data.status);
                     $('#detail-total-harga').text(formatRupiah(data.total_harga));
 
                     // Update payment proof information
-                    $('#detail-bank').text(data.bank || '-');
+                    $('#detail-bank').text(data.bank.nama_bank || '-');
+                    $('#detail-ket').text(data.ket || '-');
+                    $('#detail-estimasi').text(data.etd || '-');
+                    $('#detail-no-rekening').text(data.bank.no_akun || '-');
                     $('#bukti-transfer').attr('src', `{{ asset('storage/') }}/${data.bukti_pembayaran}`);
-                    console.log(data.bukti_pembayaran)
+                    console.log(data.bank.nama_bank, 'console.log bank.nama_bank')
+                    console.log(data.bank.no_akun, 'console.log bank.no_akun')
                     console.log(`{{ asset('storage/') }}/${data.bukti_pembayaran}`)
                     $('#detail-jumlah').text(formatRupiah(data.total_harga));
-                    $('#detail-no-rekening').text(data.no_rekening || '-');
                     $('#detail-tanggal-transfer').text(data.tanggal_transfer ?
                         formatTanggal(data.tanggal_transfer) : '-');
 
@@ -255,19 +118,31 @@
                 callback: function(data) {
                     const status = data.status;
                     $('#statusSelect').val(status);
+                    $('#statusForm').data('id', id);
                 }
             });
             openModal('statusModal');
         }
 
         function saveResi() {
-            const resiValue = document.getElementById('resiInput').value;
-            if (resiValue.trim() === '') {
-                alert('Mohon masukkan nomor resi!');
-                return;
-            }
-            // Implementasi save resi
-            alert('Nomor resi berhasil disimpan!');
+            const id = $('#orderIdUpdate').val()
+            console.log(id);
+            const url = '/admin/pesanan/' + id + '/resi';
+            const data = {
+                status: 'dikirim',
+                resi: $('#resiInput').val(),
+                id: id
+            };
+
+            const _method = 'POST';
+
+            ajaxCall(url, _method, data, function(response) {
+                successToast(response);
+                closeModal('detailModal');
+                // loadData(currentPage, currentQuery, currentStatus);
+            }, function(error) {
+                errorToast(error);
+            });
         }
 
         // Status change handler
@@ -286,22 +161,6 @@
             } else if (status === 'ditolak') {
                 rejectSection.style.display = 'block';
             }
-        });
-
-        // Form Submissions
-        document.getElementById('statusForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const status = document.getElementById('statusSelect').value;
-
-            if (status === 'dikirim') {
-                const resi = document.getElementById('resiNumber').value;
-                if (resi.trim() === '') {
-                    showToast('error','Mohon masukkan nomor resi untuk status dikirim!');
-                    return;
-                }
-            }
-
-
         });
 
         // Tutup modal klik diluar
@@ -331,12 +190,13 @@
             // State
             let currentPage = 1;
             let currentQuery = '';
-            console.log(currentPage, currentQuery);
+            let currentStatus = '';
+            console.log(currentPage, currentQuery, currentStatus);
 
             // Fungsi Load Data
-            function loadData(page = 1, query = '') {
+            function loadData(page = 1, query = '', status = currentStatus) {
                 $.ajax({
-                    url: `/admin/pesanan?page=${page}&search=${encodeURIComponent(query)}`,
+                    url: `/admin/pesanan?page=${page}&search=${encodeURIComponent(query)}&status=${encodeURIComponent(status)}`,
                     type: 'GET',
                     success: function(res) {
                         $('#table-pesanan').html(res.data.view);
@@ -344,12 +204,38 @@
 
                         currentPage = page;
                         currentQuery = query;
+                        currentStatus = status;
                     },
                     error: function() {
                         showToast('error', 'Gagal memuat data.');
                     }
                 });
             }
+
+            $(document).on('submit', '#statusForm', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const id = $(this).data('id');
+
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value}`);
+                }
+
+                formData.append('_method', 'PUT');
+
+                const successCallback = function(response) {
+                    successToast(response);
+                    closeModal("statusModal");
+                    loadData(currentPage, currentQuery, currentStatus);
+                };
+
+                const errorCallback = function(error) {
+                    errorToast(error)
+                };
+
+                ajaxCall(`/admin/pesanan/${id}/status`, 'POST', formData, successCallback, errorCallback);
+            });
 
             // Event: Search input (debounced)
             $('#searchInput').on('keyup', function() {
@@ -359,8 +245,15 @@
                 currentQuery = query;
 
                 debounceTimeout = setTimeout(() => {
-                    loadData(1, currentQuery); // reset ke page 1 saat search
+                    loadData(1, currentQuery, currentStatus); // reset ke page 1 saat search
                 }, debounceDelay);
+            });
+
+            $('#statusFilter').on('change', function() {
+                const status = $(this).val();
+                console.log(status);
+                currentStatus = status;
+                loadData(1, currentQuery, status);
             });
 
             // Event: Klik link pagination
@@ -372,10 +265,10 @@
                 const page = urlParams.get('page') || 1;
                 console.log(href, urlParams, page);
 
-                loadData(page, currentQuery);
+                loadData(page, currentQuery, currentStatus);
             });
 
-            loadData(currentPage, currentQuery);
+            loadData(currentPage, currentQuery, currentStatus);
         });
     </script>
 @endsection

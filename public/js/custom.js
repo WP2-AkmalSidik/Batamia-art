@@ -6,7 +6,6 @@ const ajaxCall = (
   errorCallback = () => {}
 ) => {
   const isFormData = data instanceof FormData
-  const isGet = method.toUpperCase() === 'GET'
 
   $.ajax({
     type: method,
@@ -165,6 +164,17 @@ function showToast (icon = 'success', message) {
     icon: icon,
     title: message
   })
+}
+
+function successToast (response) {
+  console.log(response)
+  showToast('success', response.message)
+}
+
+function errorToast (error) {
+  console.log(error)
+  const message = error.responseJSON.message || error?.message || error || '-'
+  showToast('error', message)
 }
 
 function showSwal (title, icon, message, redirect = null) {

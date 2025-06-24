@@ -143,8 +143,9 @@
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nomor
                                         Resi</label>
                                     <div class="flex space-x-2">
-                                        <input type="text" id="resiInput" name="no_resi"
+                                        <input type="text" id="resiInput" name="resi"
                                             class="form-input flex-1 rounded-lg" placeholder="Masukkan nomor resi...">
+                                        <input type="hidden" name="id" id="orderIdUpdate">
                                         <button onclick="saveResi()"
                                             class="btn-accent px-4 py-2 text-sm rounded-lg flex items-center space-x-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
@@ -177,6 +178,11 @@
                                             id="detail-status">
                                             Dibayar
                                         </span>
+                                        <p
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                            id="detail-ket">
+                                            Dibayar
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -269,13 +275,13 @@
                 <div class="mb-4">
                     <label class="form-label">Status Orderan</label>
                     <select class="form-input w-full" id="statusSelect" name="status" required>
-                        <option value="">Pilih Status</option>
                         <option value="belum_bayar">Belum Dibayar</option>
                         <option value="dibayar">Dibayar</option>
                         <option value="diproses">Diproses</option>
                         <option value="ditolak">Ditolak</option>
                         <option value="dikirim">Dikirim</option>
-                        <option value="sampai">Sampai Lokasi</option>
+                        <option value="diterima">Diterima</option>
+                        <option value="selesai">Selesai</option>
                     </select>
                 </div>
 
@@ -287,7 +293,7 @@
 
                 <div class="mb-4" id="rejectSection" style="display: none;">
                     <label class="form-label">Alasan Penolakan</label>
-                    <textarea class="form-input w-full" rows="3" name="alasan" placeholder="Masukkan alasan penolakan..."></textarea>
+                    <textarea class="form-input w-full" rows="3" name="ket" placeholder="Masukkan alasan penolakan..."></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-2">

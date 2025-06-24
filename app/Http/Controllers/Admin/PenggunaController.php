@@ -2,9 +2,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alamat;
 use App\Models\User;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PenggunaController extends Controller
 {
@@ -54,6 +56,88 @@ class PenggunaController extends Controller
 
         try {
             $user = User::create($validator);
+            return $this->successResponse(
+                $user,
+                'Data berhasil disimpan.'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(null, 'Data Pengguna gagal disimpan. ' . $e->getMessage());
+        }
+    }
+
+    public function profile()
+    {
+        $user = User::with('alamat')->where('id', auth()->user()->id)->first();
+        return view('pages.user.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $rules = [
+            'nama'  => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
+        ];
+
+        if (auth()->user()->role == 'user') {
+            $rules = array_merge($rules, [
+                'provinsi'       => 'required|string',
+                'nomor_hp'       => 'required|string',
+                'kota'           => 'required|string',
+                'kecamatan'      => 'required|string',
+                'kelurahan'      => 'required|string',
+                'kode_pos'       => 'required|string',
+                'alamat_lengkap' => 'required|string',
+            ]);
+        }
+
+        $validated = $request->validate($rules);
+
+        try {
+            $user = User::findOrFail(auth()->id());
+            $user->update([
+                'nama'  => $validated['nama'],
+                'email' => $validated['email'],
+            ]);
+
+            if (auth()->user()->role == 'user') {
+                Alamat::updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'provinsi'       => $validated['provinsi'],
+                        'nomor_hp'       => $validated['nomor_hp'],
+                        'kota'           => $validated['kota'],
+                        'kecamatan'      => $validated['kecamatan'],
+                        'kelurahan'      => $validated['kelurahan'],
+                        'kode_pos'       => $validated['kode_pos'],
+                        'alamat_lengkap' => $validated['alamat_lengkap'],
+                    ]
+                );
+            }
+
+            return $this->successResponse($user, 'Data berhasil disimpan.');
+        } catch (\Exception $e) {
+            return $this->errorResponse(null, 'Data gagal disimpan. ' . $e->getMessage());
+        }
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = $request->validate([
+            'password_lama'       => 'required',
+            'password_baru'       => 'required',
+            'password_konfirmasi' => 'required|same:password_baru',
+        ]);
+
+        try {
+            $user = User::where('id', auth()->user()->id)->first();
+
+            if (! Hash::check($validator['password_lama'], $user->password)) {
+                return $this->errorResponse(null, 'Password lama salah.');
+            }
+
+            $user->update([
+                'password' => Hash::make($validator['password_baru']),
+            ]);
             return $this->successResponse(
                 $user,
                 'Data berhasil disimpan.'

@@ -12,8 +12,8 @@
                     <select class="form-input text-sm px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600"
                         id="statusFilter">
                         <option value="">Semua Status</option>
-                        <option value="menunggu_pembayaran">Menunggu Pembayaran</option>
-                        <option value="diproses">Diproses</option>
+                        <option value="belum_dibayar">Menunggu Pembayaran</option>
+                        <option value="dibayar">Dibayar</option>
                         <option value="dikirim">Dikirim</option>
                         <option value="selesai">Selesai</option>
                         <option value="dibatalkan">Dibatalkan</option>
@@ -27,6 +27,7 @@
         <div class="space-y-4" id="card-container">
 
         </div>
+
         <div class="text-center mt-15">
             <button
                 class="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white px-6 py-3 text-sm font-medium rounded-xl transition-colors duration-200"
@@ -98,23 +99,117 @@
         </div>
     </div>
 
-    <script>
-        // Data pesanan untuk modal
-        const orderData = {
-            'ORD-2024-001': {
-                total: 'Rp 730.000'
-            },
-            'ORD-2024-002': {
-                total: 'Rp 750.000'
-            },
-            'ORD-2024-003': {
-                total: 'Rp 320.000'
-            },
-            'ORD-2024-004': {
-                total: 'Rp 850.000'
-            }
-        };
+    <!-- Modal Batal -->
+    <div id="cancelModal"
+        class="modal fixed inset-0 bg-black/30 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div
+            class="modal-content bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl max-w-md w-full max-h-screen overflow-y-auto border border-white/20 dark:border-gray-700/50">
+            <div class="p-6">
+                <!-- Header Modal -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Batalkan Pesanan</h3>
+                    <button onclick="closeModal('cancelModal')"
+                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <!-- Upload Form -->
+                <form id="cancelForm">
+                    <div class="mb-6">
+                        <label class="form-label text-gray-700 dark:text-gray-300">Alasan Pembatalan</label>
+                        <div class="mt-2">
+                            <input type="hidden" name="order_id" id="cancelOrderId">
+                            <input type="text" id="ket" name="ket" accept="image/*,.pdf"
+                                class="form-input w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200">
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Deskripsikan alasan pembatalan pesanan
+                            anda.</p>
+                    </div>
 
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-3">
+                        <button type="button" onclick="closeModal('uploadModal')"
+                            class="btn-secondary flex-1 py-3 rounded-lg font-medium">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn-accent flex-1 py-3 rounded-lg font-medium">
+                            <i class="fas fa-upload mr-2"></i>
+                            Batalkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="ratingModal"
+        class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div
+            class="modal-content bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform transition-all duration-300 ease-out translate-y-4 opacity-0">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Beri Ulasan</h3>
+                    <button onclick="closeModal('ratingModal')"
+                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Product Info -->
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80"
+                            alt="Produk" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-gray-900 dark:text-white" id="ratingProductName">-</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400" id="ratingOrderNumber">-</p>
+                    </div>
+                </div>
+
+                <!-- Rating Form -->
+                <form id="ratingForm">
+                    <input type="hidden" id="orderId" name="order_id">
+                    <input type="hidden" id="productId" name="product_id">
+
+                    <!-- Star Rating -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Rating
+                            Produk</label>
+                        <div class="flex justify-center gap-1" id="starRating">
+                            <!-- Stars will be generated by JavaScript -->
+                        </div>
+                        <input type="hidden" id="ratingValue" name="rating" value="0">
+                    </div>
+
+                    <!-- Review Text -->
+                    <div class="mb-6">
+                        <label for="reviewText"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ulasan Anda</label>
+                        <textarea id="reviewText" name="review" rows="4"
+                            class="w-full px-3 py-2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-amber-500 focus:ring-amber-500 focus:border-amber-500 dark:bg-gray-700 dark:border-amber-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500"
+                            placeholder="Bagaimana pengalaman Anda dengan produk ini?"></textarea>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex gap-3">
+                        <button type="button" onclick="closeModal('ratingModal')"
+                            class="flex-1 py-3 px-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="flex-1 py-3 px-4 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <i class="fas fa-star"></i>
+                            Kirim Ulasan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
         function openUploadModal(orderNumber, totalHarga) {
             const modal = document.getElementById('uploadModal');
             const orderTotalElement = document.getElementById('modalOrderTotal');
@@ -125,6 +220,21 @@
 
             // Set data pesanan
             orderTotalElement.textContent = totalHarga;
+
+            // Show modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openCancelModal(orderNumber) {
+            const modal = document.getElementById('cancelModal');
+
+            // Set order ID
+            const orderIdInput = document.getElementById('cancelOrderId');
+            orderIdInput.value = orderNumber;
 
             // Show modal
             modal.classList.remove('hidden');
@@ -293,12 +403,29 @@
                 const formData = new FormData(this);
 
                 const successCallback = function(response) {
-                    handleSuccess(response);
+                    successToast(response);
                     loadData();
                 };
 
                 const errorCallback = function(error) {
-                    handleSimpleError(error)
+                    errorToast(error)
+                };
+
+                ajaxCall(url, "POST", formData, successCallback, errorCallback);
+            })
+            $(document).on('submit', '#cancelForm', function(e) {
+                e.preventDefault();
+
+                const url = '{{ route('pesanan.update.cancel') }}';
+                const formData = new FormData(this);
+
+                const successCallback = function(response) {
+                    successToast(response);
+                    loadData();
+                };
+
+                const errorCallback = function(error) {
+                    errorToast(error)
                 };
 
                 ajaxCall(url, "POST", formData, successCallback, errorCallback);
