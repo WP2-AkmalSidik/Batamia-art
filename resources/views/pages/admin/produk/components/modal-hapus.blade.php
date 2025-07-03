@@ -8,7 +8,7 @@
 
             <h3 class="text-xl font-bold mb-2">Hapus Produk</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Apakah Anda yakin ingin menghapus produk <strong>"Vas Bambu Minimalis"</strong>?
+                Apakah Anda yakin ingin menghapus produk <strong id="nama-produk"></strong>?
                 Tindakan ini tidak dapat dibatalkan.
             </p>
 

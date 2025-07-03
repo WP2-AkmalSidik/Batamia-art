@@ -8,7 +8,7 @@
 
             <h3 class="text-xl font-bold mb-2">Hapus Kategori</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Apakah Anda yakin ingin menghapus kategori <strong>"Dekorasi Rumah"</strong>?
+                Apakah Anda yakin ingin menghapus kategori <strong id="nama-kategori">"Dekorasi Rumah"</strong>?
                 Tindakan ini akan mempengaruhi <strong id="total-produk-delete-modal">24 produk</strong> dan tidak dapat dibatalkan.
             </p>
 

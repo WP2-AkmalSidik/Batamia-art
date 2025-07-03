@@ -51,10 +51,11 @@
             $('#selectedIcon').val('');
         }
 
-        function openDeleteModal(id, produk = 1) {
+        function openDeleteModal(id, produk = 1, kategori) {
             const totalProduk = produk + ' produk';
             $('#hapus-kategori').data('id', id);
             $('#total-produk-delete-modal').html(totalProduk);
+            $('#nama-kategori').html(kategori);
 
             openModal('deleteModal');
         }

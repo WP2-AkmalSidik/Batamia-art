@@ -1,12 +1,12 @@
 <?php
 
-use App\Models\Bank;
 use App\Models\Alamat;
-use App\Models\Produk;
+use App\Models\Bank;
 use App\Models\Kategori;
 use App\Models\Keranjang;
-use App\Models\Pengaturan;
 use App\Models\KeranjangProduk;
+use App\Models\Pengaturan;
+use App\Models\Produk;
 
 if (! function_exists('getPengaturan')) {
     function getPengaturan(): ?Pengaturan
@@ -128,6 +128,29 @@ if (! function_exists('bulan')) {
     }
 }
 
+if (! function_exists('getNamaBulan')) {
+
+    function getNamaBulan($bulan)
+    {
+        $namaBulan = [
+            1  => 'Januari',
+            2  => 'Februari',
+            3  => 'Maret',
+            4  => 'April',
+            5  => 'Mei',
+            6  => 'Juni',
+            7  => 'Juli',
+            8  => 'Agustus',
+            9  => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        return $namaBulan[(int) $bulan] ?? 'Bulan Tidak Dikenal';
+    }
+}
+
 if (! function_exists('percentage')) {
     function percentage($value, $decimals = 0)
     {
@@ -185,8 +208,6 @@ if (! function_exists('getKeranjangProdukCount')) {
         return;
     }
 }
-
-
 
 if (! function_exists('getKategori')) {
     function getKategori()

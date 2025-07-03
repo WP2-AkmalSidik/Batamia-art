@@ -73,6 +73,7 @@
                     }
                     // Update customer information
                     $('#detail-user-nama').text(data.user.nama);
+                    $('#invoice-pesanan').text(data.invoice);
                     $('#detail-user-email').text(data.user.email);
                     $('#detail-user-telepon').text(data.alamat.nomor_hp || '-');
                     $('#detail-user-alamat').text(data.alamat.alamat_lengkap || '-');
@@ -87,12 +88,22 @@
                     $('#detail-status').text(data.status);
                     $('#detail-total-harga').text(formatRupiah(data.total_harga));
 
+                    console.log('nama_bank: ', data.bank, data.bank.nama_bank);
                     // Update payment proof information
                     $('#detail-bank').text(data.bank.nama_bank || '-');
                     $('#detail-ket').text(data.ket || '-');
                     $('#detail-estimasi').text(data.etd || '-');
                     $('#detail-no-rekening').text(data.bank.no_akun || '-');
-                    $('#bukti-transfer').attr('src', `{{ asset('storage/') }}/${data.bukti_pembayaran}`);
+                    if (data.bukti_pembayaran) {
+                        $('#bukti-transfer').attr('src',
+                            data.bukti_pembayaran.startsWith('http') ? image :
+                            `{{ asset('storage') }}/${data.bukti_pembayaran}`
+                        ).removeClass('hidden');
+                        $('#no-proof-text').addClass('hidden');
+                    } else {
+                        $('#bukti-transfer').addClass('hidden');
+                        $('#no-proof-text').removeClass('hidden').text('Belum ada bukti transfer');
+                    }
                     console.log(data.bank.nama_bank, 'console.log bank.nama_bank')
                     console.log(data.bank.no_akun, 'console.log bank.no_akun')
                     console.log(`{{ asset('storage/') }}/${data.bukti_pembayaran}`)

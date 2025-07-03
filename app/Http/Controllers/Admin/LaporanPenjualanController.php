@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\LaporanPenjualanExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Traits\JsonResponder;
+use App\Exports\LaporanPenjualanExport;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use DateTime;
+use Illuminate\Http\Request;
 
 class LaporanPenjualanController extends Controller
 {
@@ -18,15 +19,23 @@ class LaporanPenjualanController extends Controller
             $perPages   = 10;
             $orderQuery = Order::with('orderProduks.produk', 'alamat.user', 'bank');
 
+            $periode = '';
+
             if ($request->has('filter') && $request->filter != '') {
                 if ($request->filter == 'monthly' && $request->bulan != '' && $request->tahun != '') {
+                    $bulan   = DateTime::createFromFormat('!m', $request->bulan)->format('F');
+                    $periode = "Bulan $bulan Tahun $request->tahun";
                     $orderQuery->whereMonth('created_at', $request->bulan)
                         ->whereYear('created_at', $request->tahun);
                 } elseif ($request->filter == 'yearly' && $request->tahun != '') {
+                    $periode = "Tahun $request->tahun";
                     $orderQuery->whereYear('created_at', $request->tahun);
                 } elseif ($request->filter == 'weekly' && $request->dariTanggal != '' && $request->sampaiTanggal != '') {
+                    $periode = "Periode " . date('d M Y', strtotime($request->dariTanggal)) . " - " . date('d M Y', strtotime($request->sampaiTanggal));
                     $orderQuery->whereBetween('created_at', [$request->dariTanggal, $request->sampaiTanggal]);
                 }
+            } else {
+                $periode = "Semua Data";
             }
 
             if ($request->has('status') && $request->status != '') {
@@ -88,13 +97,12 @@ class LaporanPenjualanController extends Controller
                         'orders', 'totalPemasukan', 'totalPenjualan', 'totalProdukTerjual',
                         'averageProdukPerTransaksi', 'averagePemasukanPerTransaksi',
                         'totalProdukDibatalkan', 'totalProdukDiproses', 'totalProdukDikirim', 'totalProdukDibayar',
-                        'totalTransaksi', 'totalKuantitasProduk'
+                        'totalTransaksi', 'totalKuantitasProduk', 'periode' // Tambahkan periode di sini
                     ))->render(),
                 'pagination' => (string) $orders->links('vendor.pagination.tailwind'),
             ];
 
             return $this->successResponse($data, 'Data berhasil ditemukan.');
-
         }
         return view('pages.admin.laporan-penjualan.index');
     }

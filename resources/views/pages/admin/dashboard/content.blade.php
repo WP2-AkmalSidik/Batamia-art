@@ -106,7 +106,7 @@
     <div class="flex items-center justify-between text-sm">
         <span class="text-gray-600 dark:text-gray-400">
             <i class="fas fa-calendar-alt mr-2"></i>
-            Periode: <strong>{{ $periode }}</strong>
+            Periode: <strong>{{ getNamaBulan($bulanIni) }} {{ $tahunIni }}</strong>
         </span>
         <span class="text-gray-600 dark:text-gray-400">
             <i class="fas fa-clock mr-2"></i>

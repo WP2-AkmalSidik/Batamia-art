@@ -294,7 +294,7 @@
                                         @foreach (getBanks() as $bank)
                                             <label
                                                 class="flex items-center p-4 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors">
-                                                <input type="radio" name="payment" value="{{ $bank->id }}"
+                                                <input type="radio" name="bank_id" value="{{ $bank->id }}"
                                                     class="mr-3 text-blue-600 focus:ring-blue-500" required>
                                                 <i
                                                     class="fas {{ $bank->jenis == 'bank' ? 'fa-university' : 'fa-mobile-alt' }} text-blue-600 mr-3"></i>
