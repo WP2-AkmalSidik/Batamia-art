@@ -31,7 +31,8 @@
                                 class="btn-outline text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/30">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button onclick="openDeleteModal({{ $kategori->id }}, {{ $kategori->produks->count() }})"
+                            <button
+                                onclick="openDeleteModal({{ $kategori->id }}, {{ $kategori->produks->count() }}, '{{ $kategori->nama }}')"
                                 class="btn-outline text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
                                 <i class="fas fa-trash"></i>
                             </button>

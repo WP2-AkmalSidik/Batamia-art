@@ -21,6 +21,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('role:admin')->group(function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard/pdf', [AdminDashboardController::class, 'exportPdf'])->name('admin.dashboard.pdf');
+    Route::get('/dashboard/excel', [AdminDashboardController::class, 'exportExcel'])->name('admin.dashboard.excel');
     Route::get('/laporan-penjualan', [LaporanPenjualanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan-penjualan/export-excel', [LaporanPenjualanController::class, 'exportExcel'])->name('laporan.excel');
     Route::get('/laporan-penjualan/export-pdf', [LaporanPenjualanController::class, 'exportPdf'])->name('laporan.pdf');
@@ -50,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/keranjang/{id}/kuantitas', [App\Http\Controllers\User\KeranjangController::class, 'updateKuantitas'])->name('keranjang.update.kuantitas');
 
     Route::resource('/pesanan', App\Http\Controllers\User\PesananController::class)->names('pesanan');
+    Route::put('/pesanan/{id}/selesai', [App\Http\Controllers\User\PesananController::class, 'pesananSelesai'])->name('pesanan.selesai');
     Route::post('/pesanan/pembayaran', [App\Http\Controllers\User\PesananController::class, 'updatePembayaran'])->name('pesanan.update.pembayaran');
     Route::post('/pesanan/cancel', [App\Http\Controllers\User\PesananController::class, 'cancelPesanan'])->name('pesanan.update.cancel');
     Route::put('/profile/update', [App\Http\Controllers\Admin\PenggunaController::class, 'updateProfile'])->name('profile.update');
