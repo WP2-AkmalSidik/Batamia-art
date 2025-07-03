@@ -17,9 +17,8 @@
                     <td class="py-3 px-4 font-medium text-gray-900 dark:text-gray-200">
                         {{ $users->firstItem() + $loop->index }}</td>
                     <td class="py-3 px-4">
-                        <div
-                            class="w-10 bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                           <img src="{{ getUiAvatar($user->nama) }}" class="rounded-full" alt="">
+                        <div class="w-10 bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                            <img src="{{ getUiAvatar($user->nama) }}" class="rounded-full" alt="">
                         </div>
                     </td>
                     <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">{{ $user->nama }}</td>
@@ -37,7 +36,7 @@
                                 class="btn-outline text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/30">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button onclick="openDeleteModal({{ $user->id }})"
+                            <button onclick="openDeleteModal({{ $user->id }},'{{ $user->nama }}')"
                                 class="btn-outline text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
                                 <i class="fas fa-trash"></i>
                             </button>

@@ -107,8 +107,9 @@
             openModal('addModal');
         }
 
-        function openDeleteModal(id) {
+        function openDeleteModal(id, nama) {
             $('#hapus-pengguna').data('id', id);
+            $('#delete-name').text(nama);
             openModal('deleteModal');
         }
 
