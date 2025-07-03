@@ -167,7 +167,6 @@ function showToast (icon = 'success', message) {
 }
 
 function successToast (response, redirect = null) {
-  console.log(response)
   showToast('success', response.message)
 
   if (redirect) {

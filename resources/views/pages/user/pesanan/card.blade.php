@@ -7,9 +7,9 @@
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-shopping-bag text-blue-500"></i>
-                        {{-- <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $pesanan->id }}</span> --}}
+                        <span class="font-semibold text-gray-900 dark:text-gray-100">{{ $pesanan->invoice }}</span>
                     </div>
-                    {{-- <span class="text-sm text-gray-500 dark:text-gray-400">•</span> --}}
+                    <span class="text-sm text-gray-500 dark:text-gray-400">•</span>
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ $pesanan->created_at }}</span>
                 </div>
                 <span
@@ -79,7 +79,7 @@
                         Pesanan Sedang Diproses
                     </button>
                 @elseif ($pesanan->status == 'dikirim')
-                    <button disabled
+                    <button onclick="openSelesaiModal({{ $pesanan->id }},'{{ $pesanan->invoice }}')"
                         class="btn-accent px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
                         <i class="fas fa-truck mr-2"></i>
                         Selesaikan Pesanan
