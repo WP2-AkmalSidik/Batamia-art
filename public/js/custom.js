@@ -166,15 +166,23 @@ function showToast (icon = 'success', message) {
   })
 }
 
-function successToast (response) {
+function successToast (response, redirect = null) {
   console.log(response)
   showToast('success', response.message)
+
+  if (redirect) {
+    window.location.href = redirect
+  }
 }
 
-function errorToast (error) {
+function errorToast (error, redirect = null) {
   console.log(error)
   const message = error.responseJSON.message || error?.message || error || '-'
   showToast('error', message)
+
+  if (redirect) {
+    window.location.href = redirect
+  }
 }
 
 function showSwal (title, icon, message, redirect = null) {

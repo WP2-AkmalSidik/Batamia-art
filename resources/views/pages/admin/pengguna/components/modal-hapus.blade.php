@@ -8,7 +8,7 @@
 
             <h3 class="text-xl font-bold mb-2">Hapus Pengguna</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Apakah Anda yakin ingin menghapus pengguna <strong>"Ahmad Pratama"</strong>?
+                Apakah Anda yakin ingin menghapus pengguna <strong id="delete-name"></strong>?
                 Tindakan ini tidak dapat dibatalkan dan akan menghapus semua data terkait pengguna.
             </p>
 
