@@ -19,7 +19,7 @@ class ProdukController extends Controller
                 'Data berhasil ditemukan',
             );
         } else if ($request->ajax()) {
-            $perPages = 25;
+            $perPages = 10;
             $query    = Produk::with('kategori');
 
             if ($request->has('search') && $request->search != '') {
