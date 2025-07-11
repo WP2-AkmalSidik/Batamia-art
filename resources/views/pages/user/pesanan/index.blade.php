@@ -208,6 +208,30 @@
             </div>
         </div>
     </div>
+    <div id="modal-selesai"
+        class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="modal-content w-full max-w-md mx-4 p-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                </div>
+
+                <h3 class="text-xl font-bold mb-2">Selesaikan Pesanan</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Apakah Pesanan <strong id="invoice-pesanan"></strong> sudah anda terima?
+                </p>
+
+                <div class="flex justify-center space-x-3">
+                    <form id="form-selesai">
+                        <button onclick="closeModal('deleteModal')" class="btn-secondary">Batal</button>
+                        <button type="submit" class="btn-accent">
+                            Pesanan Selesai
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         function openUploadModal(orderNumber, totalHarga) {
@@ -220,6 +244,19 @@
 
             // Set data pesanan
             orderTotalElement.textContent = totalHarga;
+
+            // Show modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openSelesaiModal(id, invoice) {
+            const modal = document.getElementById('modal-selesai');
+            $('#invoice-pesanan').text(invoice)
+            $('#form-selesai').attr('data-id', id)
 
             // Show modal
             modal.classList.remove('hidden');
@@ -413,6 +450,7 @@
 
                 ajaxCall(url, "POST", formData, successCallback, errorCallback);
             })
+
             $(document).on('submit', '#cancelForm', function(e) {
                 e.preventDefault();
 
@@ -431,7 +469,29 @@
                 ajaxCall(url, "POST", formData, successCallback, errorCallback);
             })
 
-            // Initial load
+            $(document).on('submit', '#form-selesai', function(e) {
+                e.preventDefault();
+
+                const id = $(this).attr('data-id');
+
+                const url = `pesanan/${id}/selesai`;
+
+                const data = {
+                    '_method': 'PUT'
+                }
+
+                const successCallback = function(res) {
+                    successToast(res);
+                    loadData();
+                }
+
+                const errorCallback = function(error) {
+                    errorToast(error)
+                }
+
+                ajaxCall(url, "POST", data, successCallback, errorCallback);
+            })
+
             loadData();
         });
     </script>

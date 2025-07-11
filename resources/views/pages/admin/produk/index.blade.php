@@ -157,8 +157,9 @@
             };
         }
 
-        function openDeleteModal(id) {
+        function openDeleteModal(id, produk) {
             $('#hapus-produk').data('id', id);
+            $('#nama-produk').text(produk);
             openModal('deleteModal');
         }
 
