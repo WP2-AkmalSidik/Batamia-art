@@ -82,6 +82,21 @@ class PesananController extends Controller
             return $this->errorResponse(null, 'Gagal membayar pesanan. ' . $th->getMessage());
         }
     }
+    public function pesananSelesai(string $id)
+    {
+        try {
+            $order = Order::where('id', $id)->first();
+
+            $status = 'selesai';
+
+            $order->status = $status;
+            $order->save();
+
+            return $this->successResponse(null, 'Pesanan selesai .');
+        } catch (\Exception $th) {
+            return $this->errorResponse(null, 'Gagal membayar pesanan. ' . $th->getMessage());
+        }
+    }
     public function cancelPesanan(Request $request)
     {
         $request->validate([

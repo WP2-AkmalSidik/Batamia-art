@@ -7,7 +7,7 @@
             <div
                 class="sticky top-0 z-10 bg-white dark:bg-gray-800 p-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
                 <div>
-                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white">Order #ORD001</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white" id="invoice-pesanan">Order #ORD001</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">15 Januari 2024</p>
                 </div>
                 <button onclick="closeModal('detailModal')"
@@ -178,8 +178,7 @@
                                             id="detail-status">
                                             Dibayar
                                         </span>
-                                        <p
-                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                        <p class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                                             id="detail-ket">
                                             Dibayar
                                         </p>
@@ -212,6 +211,7 @@
                                     class="bg-white dark:bg-gray-600 rounded-lg overflow-hidden border border-gray-100 dark:border-gray-600">
                                     <img id="bukti-transfer" alt="Bukti Transfer"
                                         class="w-full h-auto max-h-[400px] object-contain">
+                                    <div id="no-proof-text" class="hidden text-center py-4 text-gray-500"></div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 text-sm">
                                     <div>
