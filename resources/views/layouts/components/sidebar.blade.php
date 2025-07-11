@@ -87,6 +87,12 @@
                     </a>
                 @endif
 
+                <a href="/cara-bayar"
+                    class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->is('cara-bayar') ? 'active' : '' }}">
+                    <i class="fa-solid fa-credit-card w-5 mr-3"></i>
+                    <span>Cara Membayar</span>
+                </a>
+
                 @if (auth()->check())
                     <button onclick="openModal('logoutModal')"
                         class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition text-gray-700 dark:text-gray-300 w-full text-left">
