@@ -91,3 +91,4 @@ Route::view('/list-pesanan', 'pages/user/list-pesanan');
 
 // Guest
 Route::view('/beranda', 'guest/landing-page');
+Route::view('/cara-bayar', 'pages.user.tutorial-pembayaran');
