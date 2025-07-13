@@ -30,7 +30,7 @@ class ProdukController extends Controller
                 $perPages = $request->perPage;
             }
 
-            $produks = $query->orderBy('created_at')->paginate($perPages);
+            $produks = $query->orderBy('created_at', 'desc')    ->paginate($perPages);
 
             $data = [
                 'view'       => view('pages.admin.produk.components.table', compact('produks'))->render(),
@@ -79,6 +79,7 @@ class ProdukController extends Controller
     }
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'kategori_id' => 'required|exists:kategoris,id',
             'nama'        => 'required|unique:produks,nama,' . $id,

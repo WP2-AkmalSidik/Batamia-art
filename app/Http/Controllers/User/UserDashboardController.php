@@ -2,8 +2,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use App\Models\Order;
 use App\Models\Produk;
+use App\Models\Review;
+use App\Models\User;
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 
@@ -90,6 +93,15 @@ class UserDashboardController extends Controller
         }
 
         return view('pages.user.dashboard');
+    }
+
+    public function landingPage()
+    {
+        $users     = User::where('role', 'user')->count();
+        $produks   = Produk::count();
+        $kategoris = Kategori::all();
+        $kepuasan  = Review::kepuasanToko();
+        return view('guest/landing-page', compact('kategoris', 'produks', 'users', 'kepuasan'));
     }
     public function show(string $id)
     {

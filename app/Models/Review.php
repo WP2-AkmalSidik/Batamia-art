@@ -1,8 +1,8 @@
 <?php
 namespace App\Models;
 
-use App\Models\User;
 use App\Models\Produk;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
@@ -17,4 +17,9 @@ class Review extends Model
     {
         return $this->belongsTo(Produk::class);
     }
+    public static function kepuasanToko()
+    {
+        return static::avg('rating');
+    }
+
 }

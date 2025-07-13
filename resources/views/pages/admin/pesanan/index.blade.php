@@ -238,6 +238,7 @@
                 const successCallback = function(response) {
                     successToast(response);
                     closeModal("statusModal");
+                    closeModal('detailModal')
                     loadData(currentPage, currentQuery, currentStatus);
                 };
 
