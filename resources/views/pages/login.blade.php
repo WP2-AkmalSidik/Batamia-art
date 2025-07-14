@@ -146,7 +146,7 @@
                 const successCallback = function(response) {
                     setButtonLoadingState("#login .btn.btn-primary", false,
                         "<i class='fas fa-sign-in mr-2'></i>Login");
-                    handleSuccess(response, null, null, "/");
+                    handleSuccess(response, null, null, "{{ route('user.dashboard') }}");
                 };
 
                 const errorCallback = function(error) {
