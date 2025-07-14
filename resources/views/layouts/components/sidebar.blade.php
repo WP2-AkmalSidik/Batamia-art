@@ -9,10 +9,12 @@
                     class="w-12 h-12 rounded-lg flex items-center justify-center mr-3 bg-gradient-to-br from-amber-100 to-orange-100">
                     <i class="fas fa-leaf icon-accent text-xl"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold">{{ getPengaturan()->nama_toko }}</h1>
-                    <p class="text-sm text-gray-500">@yield('title')</p>
-                </div>
+                <a href="{{ route('user.landingPage') }}">
+                    <div>
+                        <h1 class="text-xl font-bold">{{ getPengaturan()->nama_toko }}</h1>
+                        <p class="text-sm text-gray-500">@yield('title')</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -44,8 +46,8 @@
                         <span>Produk</span>
                     </a>
                     @if (auth()->check() && auth()->user()->role === 'admin')
-                        <a href="{{ route('admin.pesanan.index') }}"
-                            class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('admin/pesanan.*') ? 'active' : '' }}">
+                        <a href="{{ route('pesanan.index') }}"
+                            class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('pesanan.*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-cart w-5 mr-3"></i>
                             <span>Pesanan</span>
                         </a>

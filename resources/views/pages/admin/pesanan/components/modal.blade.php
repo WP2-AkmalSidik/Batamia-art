@@ -275,7 +275,7 @@
                 <div class="mb-4">
                     <label class="form-label">Status Orderan</label>
                     <select class="form-input w-full" id="statusSelect" name="status" required>
-                        <option value="belum_bayar">Belum Dibayar</option>
+                        <option value="belum_dibayar">Belum Dibayar</option>
                         <option value="dibayar">Dibayar</option>
                         <option value="diproses">Diproses</option>
                         <option value="ditolak">Ditolak</option>

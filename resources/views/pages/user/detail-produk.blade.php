@@ -24,13 +24,14 @@
             <div class="mb-6">
                 <div
                     class="relative aspect-square rounded-2xl overflow-hidden bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border border-gray-200 dark:border-gray-600">
-                    <img id="mainProductImage" src="{{ asset('storage/' . $produk->image) }}"
+                    <img id="mainProductImage"
+                        src="{{ Str::startsWith($produk->image, 'https://ui-avatars.com') ? $produk->image : asset('storage/' . $produk->image) }}"
                         alt="Vas Bunga Kayu Jati Handmade" class="w-full h-full object-cover">
 
                     <!-- Badge Populer -->
                     <div
                         class="absolute top-4 right-4 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 px-3 py-1 rounded-full text-sm font-medium">
-                        Populer
+                        {{ $produk->kategori->nama }}
                     </div>
 
                     {{-- <!-- Wishlist Button -->
@@ -134,7 +135,7 @@
                 class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-600 p-6 mb-20">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Ulasan Pembeli</h2>
-                    <button class="text-sm text-amber-600 dark:text-amber-400 font-medium">Lihat Semua</button>
+                    {{-- <button class="text-sm text-amber-600 dark:text-amber-400 font-medium">Lihat Semua</button> --}}
                 </div>
 
                 <!-- Review Items -->
@@ -210,7 +211,7 @@
                 <div class="flex gap-3 mb-4">
                     <div
                         class="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 flex-shrink-0">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center"
+                        <img src="{{ Str::startsWith($produk->image, 'https://ui-avatars.com') ? $produk->image : asset('storage/' . $produk->image) }}"
                             alt="Product" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1">

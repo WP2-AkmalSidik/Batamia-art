@@ -11,6 +11,10 @@
                     </div>
                     <span class="text-sm text-gray-500 dark:text-gray-400">•</span>
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ $pesanan->created_at }}</span>
+                    @if ($pesanan->resi)
+                        <span class="text-sm text-gray-500 dark:text-gray-400">•</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ $pesanan->resi }}</span>
+                    @endif
                 </div>
                 <span
                     class="status-{{ $pesanan->status == 'belum_dibayar' ? 'belum-bayar' : ($pesanan->status == 'Diproses' ? 'diproses' : ($pesanan->status == 'Dikirim' ? 'dikirim' : $pesanan->status)) }} px-3 py-1 rounded-full text-xs font-medium">
