@@ -84,6 +84,7 @@ Route::prefix('wilayah')->name('wilayah.')->group(function () {
 // User Routes
 Route::get('/', [UserDashboardController::class, 'landingPage'])->name('user.landingPage');
 Route::get('/beranda', [UserDashboardController::class, 'index'])->name('user.dashboard');
+Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard');
 Route::get('/detail-produk', [DetailProdukController::class, 'index'])->name('user.detail');
 Route::view('/masuk', 'pages.login');
 Route::view('/signin', 'pages.signin');
@@ -94,5 +95,7 @@ Route::get('/produk/{id}', [UserDashboardController::class, 'detailProduk'])->na
 Route::view('/list-pesanan', 'pages/user/list-pesanan');
 
 // Guest
+// Route::view('/beranda', 'guest/landing-page');
+Route::view('/cara-bayar', 'pages.user.tutorial-pembayaran');
 // Route::view('/beranda', 'guest/landing-page');
 Route::view('/cara-bayar', 'pages.user.tutorial-pembayaran');

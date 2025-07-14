@@ -2,11 +2,16 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use App\Models\Kategori;
 use App\Models\Order;
 use App\Models\Produk;
 use App\Models\Review;
 use App\Models\User;
+=======
+use App\Models\Order;
+use App\Models\Produk;
+>>>>>>> 8583a4f9645277be5cae6bd292f37cbd9895a314
 use App\Traits\JsonResponder;
 use Illuminate\Http\Request;
 
@@ -94,6 +99,7 @@ class UserDashboardController extends Controller
 
         return view('pages.user.dashboard');
     }
+<<<<<<< HEAD
 
     public function landingPage()
     {
@@ -103,6 +109,8 @@ class UserDashboardController extends Controller
         $kepuasan  = Review::kepuasanToko();
         return view('guest/landing-page', compact('kategoris', 'produks', 'users', 'kepuasan'));
     }
+=======
+>>>>>>> 8583a4f9645277be5cae6bd292f37cbd9895a314
     public function show(string $id)
     {
         $produk  = Produk::with('kategori', 'reviews')->where('id', $id)->first();

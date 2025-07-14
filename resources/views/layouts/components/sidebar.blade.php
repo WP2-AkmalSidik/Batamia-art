@@ -46,8 +46,13 @@
                         <span>Produk</span>
                     </a>
                     @if (auth()->check() && auth()->user()->role === 'admin')
+<<<<<<< HEAD
                         <a href="{{ route('pesanan.index') }}"
                             class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('pesanan.*') ? 'active' : '' }}">
+=======
+                        <a href="{{ route('admin.pesanan.index') }}"
+                            class="nav-item flex items-center px-4 py-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition {{ request()->routeIs('admin/pesanan.*') ? 'active' : '' }}">
+>>>>>>> 8583a4f9645277be5cae6bd292f37cbd9895a314
                             <i class="fas fa-shopping-cart w-5 mr-3"></i>
                             <span>Pesanan</span>
                         </a>

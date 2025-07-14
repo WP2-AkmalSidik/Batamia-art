@@ -9,7 +9,6 @@
     <script src="https://kit.fontawesome.com/af96158b7b.js" crossorigin="anonymous"></script>
     @include('guest.assets.style')
 </head>
-
 <body class="antialiased">
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-gray-200 dark:border-gray-700">
@@ -38,7 +37,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="md:hidden">
                     <button id="mobile-menu-btn" class="nav-item px-3 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-bars"></i>
@@ -46,7 +44,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -174,7 +171,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="floating-element">
                     <div class="glass-card p-8 text-center">
                         <div class="grid grid-cols-2 gap-6">
@@ -321,7 +317,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center opacity-70">
                 <p>&copy; 2025 Batamia Art. Semua hak dilindungi.</p>
             </div>

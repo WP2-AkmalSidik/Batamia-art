@@ -28,7 +28,6 @@
                     <span>Detail</span>
                     {{-- <i class="fa-solid fa-eye"></i> --}}
                 </a>
-
                 <!-- Tombol Keranjang -->
                 @if (auth()->check() && auth()->user()->role == 'user')
                     <button
