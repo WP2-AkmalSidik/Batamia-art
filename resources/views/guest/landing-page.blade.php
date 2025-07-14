@@ -9,6 +9,7 @@
     <script src="https://kit.fontawesome.com/af96158b7b.js" crossorigin="anonymous"></script>
     @include('guest.assets.style')
 </head>
+
 <body class="antialiased">
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-gray-200 dark:border-gray-700">

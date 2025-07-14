@@ -31,10 +31,14 @@ class ProdukController extends Controller
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             $produks = $query->orderBy('created_at', 'desc')    ->paginate($perPages);
 =======
             $produks = $query->orderBy('created_at')->paginate($perPages);
 >>>>>>> 8583a4f9645277be5cae6bd292f37cbd9895a314
+=======
+            $produks = $query->orderBy('created_at', 'desc')    ->paginate($perPages);
+>>>>>>> d2c439047bc2fbf6a7758640a0ed9dd71a080119
 
             $data = [
                 'view'       => view('pages.admin.produk.components.table', compact('produks'))->render(),
@@ -84,9 +88,13 @@ class ProdukController extends Controller
     public function update(Request $request, string $id)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         // dd($request->all());
 =======
 >>>>>>> 8583a4f9645277be5cae6bd292f37cbd9895a314
+=======
+        // dd($request->all());
+>>>>>>> d2c439047bc2fbf6a7758640a0ed9dd71a080119
         $validated = $request->validate([
             'kategori_id' => 'required|exists:kategoris,id',
             'nama'        => 'required|unique:produks,nama,' . $id,
