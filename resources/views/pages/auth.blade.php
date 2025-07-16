@@ -22,8 +22,8 @@
                     class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full mb-4 shadow-lg">
                     <i class="fas fa-leaf text-white text-2xl"></i>
                 </div>
-                <h1 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white">Batamia Art</h1>
-                <p class="text-sm text-gray-600 dark:text-slate-400">Kerajinan Tangan Berkualitas</p>
+                <h1 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white">{{ getPengaturan()->nama_toko }}</h1>
+                {{-- <p class="text-sm text-gray-600 dark:text-slate-400">Kerajinan Tangan Berkualitas</p> --}}
             </div>
 
             <!-- Login Form -->
@@ -103,7 +103,7 @@
             <!-- Footer -->
             <div class="text-center mt-8">
                 <p class="text-xs text-gray-500 dark:text-slate-500">
-                    © 2024 Batamia Art. Semua hak dilindungi.
+                    © {{ date('Y') }} {{ getPengaturan()->nama_toko }}. Semua hak dilindungi.
                 </p>
             </div>
         </div>
@@ -178,7 +178,7 @@
                 const successCallback = function(response) {
                     setButtonLoadingState("#login-button", false,
                         "<i class='fas fa-sign-in mr-2'></i>Login");
-                    handleSuccess(response, null, "/");
+                    handleSuccess(response, null, "{{ route('user.dashboard') }}");
                 };
 
                 const errorCallback = function(error) {
