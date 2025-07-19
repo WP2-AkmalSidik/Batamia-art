@@ -107,10 +107,6 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Bahan</div>
-                        <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Kayu Jati</div>
-                    </div>
-                    <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
                         <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Berat</div>
                         <div class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ $produk->berat }} gram</div>
                     </div>
@@ -180,12 +176,14 @@
                 <div
                     class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-600 p-2 lg:p-4 rounded-t-xl">
                     <div class="flex gap-2 lg:gap-3">
-                        <!-- Tombol Tambah ke Keranjang -->
-                        <button onclick="openCartModal()"
-                            class="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 lg:py-3 px-4 lg:px-6 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center gap-1 lg:gap-2 text-sm lg:text-base">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="whitespace-nowrap">Tambah ke Keranjang</span>
-                        </button>
+                        @if (auth()->check() && auth()->user()->role == 'user')
+                            <!-- Tombol Tambah ke Keranjang -->
+                            <button onclick="openCartModal()"
+                                class="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 lg:py-3 px-4 lg:px-6 rounded-xl font-medium transition-colors duration-200 flex items-center justify-center gap-1 lg:gap-2 text-sm lg:text-base">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="whitespace-nowrap">Tambah ke Keranjang</span>
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
