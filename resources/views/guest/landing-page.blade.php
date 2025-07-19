@@ -5,389 +5,560 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ getPengaturan()->nama_toko }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/af96158b7b.js" crossorigin="anonymous"></script>
     @include('guest.assets.style')
 </head>
 
-<body class="antialiased">
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-0 border-b border-gray-200 dark:border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <i class="fas fa-leaf text-2xl mr-2"
-                            style="background: var(--accent-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                        <span class="text-xl font-bold">{{ getPengaturan()->nama_toko }}</span>
+<body class="bg-gradient-to-br from-orange-50 via-rose-50 to-amber-50">
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50 animate-fade-in">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 animate-slide-in-left">
+                    <div
+                        class="w-10 h-10 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('brand/logo.png') }}" alt="Batamia Art Logo"
+                            class="w-full h-full object-cover">
                     </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Batamia Art</h1>
                 </div>
 
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#beranda" class="nav-item px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
-                        <a href="#produk" class="nav-item px-3 py-2 rounded-md text-sm font-medium">Produk</a>
-                        <a href="#tentang" class="nav-item px-3 py-2 rounded-md text-sm font-medium">Tentang</a>
-                        <a href="#kontak" class="nav-item px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
-                        @auth
-                            <a href="{{ route('user.dashboard') }}"
-                                class="nav-item px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
-                        @endauth
-                        <button id="theme-toggle" class="nav-item px-3 py-2 rounded-md text-sm font-medium">
-                            <i class="fas fa-moon" id="theme-icon"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="nav-item px-3 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 animate-fade-in delay-200">
+                    <a href="#heroSection"
+                        class="text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium">Home</a>
+                    <a href="#kategori"
+                        class="text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium">Produk</a>
+                    <a href="#review"
+                        class="text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium">Testimoni</a>
+                    <a href="#kontak"
+                        class="text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium">Kontak</a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button class="md:hidden focus:outline-none hamburger" id="hamburger">
+                    <span class="block w-5 h-0.5 bg-gray-800 mb-1 transition-all"></span>
+                    <span class="block w-5 h-0.5 bg-gray-800 mb-1 transition-all"></span>
+                    <span class="block w-5 h-0.5 bg-gray-800 transition-all"></span>
+                </button>
             </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="mobile-menu md:hidden bg-white/90 mt-1 rounded-lg shadow-md" id="mobileMenu">
+                <!-- Ubah mt-4 menjadi mt-2 -->
+                <div class="flex flex-col space-y-2 p-2"> <!-- Ubah space-y-3 menjadi space-y-2 dan p-4 menjadi p-2 -->
+                    <a href="#heroSection"
+                        class="text-sm text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium py-1 px-3 rounded-lg hover:bg-orange-50">Home</a>
+                    <!-- Tambah text-sm dan ubah padding -->
+                    <a href="#kategori"
+                        class="text-sm text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium py-1 px-3 rounded-lg hover:bg-orange-50">Produk</a>
+                    <a href="#review"
+                        class="text-sm text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium py-1 px-3 rounded-lg hover:bg-orange-50">Testimoni</a>
+                    <a href="#kontak"
+                        class="text-sm text-gray-700 hover:text-orange-500 transition-colors duration-300 font-medium py-1 px-3 rounded-lg hover:bg-orange-50">Kontak</a>
+                </div>
+            </nav>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="md:hidden hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#beranda" class="nav-item block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="#produk" class="nav-item block px-3 py-2 rounded-md text-base font-medium">Produk</a>
-                <a href="#tentang" class="nav-item block px-3 py-2 rounded-md text-base font-medium">Tentang</a>
-                <a href="#kontak" class="nav-item block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
-            </div>
-        </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section id="beranda" class="hero-gradient min-h-screen flex items-center justify-center pt-16 parallax-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center fade-in">
-                <div class="floating-element mb-8">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center glass-card">
-                        <i class="fas fa-leaf text-4xl"
-                            style="background: var(--accent-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                    </div>
-                </div>
+    <section id="heroSection" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background Shapes -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div
+                class="absolute top-20 left-10 w-72 h-72 bg-gradient-sage shape-blob opacity-20 animate-scale-in delay-300">
+            </div>
+            <div
+                class="absolute bottom-20 right-10 w-96 h-96 bg-gradient-lavender shape-organic opacity-20 animate-scale-in delay-500">
+            </div>
+            <div
+                class="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-dusty shape-blob opacity-15 animate-scale-in delay-700">
+            </div>
+        </div>
 
-                @php
-                    $namaToko = getPengaturan()->nama_toko; // "Batamia Art"
-                    $parts = explode(' ', $namaToko); // ['Batamia', 'Art']
-                @endphp
+        <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-center lg:text-left space-y-8">
+                <h2 class="text-5xl lg:text-6xl font-bold text-gray-800 leading-tight animate-fade-in-up">
+                    Temukan <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-rose-500">Produk
+                        Terbaik</span> untuk Hidup Anda
+                </h2>
 
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                    <span class="block">{{ $parts[0] ?? '' }}</span>
-                    <span class="block"
-                        style="background: var(--accent-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                        {{ $parts[1] ?? '' }}
-                    </span>
-                </h1>
-
-
-                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-80">
-                    {{ getPengaturan()->deskripsi }}
+                <p class="text-xl text-gray-600 leading-relaxed animate-fade-in-up delay-200">
+                    Koleksi eksklusif produk berkualitas tinggi dengan desain modern dan harga terjangkau. Wujudkan gaya
+                    hidup impian Anda bersama kami.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('login') }}" class="btn-accent px-8 py-3 text-lg font-semibold">
-                        <i class="fas fa-shopping-cart mr-2"></i>
+                <div
+                    class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up delay-400">
+                    <a href="{{ route('login') }}"
+                        class="bg-gradient-to-r from-orange-500 to-rose-500 text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-shopping-bag mr-2"></i>
                         Belanja Sekarang
                     </a>
                     <a href="{{ route('user.dashboard') }}"
-                        class="glass-card px-8 py-3 text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        class="border-2 border-orange-500 text-orange-500 px-8 py-4 rounded-full font-semibold hover:bg-orange-500 hover:text-white transition-all duration-300">
                         <i class="fas fa-play mr-2"></i>
-                        Lihat Koleksi
+                        Lihat Produk
                     </a>
                 </div>
+
+                <div class="flex items-center justify-center lg:justify-start space-x-8 animate-fade-in-up delay-600">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-800">5000+</div>
+                        <div class="text-gray-600">Produk</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-800">10k+</div>
+                        <div class="text-gray-600">Pelanggan</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-gray-800">4.9</div>
+                        <div class="text-gray-600">Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative animate-scale-in delay-300">
+                <div
+                    class="w-full h-96 bg-gradient-to-br from-orange-100 to-rose-100 rounded-3xl shadow-2xl overflow-hidden">
+                    <div
+                        class="w-full h-full bg-gradient-to-br from-orange-200/50 to-rose-200/50 flex items-center justify-center">
+                        <img src="{{ asset('landing/herosection.jpg') }}" alt="Hero Product"
+                            class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div
+                    class="absolute -top-4 -left-4 w-20 h-20 bg-gradient-sage rounded-full flex items-center justify-center shadow-lg animate-fade-in delay-800">
+                    <i class="fas fa-truck text-green-600 text-xl"></i>
+                </div>
+                <div
+                    class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-lavender rounded-full flex items-center justify-center shadow-lg animate-fade-in delay-1000">
+                    <i class="fas fa-shield-alt text-purple-600 text-xl"></i>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="produk" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Produk Unggulan</h2>
-                <p class="text-xl opacity-70 max-w-2xl mx-auto">
-                    Temukan koleksi kerajinan tangan dan peralatan berkualitas tinggi kami
-                </p>
+    <!-- Featured Products -->
+    <section id="kategori" class="py-20 bg-white/50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Kategori Produk</h3>
+                <p class="text-xl text-gray-600">Berbagai macam kategori produk yang kami jual</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Kerajinan Kayu -->
-                @foreach ($kategoris as $kategori)
-                    <div class="glass-card p-8 text-center">
-                        <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center"
-                            style="background: var(--green-gradient);">
-                            <i class="{{ $kategori->icon }} text-white text-2xl"></i>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Kategori Perhiasan -->
+                <div
+                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200 group">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="{{ asset('landing/perhiasan.jpg') }}" alt="Koleksi Perhiasan"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                            <span class="text-white font-medium text-lg">Jelajahi Koleksi →</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">{{ $kategori->nama }}</h3>
-                        <p class="opacity-70 mb-6">{{ $kategori->deskripsi }}</p>
-                        <button onclick="window.location.href='{{ route('user.dashboard') }}'"
-                            class="btn-accent w-full">
-                            <i class="fas fa-eye mr-2"></i>
-                            Lihat Koleksi
-                        </button>
                     </div>
-                @endforeach
 
-                <!-- Custom Order -->
-                {{-- <div class="glass-card p-8 text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: var(--warning-color);">
-                        <i class="fas fa-magic text-white text-2xl"></i>
+                    <div class="p-6 text-center">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Perhiasan Eksklusif</h4>
+                        <p class="text-gray-500 italic">
+                            "Keanggunan yang abadi dalam setiap detail"
+                        </p>
+
+                        <div class="my-4 flex justify-center">
+                            <div class="w-16 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+                        </div>
+                        <span class="text-xs tracking-widest text-amber-600 font-medium">GOLD COLLECTION</span>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4">Custom Order</h3>
-                    <p class="opacity-70 mb-6">Pesan sesuai keinginan Anda dengan desain dan spesifikasi khusus</p>
-                    <button class="btn-accent w-full">
-                        <i class="fas fa-phone mr-2"></i>
-                        Hubungi Kami
-                    </button>
-                </div> --}}
+                </div>
+
+                <!-- Card Kerajinan Tangan - Dual Material -->
+                <div
+                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-fade-in-up delay-200 group">
+                    <!-- Header Card -->
+                    <div class="bg-gradient-to-r from-amber-50 to-green-50 py-4 text-center">
+                        <h3 class="text-xl font-semibold text-gray-800 uppercase tracking-wider">Kerajinan Tangan</h3>
+                        <p class="text-xs text-gray-500 mt-1">Karya Seni Berkelas dengan Bahan Daur Ulang</p>
+                    </div>
+
+                    <!-- Grid Dua Gambar Bahan -->
+                    <div class="grid grid-cols-2 divide-x divide-gray-100">
+                        <!-- Plastik -->
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="{{ asset('landing/plastik.jpg') }}" alt="Kerajinan Plastik Daur Ulang"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
+                                <span class="text-white text-sm font-medium bg-black/60 px-2 py-1 rounded-full">PLASTIK
+                                    DAUR ULANG</span>
+                            </div>
+                        </div>
+
+                        <!-- Bambu -->
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="{{ asset('landing/bambu.jpg') }}" alt="Kerajinan Bambu Tradisional"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
+                                <span class="text-white text-sm font-medium bg-black/60 px-2 py-1 rounded-full">BAMBU
+                                    ALAMI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Deskripsi -->
+                    <div class="p-5 text-center border-t border-gray-100">
+                        <p class="text-gray-600 mb-3">
+                            <span class="font-medium text-amber-600">Plastik</span> - Karya inovatif ramah
+                            lingkungan<br>
+                            <span class="font-medium text-green-600">Bambu</span> - Keindahan alam yang abadi
+                        </p>
+                        <div class="flex justify-center space-x-2">
+                            <span
+                                class="text-xs px-3 py-1 bg-amber-100 text-amber-800 rounded-full">Eco-Friendly</span>
+                            <span class="text-xs px-3 py-1 bg-green-100 text-green-800 rounded-full">Handmade</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kategori Perkakas Rumah Tangga -->
+                <div
+                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-fade-in-up delay-200 group">
+                    <div class="h-64 relative overflow-hidden">
+                        <img src="{{ asset('landing/perkakas.jpg') }}" alt="Perkakas Rumah Tangga Premium"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                            <span class="text-white font-medium text-lg">Telusuri Koleksi →</span>
+                        </div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Perkakas Rumah Tangga</h4>
+                        <p class="text-gray-500 italic">
+                            "Fungsionalitas premium untuk kenyamanan harian"
+                        </p>
+
+                        <div class="my-4 flex justify-center">
+                            <div class="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+                        </div>
+
+                        <span class="text-xs tracking-widest text-blue-600 font-medium">HOME ESSENTIALS</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="tentang" class="py-20 parallax-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Tentang {{ getPengaturan()->nama_toko }}</h2>
-                    <p class="text-lg opacity-80 mb-6">
-                        {{ getPengaturan()->deskripsi }}
+    <!-- Testimonials -->
+    <section id="review" class="py-20 bg-gradient-to-br from-orange-50 to-rose-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h3 class="text-4xl font-bold text-gray-800 mb-4">Testimoni Pelanggan</h3>
+                <p class="text-xl text-gray-600">Apa kata pelanggan tentang produk dan layanan kami</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div
+                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Putri"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Sarah Putri</h4>
+                            <p class="text-gray-600">Jakarta</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-lg mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic leading-relaxed">
+                        "Produk yang dibeli benar-benar berkualitas tinggi. Pengiriman cepat dan packaging sangat rapi.
+                        Sangat puas dengan pelayanannya!"
                     </p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            <span>Kualitas produk terjamin</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            <span>Harga kompetitif</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            <span>Pengiriman cepat dan aman</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            <span>Layanan customer service 24/7</span>
-                        </div>
-                    </div>
                 </div>
-                <div class="floating-element">
-                    <div class="glass-card p-8 text-center">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <h3 class="text-3xl font-bold mb-2"
-                                    style="background: var(--accent-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                    {{ $produks }}+</h3>
-                                <p class="opacity-70">Produk Tersedia</p>
-                            </div>
-                            <div>
-                                <h3 class="text-3xl font-bold mb-2"
-                                    style="background: var(--success-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                    {{ $users }}+</h3>
-                                <p class="opacity-70">Pelanggan Puas</p>
-                            </div>
-                            <div>
-                                <h3 class="text-3xl font-bold mb-2"
-                                    style="background: var(--info-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                    5+</h3>
-                                <p class="opacity-70">Tahun Pengalaman</p>
-                            </div>
-                            <div>
-                                <h3 class="text-3xl font-bold mb-2"
-                                    style="background: var(--purple-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                    {{ round($kepuasan, 2) }} / 5</h3>
-                                <p class="opacity-70">Rating Kepuasan</p>
-                            </div>
+
+                <!-- Testimonial 2 -->
+                <div
+                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-400">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sarah Putri"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Budi Santoso</h4>
+                            <p class="text-gray-600">Surabaya</p>
                         </div>
                     </div>
+                    <div class="text-yellow-400 text-lg mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic leading-relaxed">
+                        "Website sangat user-friendly dan mudah digunakan. Harga produk kompetitif dengan kualitas yang
+                        tidak mengecewakan. Recommended!"
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div
+                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-600">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/41.jpg" alt="Sarah Putri"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Maya Sari</h4>
+                            <p class="text-gray-600">Bandung</p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 text-lg mb-4">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic leading-relaxed">
+                        "Customer service yang responsif dan membantu. Produk sesuai dengan deskripsi di website. Akan
+                        order lagi di masa depan!"
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="kontak" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Hubungi Kami</h2>
-                <p class="text-xl opacity-70 max-w-2xl mx-auto">
-                    Siap membantu Anda menemukan produk yang tepat untuk kebutuhan Anda
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-orange-500 to-rose-500 relative overflow-hidden">
+        <div class="absolute inset-0 bg-white/10"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="max-w-4xl mx-auto animate-fade-in-up">
+                <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Bergabunglah dengan Komunitas Kami
+                </h3>
+                <p class="text-xl text-white/90 mb-8 leading-relaxed">
+                    Dapatkan update produk terbaru, promo eksklusif, dan tips lifestyle menarik langsung ke inbox Anda.
+                    Jangan lewatkan kesempatan emas ini!
                 </p>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-8 text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center"
-                        style="background: var(--info-color);">
-                        <i class="fas fa-phone text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Telepon</h3>
-                    <p class="opacity-70 mb-4">{{ getPengaturan()->no_hp }}</p>
-                    <button class="btn-accent w-full">
-                        <i class="fas fa-phone mr-2"></i>
-                        Hubungi
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto mb-8">
+                    <input type="email" placeholder="Masukkan email Anda..."
+                        class="flex-1 px-6 py-4 rounded-full border-0 focus:outline-none focus:ring-4 focus:ring-white/30 text-gray-800 placeholder-gray-500">
+                    <button
+                        class="bg-white text-orange-500 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-lg">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Subscribe
                     </button>
                 </div>
 
-                <div class="glass-card p-8 text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center"
-                        style="background: var(--success-color);">
-                        <i class="fab fa-whatsapp text-white text-2xl"></i>
+                <div class="flex items-center justify-center space-x-8 text-white/80">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Promo Eksklusif</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">WhatsApp</h3>
-                    <p class="opacity-70 mb-4">{{ getPengaturan()->no_hp }}</p>
-                    <button class="btn-accent w-full">
-                        <i class="fab fa-whatsapp mr-2"></i>
-                        Chat Sekarang
-                    </button>
-                </div>
-
-                <div class="glass-card p-8 text-center">
-                    <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center"
-                        style="background: var(--purple-gradient);">
-                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    <div class="flex items-center">
+                        <i class="fas fa-gift mr-2"></i>
+                        <span>Bonus Member</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Email</h3>
-                    <p class="opacity-70 mb-4">{{ getPengaturan()->email }}</p>
-                    <button class="btn-accent w-full">
-                        <i class="fas fa-envelope mr-2"></i>
-                        Kirim Email
-                    </button>
+                    <div class="flex items-center">
+                        <i class="fas fa-bell mr-2"></i>
+                        <span>Update Terbaru</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="glass-card border-0 border-t border-gray-200 dark:border-gray-700 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-palette text-2xl mr-2"
-                            style="background: var(--accent-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                        <span class="text-xl font-bold">Batamia Art</span>
+    <footer id="kontak" class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="animate-fade-in-up">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-gradient-peach rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-orange-600 text-xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold">Bloom Store</h4>
                     </div>
-                    <p class="opacity-70 mb-4">
-                        Toko online terpercaya untuk kerajinan tangan berkualitas dan peralatan rumah tangga.
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Toko online terpercaya dengan koleksi produk berkualitas tinggi untuk memenuhi kebutuhan
+                        lifestyle modern Anda.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-2xl hover:opacity-60 transition-opacity">
+                        <a href="#"
+                            class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-2xl hover:opacity-60 transition-opacity">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <a href="#" class="text-2xl hover:opacity-60 transition-opacity">
+                        <a href="#"
+                            class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                            <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Produk</h4>
-                    <ul class="space-y-2 opacity-70">
-                        @foreach ($kategoris as $kategori)
-                            <li><a href="{{ route('user.dashboard') }}"
-                                    class="hover:opacity-100 transition-opacity">{{ $kategori->nama }}</a></li>
-                        @endforeach
+                <!-- Quick Links -->
+                <div class="animate-fade-in-up delay-200">
+                    <h5 class="text-xl font-semibold mb-6">Quick Links</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Tentang
+                                Kami</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Produk</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Promo</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Blog</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Karier</a>
+                        </li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Layanan</h4>
-                    <ul class="space-y-2 opacity-70">
-                        <li><a href="javascript:void(0)" class="hover:opacity-100 transition-opacity">Custom Order</a>
+                <!-- Customer Service -->
+                <div class="animate-fade-in-up delay-400">
+                    <h5 class="text-xl font-semibold mb-6">Customer Service</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Pusat
+                                Bantuan</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Cara
+                                Pemesanan</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Kebijakan
+                                Privasi</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Syarat &
+                                Ketentuan</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-orange-500 transition-colors duration-300">Pengembalian</a>
                         </li>
-                        <li><a href="javascript:void(0)" class="hover:opacity-100 transition-opacity">Konsultasi</a>
-                        </li>
-                        <li><a href="javascript:void(0)" class="hover:opacity-100 transition-opacity">Pengiriman</a>
-                        </li>
-                        <li><a href="javascript:void(0)" class="hover:opacity-100 transition-opacity">Garansi</a></li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Kontak</h4>
-                    <ul class="space-y-2 opacity-70">
-                        <li>{{ getPengaturan()->kota }}, {{ getPengaturan()->provinsi }}</li>
-                        <li>{{ getPengaturan()->no_hp }}</li>
-                        <li>{{ getPengaturan()->email }}</li>
-                        <li>Senin - Sabtu: 08:00 - 17:00</li>
-                    </ul>
+                <!-- Contact -->
+                <div class="animate-fade-in-up delay-600">
+                    <h5 class="text-xl font-semibold mb-6">Hubungi Kami</h5>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-orange-500"></i>
+                            <span class="text-gray-400">Jl. Raya Jakarta No. 123, Indonesia</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-orange-500"></i>
+                            <span class="text-gray-400">+62 812-3456-7890</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-orange-500"></i>
+                            <span class="text-gray-400">hello@bloomstore.com</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-orange-500"></i>
+                            <span class="text-gray-400">Senin - Jumat: 08:00 - 17:00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center opacity-70">
-                <p>&copy; 2025 Batamia Art. Semua hak dilindungi.</p>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2024 Bloom Store. All rights reserved. Made with <i class="fas fa-heart text-red-500"></i> in
+                    Indonesia.
+                </p>
             </div>
         </div>
     </footer>
-
     <script>
-        // Theme Toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const html = document.documentElement;
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            if (html.classList.contains('dark')) {
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
         });
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            html.classList.add('dark');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-        }
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // Tutup mobile menu saat mengklik link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('open');
+            });
         });
-
-        // Smooth Scrolling
+        // Smooth scroll dengan offset untuk fixed header
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                const headerOffset = 80; // Sesuaikan dengan tinggi header Anda
+
+                if (targetElement) {
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    // Animasi scroll
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
+
+                    // Tambahkan efek aktif pada menu
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('text-orange-500', 'font-bold');
+                    });
+                    this.classList.add('text-orange-500', 'font-bold');
                 }
             });
         });
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Animasi saat scroll ke section
+        function animateOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const windowHeight = window.innerHeight;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const sectionVisible = 150;
+
+                if (sectionTop < windowHeight - sectionVisible) {
+                    section.classList.add('animate-section');
                 }
             });
-        }, observerOptions);
+        }
 
-        // Observe all cards
-        document.querySelectorAll('.glass-card').forEach(card => {
-            observer.observe(card);
-        });
+        // Jalankan saat load dan scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
     </script>
 </body>
 
