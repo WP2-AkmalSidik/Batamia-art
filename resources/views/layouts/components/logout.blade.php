@@ -12,12 +12,12 @@
             </p>
 
             <div class="flex justify-center space-x-3">
-                <form id="hapus-kategori" method="DELETE">
-                    <button onclick="closeModal('logoutModal')" class="btn-secondary">Batal</button>
-                    <button onclick="confirmLogout()" class="btn-danger">
-                        <i class="fas fa-trash mr-2"></i>Logout
-                    </button>
-                </form>
+                {{-- <form id="hapus-kategori" method="DELETE"> --}}
+                <button onclick="closeModal('logoutModal')" class="btn-secondary">Batal</button>
+                <button onclick="confirmLogout()" class="btn-danger">
+                    <i class="fas fa-trash mr-2"></i>Logout
+                </button>
+                {{-- </form> --}}
             </div>
         </div>
     </div>

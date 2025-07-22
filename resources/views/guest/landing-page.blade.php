@@ -21,7 +21,7 @@
                         <img src="{{ asset('brand/logo.png') }}" alt="Batamia Art Logo"
                             class="w-full h-full object-cover">
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-800">Batamia Art</h1>
+                    <h1 class="text-2xl font-bold text-gray-800">{{ getPengaturan()->nama_toko }}</h1>
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -86,8 +86,7 @@
                 </h2>
 
                 <p class="text-xl text-gray-600 leading-relaxed animate-fade-in-up delay-200">
-                    Koleksi eksklusif produk berkualitas tinggi dengan desain modern dan harga terjangkau. Wujudkan gaya
-                    hidup impian Anda bersama kami.
+                    {{ \Illuminate\Support\Str::limit(getPengaturan()->deskripsi, 300) }}
                 </p>
 
                 <div
@@ -150,103 +149,29 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Kategori Perhiasan -->
-                <div
-                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200 group">
-                    <div class="h-64 relative overflow-hidden">
-                        <img src="{{ asset('landing/perhiasan.jpg') }}" alt="Koleksi Perhiasan"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                            <span class="text-white font-medium text-lg">Jelajahi Koleksi →</span>
-                        </div>
-                    </div>
-
-                    <div class="p-6 text-center">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Perhiasan Eksklusif</h4>
-                        <p class="text-gray-500 italic">
-                            "Keanggunan yang abadi dalam setiap detail"
-                        </p>
-
-                        <div class="my-4 flex justify-center">
-                            <div class="w-16 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-                        </div>
-                        <span class="text-xs tracking-widest text-amber-600 font-medium">GOLD COLLECTION</span>
-                    </div>
-                </div>
-
-                <!-- Card Kerajinan Tangan - Dual Material -->
-                <div
-                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-fade-in-up delay-200 group">
-                    <!-- Header Card -->
-                    <div class="bg-gradient-to-r from-amber-50 to-green-50 py-4 text-center">
-                        <h3 class="text-xl font-semibold text-gray-800 uppercase tracking-wider">Kerajinan Tangan</h3>
-                        <p class="text-xs text-gray-500 mt-1">Karya Seni Berkelas dengan Bahan Daur Ulang</p>
-                    </div>
-
-                    <!-- Grid Dua Gambar Bahan -->
-                    <div class="grid grid-cols-2 divide-x divide-gray-100">
-                        <!-- Plastik -->
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="{{ asset('landing/plastik.jpg') }}" alt="Kerajinan Plastik Daur Ulang"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                @foreach ($kategoris as $kategori)
+                    <div
+                        class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200 group">
+                        <div class="h-64 relative overflow-hidden">
                             <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
-                                <span class="text-white text-sm font-medium bg-black/60 px-2 py-1 rounded-full">PLASTIK
-                                    DAUR ULANG</span>
+                                class="w-full h-full flex items-center justify-center transition-transform duration-700 group-hover:scale-110">
+                                <i class="{{ $kategori->icon }} text-6xl text-gray-700 dark:text-gray-200"></i>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
                             </div>
                         </div>
 
-                        <!-- Bambu -->
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="{{ asset('landing/bambu.jpg') }}" alt="Kerajinan Bambu Tradisional"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent flex items-end p-4">
-                                <span class="text-white text-sm font-medium bg-black/60 px-2 py-1 rounded-full">BAMBU
-                                    ALAMI</span>
+                        <div class="p-6 text-center">
+                            <h4 class="text-xl font-semibold text-gray-800 mb-2">{{ $kategori->nama }}</h4>
+
+                            <div class="my-4 flex justify-center">
+                                <div class="w-16 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent">
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Footer Deskripsi -->
-                    <div class="p-5 text-center border-t border-gray-100">
-                        <p class="text-gray-600 mb-3">
-                            <span class="font-medium text-amber-600">Plastik</span> - Karya inovatif ramah
-                            lingkungan<br>
-                            <span class="font-medium text-green-600">Bambu</span> - Keindahan alam yang abadi
-                        </p>
-                        <div class="flex justify-center space-x-2">
-                            <span
-                                class="text-xs px-3 py-1 bg-amber-100 text-amber-800 rounded-full">Eco-Friendly</span>
-                            <span class="text-xs px-3 py-1 bg-green-100 text-green-800 rounded-full">Handmade</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Kategori Perkakas Rumah Tangga -->
-                <div
-                    class="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-fade-in-up delay-200 group">
-                    <div class="h-64 relative overflow-hidden">
-                        <img src="{{ asset('landing/perkakas.jpg') }}" alt="Perkakas Rumah Tangga Premium"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                            <span class="text-white font-medium text-lg">Telusuri Koleksi →</span>
-                        </div>
-                    </div>
-                    <div class="p-6 text-center">
-                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Perkakas Rumah Tangga</h4>
-                        <p class="text-gray-500 italic">
-                            "Fungsionalitas premium untuk kenyamanan harian"
-                        </p>
-
-                        <div class="my-4 flex justify-center">
-                            <div class="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
-                        </div>
-
-                        <span class="text-xs tracking-widest text-blue-600 font-medium">HOME ESSENTIALS</span>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -260,87 +185,54 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200">
-                    <div class="flex items-center mb-6">
-                        <div
-                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Putri"
-                                class="w-full h-full object-cover">
+                @foreach ($reviews as $review)
+                    <div
+                        class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-200">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
+                                <img src="{{ $review->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($review->user->nama) }}"
+                                    alt="{{ $review->user->name }}" class="w-full h-full object-cover">
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-semibold text-gray-800">{{ $review->user->nama }}</h4>
+                                {{-- <p class="text-gray-600">{{ $review->user->kota ?? 'Indonesia' }}</p> --}}
+                            </div>
                         </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-gray-800">Sarah Putri</h4>
-                            <p class="text-gray-600">Jakarta</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-lg mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 italic leading-relaxed">
-                        "Produk yang dibeli benar-benar berkualitas tinggi. Pengiriman cepat dan packaging sangat rapi.
-                        Sangat puas dengan pelayanannya!"
-                    </p>
-                </div>
 
-                <!-- Testimonial 2 -->
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-400">
-                    <div class="flex items-center mb-6">
-                        <div
-                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Sarah Putri"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-gray-800">Budi Santoso</h4>
-                            <p class="text-gray-600">Surabaya</p>
-                        </div>
-                    </div>
-                    <div class="text-yellow-400 text-lg mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 italic leading-relaxed">
-                        "Website sangat user-friendly dan mudah digunakan. Harga produk kompetitif dengan kualitas yang
-                        tidak mengecewakan. Recommended!"
-                    </p>
-                </div>
+                        <!-- ⭐ Dinamis Rating -->
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex items-center">
+                                @php
+                                    $rating = $review->rating; // misal 4.5
+                                    $fullStars = floor($rating);
+                                    $hasHalfStar = $rating - $fullStars >= 0.5;
+                                    $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                @endphp
 
-                <!-- Testimonial 3 -->
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 animate-fade-in-up delay-600">
-                    <div class="flex items-center mb-6">
-                        <div
-                            class="w-16 h-16 bg-gradient-peach rounded-full flex items-center justify-center overflow-hidden">
-                            <img src="https://randomuser.me/api/portraits/women/41.jpg" alt="Sarah Putri"
-                                class="w-full h-full object-cover">
+                                @for ($i = 0; $i < $fullStars; $i++)
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                @endfor
+
+                                @if ($hasHalfStar)
+                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                @endif
+
+                                @for ($i = 0; $i < $emptyStars; $i++)
+                                    <i class="far fa-star text-yellow-400"></i>
+                                @endfor
+                            </div>
+
                         </div>
-                        <div class="ml-4">
-                            <h4 class="font-semibold text-gray-800">Maya Sari</h4>
-                            <p class="text-gray-600">Bandung</p>
-                        </div>
+
+                        <!-- ✍️ Isi Testimoni -->
+                        <p class="text-gray-700 italic leading-relaxed">
+                            "{{ $review->komen }}"
+                        </p>
                     </div>
-                    <div class="text-yellow-400 text-lg mb-4">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-gray-700 italic leading-relaxed">
-                        "Customer service yang responsif dan membantu. Produk sesuai dengan deskripsi di website. Akan
-                        order lagi di masa depan!"
-                    </p>
-                </div>
+                @endforeach
             </div>
+
         </div>
     </section>
 
@@ -395,29 +287,28 @@
                         <div class="w-10 h-10 bg-gradient-peach rounded-full flex items-center justify-center">
                             <i class="fas fa-seedling text-orange-600 text-xl"></i>
                         </div>
-                        <h4 class="text-2xl font-bold">Bloom Store</h4>
+                        <h4 class="text-2xl font-bold">{{ getPengaturan()->nama_toko }}</h4>
                     </div>
                     <p class="text-gray-400 leading-relaxed mb-6">
-                        Toko online terpercaya dengan koleksi produk berkualitas tinggi untuk memenuhi kebutuhan
-                        lifestyle modern Anda.
+                        {{ \Illuminate\Support\Str::limit(getPengaturan()->deskripsi, 100) }}
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#"
+                        <a href="{{ getPengaturan()->facebook }}"
                             class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#"
+                        <a href="{{ getPengaturan()->instagram }}"
                             class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#"
+                        <a href="{{ getPengaturan()->x }}"
                             class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#"
+                        {{-- <a href="#"
                             class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                             <i class="fab fa-youtube"></i>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
 
@@ -471,15 +362,15 @@
                     <div class="space-y-4">
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-map-marker-alt text-orange-500"></i>
-                            <span class="text-gray-400">Jl. Raya Jakarta No. 123, Indonesia</span>
+                            <span class="text-gray-400">{{ getPengaturan()->alamat }}</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-phone text-orange-500"></i>
-                            <span class="text-gray-400">+62 812-3456-7890</span>
+                            <span class="text-gray-400">{{ getPengaturan()->no_telp }}</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-envelope text-orange-500"></i>
-                            <span class="text-gray-400">hello@bloomstore.com</span>
+                            <span class="text-gray-400">{{ getPengaturan()->email }}</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <i class="fas fa-clock text-orange-500"></i>
@@ -491,7 +382,8 @@
 
             <div class="border-t border-gray-800 mt-12 pt-8 text-center">
                 <p class="text-gray-400">
-                    © 2024 Bloom Store. All rights reserved. Made with <i class="fas fa-heart text-red-500"></i> in
+                    © {{ date('Y') }} {{ getPengaturan()->nama_toko }}. All rights reserved. Made with <i
+                        class="fas fa-heart text-red-500"></i> in
                     Indonesia.
                 </p>
             </div>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('etd')->nullable();
             $table->string('resi')->nullable();
             $table->string('ket')->nullable();
-            $table->enum('status', ['belum_dibayar', 'dibayar', 'diproses', 'dikirim', 'dibatalkan', 'ditolak', 'diterima', 'selesai'])->default('belum_dibayar');
+            $table->enum('status', ['belum_dibayar', 'dibayar', 'diproses', 'dikirim', 'dibatalkan', 'ditolak', 'diterima', 'selesai', 'retur'])->default('belum_dibayar');
             $table->timestamps();
 
             $table->foreign('bank_id')->references('id')->on('banks')->onDelete('set null');

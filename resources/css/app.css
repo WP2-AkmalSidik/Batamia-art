@@ -29,6 +29,7 @@
   /* Status Orderan */
   --status-dibayar: linear-gradient(135deg, #10b981 0%, #059669 100%);
   --status-belum-bayar: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --status-retur: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   --status-diproses: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   --status-ditolak: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
   --status-dibatalkan: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
@@ -39,6 +40,7 @@
   /* Text Colors untuk Status */
   --status-text-dibayar: #065f46;
   --status-text-belum_bayar: #991b1b;
+  --status-text-retur: #991b1b;
   --status-text-diproses: #1e40af;
   --status-text-ditolak: #374151;
   --status-text-dibatalkan: #374151;
@@ -71,6 +73,7 @@
   /* Text Colors untuk Status (Dark Mode) */
   --status-text-dibayar: #d1fae5;
   --status-text-belum-bayar: #fee2e2;
+  --status-text-retur: #fee2e2;
   --status-text-diproses: #dbeafe;
   --status-text-ditolak: #e5e7eb;
   --status-text-dibatalkan: #e5e7eb;
@@ -273,6 +276,12 @@ body {
 .status-belum-bayar {
   background: var(--status-belum-bayar);
   color: var(--status-text-belum-bayar);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.status-retur {
+  background: var(--status-retur);
+  color: var(--status-text-retur);
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 

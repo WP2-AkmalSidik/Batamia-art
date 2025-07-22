@@ -33,41 +33,73 @@
                         placeholder="Masukkan nama toko" required>
                 </div>
 
+                <!-- Kontak & Sosial Media -->
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Informasi Kontak</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label">No. Telepon</label>
+                            <input type="text" id="no_telp" class="form-input w-full"
+                                value="{{ getPengaturan()->no_telp }}" placeholder="Contoh: 081234567890">
+                        </div>
+                        <div>
+                            <label class="form-label">Email</label>
+                            <input type="email" id="email" class="form-input w-full"
+                                value="{{ getPengaturan()->email }}" placeholder="Contoh: email@domain.com">
+                        </div>
+                        <div>
+                            <label class="form-label">Facebook</label>
+                            <input type="text" id="facebook" class="form-input w-full"
+                                value="{{ getPengaturan()->facebook }}" placeholder="Contoh: facebook.com/nama">
+                        </div>
+                        <div>
+                            <label class="form-label">Instagram</label>
+                            <input type="text" id="instagram" class="form-input w-full"
+                                value="{{ getPengaturan()->instagram }}" placeholder="Contoh: instagram.com/nama">
+                        </div>
+                        <div>
+                            <label class="form-label">X (Twitter)</label>
+                            <input type="text" id="x" class="form-input w-full" value="{{ getPengaturan()->x }}"
+                                placeholder="Contoh: twitter.com/nama">
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="form-label">Deskripsi Toko</label>
+                        <textarea id="deskripsi" name="deskripsi" class="form-input w-full" rows="3"
+                            placeholder="Deskripsi singkat tentang toko">{{ getPengaturan()->deskripsi }}</textarea>
+                    </div>
+                </div>
+
                 <!-- Alamat Section -->
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
                     <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Alamat Toko</h4>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Provinsi -->
                         <div>
                             <label class="form-label">Provinsi</label>
                             <input type='text' id="provinsi" value="{{ getPengaturan()->provinsi }}"
                                 class="form-input w-full" required>
                         </div>
-
-                        <!-- Kota/Kabupaten -->
                         <div>
                             <label class="form-label">Kota/Kabupaten</label>
                             <input type='text' id="kota" class="form-input w-full"
                                 value="{{ getPengaturan()->kota }}" required>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                        <!-- Kecamatan -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div>
                             <label class="form-label">Kecamatan</label>
                             <input type='text' id="kecamatan" class="form-input w-full"
                                 value="{{ getPengaturan()->kecamatan }}" required>
                         </div>
-
-                        <!-- Desa/Kelurahan -->
                         <div>
                             <label class="form-label">Desa/Kelurahan</label>
                             <input type='text' id="kelurahan" class="form-input w-full"
                                 value="{{ getPengaturan()->kelurahan }}" required>
                         </div>
-                        <!-- Kode Post -->
                         <div>
                             <label class="form-label">Kode Pos</label>
                             <select type="text" name="kode_pos" id="kode_pos" class="form-input w-full">
@@ -81,9 +113,9 @@
                         <textarea id="alamat" name="alamat" class="form-input w-full" rows="3"
                             placeholder="Contoh: Jl. Raya Tawang No. 123, RT 01/RW 05" required>{{ getPengaturan()->alamat }}</textarea>
                     </div>
-
                 </div>
             </form>
+
         </div>
 
         <!-- Pengaturan Jenis Pembayaran -->
@@ -345,7 +377,13 @@
                     kelurahan: $('#kelurahan').val(),
                     kode_pos: $('#kode_pos').val(),
                     alamat: $('#alamat').val(),
-                    nama_toko: $('#nama_toko').val()
+                    nama_toko: $('#nama_toko').val(),
+                    deskripsi: $('#deskripsi').val(),
+                    no_telp: $('#no_telp').val(),
+                    email: $('#email').val(),
+                    facebook: $('#facebook').val(),
+                    instagram: $('#instagram').val(),
+                    x: $('#x').val(),
                 }
 
                 const url = '{{ route('pengaturan.update') }}';

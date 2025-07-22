@@ -17,6 +17,7 @@
                         <option value="dikirim">Dikirim</option>
                         <option value="selesai">Selesai</option>
                         <option value="dibatalkan">Dibatalkan</option>
+                        <option value="retur">Retur</option>
                     </select>
                 </div>
             </div>
@@ -59,7 +60,7 @@
             }
 
             function loadData(page = 1, status = currentStatus, append = false) {
-                console.log('load data di panggil', isLoading, append, hasMore)
+                console.log('load data di panggil', isLoading, append, hasMore, status)
                 if (isLoading || (!append && !hasMore)) return;
 
                 isLoading = true;
@@ -118,10 +119,11 @@
             }
 
             // Event filter
-            $('#filterStatus').on('change', function() {
+            $('#statusFilter').on('change', function() {
                 currentStatus = $(this).val();
+                console.log(currentStatus)
                 resetFilterState();
-                loadData();
+                loadData(currentPage, currentStatus, false);
             });
 
             // Load more

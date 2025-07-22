@@ -26,8 +26,8 @@ class PesananController extends Controller
             $query = Order::with('user', 'alamat', 'bank', 'orderProduks.produk')->where('user_id', auth()->user()->id);
 
             // Filter kategori
-            if ($request->has('status') && $request->kategori != '') {
-                $query->where('status', $request->kategori);
+            if ($request->has('status') && $request->status != '') {
+                $query->where('status', $request->status);
             }
 
             // Pagination dengan load more

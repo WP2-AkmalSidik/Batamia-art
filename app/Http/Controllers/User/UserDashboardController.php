@@ -101,7 +101,8 @@ class UserDashboardController extends Controller
         $produks   = Produk::count();
         $kategoris = Kategori::all();
         $kepuasan  = Review::kepuasanToko();
-        return view('guest/landing-page', compact('kategoris', 'produks', 'users', 'kepuasan'));
+        $reviews   = Review::with('user', 'produk')->limit(3)->get();
+        return view('guest/landing-page', compact('kategoris', 'produks', 'users', 'kepuasan', 'reviews'));
     }
 
     public function show(string $id)

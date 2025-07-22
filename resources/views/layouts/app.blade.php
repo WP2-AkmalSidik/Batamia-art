@@ -98,8 +98,8 @@
 
             const successCallback = function(response) {
                 handleSuccess(response);
-                closeModal("addModal");
-                loadData(currentPage, currentQuery);
+                closeModal("logoutModal");
+                window.location.reload();
             };
 
             const errorCallback = function(error) {

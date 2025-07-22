@@ -282,6 +282,7 @@
                         <option value="dikirim">Dikirim</option>
                         <option value="diterima">Diterima</option>
                         <option value="selesai">Selesai</option>
+                        <option value="retur">Retur</option>
                     </select>
                 </div>
 

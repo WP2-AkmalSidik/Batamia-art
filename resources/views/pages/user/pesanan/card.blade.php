@@ -88,6 +88,11 @@
                         <i class="fas fa-truck mr-2"></i>
                         Selesaikan Pesanan
                     </button>
+                    <a href="https://wa.me/{{ formatNoHp(getPengaturan()->no_telp) }}?text=Retur%20Pesanan%20{{ $pesanan->invoice }}"
+                        class="btn-accent px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
+                        <i class="fas fa-truck mr-2"></i>
+                        Retur Pesanan
+                    </a>
                 @elseif($pesanan->status == 'selesai')
                     @if (cekReviews($pesanan->orderProduks->first()->produk_id, $pesanan->id))
                         <button
@@ -108,6 +113,12 @@
                         Pesanan {{ $pesanan->status }}
                     </button>
                 @elseif($pesanan->status == 'ditolak')
+                    <button
+                        class="btn-accent px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
+                        <i class="fas fa-times mr-2"></i>
+                        Pesanan {{ $pesanan->status }}
+                    </button>
+                @else
                     <button
                         class="btn-accent px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
                         <i class="fas fa-times mr-2"></i>

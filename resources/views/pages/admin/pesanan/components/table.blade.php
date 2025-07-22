@@ -24,8 +24,7 @@
                      <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-semibold">
                          {{ format_rp($pesanan->total_harga) }}</td>
                      <td class="py-3 px-4">
-                         <span
-                             class="px-3 py-1 rounded-full text-sm text-white status-{{ $pesanan->status == 'belum_dibayar' ? 'belum-bayar' : ($pesanan->status == 'Diproses' ? 'diproses' : ($pesanan->status == 'Dikirim' ? 'dikirim' : $pesanan->status)) }}">{{ toTitleCase($pesanan->status) }}</span>
+                         <span class="px-3 py-1 rounded-full text-sm text-white status-{{ $pesanan->status == 'belum_dibayar' ? 'belum-bayar' : ($pesanan->status == 'Diproses' ? 'diproses' : ($pesanan->status == 'Dikirim' ? 'dikirim' : $pesanan->status)) }}">{{ toTitleCase($pesanan->status) }}</span>
                      </td>
                      <td class="py-3 px-4 text-center">
                          <div class="inline-flex space-x-2">

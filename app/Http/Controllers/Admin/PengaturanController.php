@@ -39,6 +39,13 @@ class PengaturanController extends Controller
             'kecamatan' => 'required',
             'kelurahan' => 'required',
             'kode_pos'  => 'required',
+            'deskripsi' => 'nullable',
+            'no_telp'   => 'nullable',
+            'email'     => 'nullable',
+            'facebook'  => 'nullable',
+            'instagram' => 'nullable',
+            'x'         => 'nullable',
+
         ]);
 
         try {

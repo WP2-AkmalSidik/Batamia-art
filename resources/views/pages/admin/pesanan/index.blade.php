@@ -17,6 +17,7 @@
                     <option value="ditolak">Ditolak</option>
                     <option value="dikirim">Dikirim</option>
                     <option value="diterima">Diterima</option>
+                    <option value="retur">Retur</option>
                 </select>
             </div>
         </div>

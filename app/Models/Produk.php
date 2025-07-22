@@ -42,4 +42,12 @@ class Produk extends Model
     {
         return ($this->averageRating() - $this->fullStars()) >= 0.5;
     }
+    public function terjual()
+    {
+        return $this->orderProduks()
+            ->whereHas('order', function ($query) {
+                $query->where('status', 'selesai');
+            })
+            ->sum('kuantitas'); // atau 'jumlah', tergantung nama kolom jumlah produk di OrderProduk
+    }
 }

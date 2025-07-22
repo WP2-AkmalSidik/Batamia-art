@@ -7,11 +7,39 @@ use App\Models\Keranjang;
 use App\Models\KeranjangProduk;
 use App\Models\Pengaturan;
 use App\Models\Produk;
+use Illuminate\Support\Str;
 
 if (! function_exists('getPengaturan')) {
     function getPengaturan(): ?Pengaturan
     {
         return Pengaturan::where('id', 1)->first();
+    }
+}
+
+if (! function_exists('getTestimoni')) {
+    function getTestimoni(): ?Pengaturan
+    {
+        return Pengaturan::where('id', 1)->first();
+    }
+}
+
+if (! function_exists('formatNoHp')) {
+    function formatNoHp($no)
+    {
+        // Hilangkan spasi, tanda strip, dan karakter aneh lainnya
+        $no = preg_replace('/[^0-9]/', '', $no);
+
+        if (Str::startsWith($no, '08')) {
+            return '62' . substr($no, 1);
+        }
+
+        // Jika sudah 62 di depan, biarkan
+        if (Str::startsWith($no, '62')) {
+            return $no;
+        }
+
+        // Jika tanpa 0 atau 62 di depan (misal 812...), anggap tetap valid
+        return '62' . ltrim($no, '0');
     }
 }
 

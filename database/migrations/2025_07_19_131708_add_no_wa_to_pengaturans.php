@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pengaturans', function (Blueprint $table) {
-            $table->text('deskripsi')->after('nama_toko')->nullable();
-
+            $table->string('email')->after('alamat')->nullable();
+            $table->string('no_telp')->after('email')->nullable();
+            $table->string('facebook')->after('no_telp')->nullable();
+            $table->string('instagram')->after('facebook')->nullable();
+            $table->string('x')->after('instagram')->nullable();
         });
     }
 
@@ -23,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pengaturans', function (Blueprint $table) {
-            $table->dropColumn(['deskripsi']);
+            //
         });
     }
 };
